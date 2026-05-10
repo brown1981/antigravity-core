@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Nexus | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scanline"></div>
+
+    <nav>
+        <a href="../../index.html" class="back-btn">[ RETURN_TO_NEXUS ]</a>
+    </nav>
+
+    <main class="nexus-wrapper">
+        <!-- Left: Node Status -->
+        <section class="panel">
+            <h2>NETWORK_NODES</h2>
+            <div class="node-grid" id="node-grid">
+                <!-- Nodes injected by script.js -->
+            </div>
+            <div style="margin-top: 20px; font-size: 0.65rem; color: #444; border-top: 1px solid var(--border); padding-top: 15px;">
+                <span style="color:var(--nexus-cyan);">P</span> = SOLID_PURIFIED<br>
+                GLOW = ACTIVE_INTELLIGENCE
+            </div>
+        </section>
+
+        <!-- Center: Visual Core -->
+        <section class="central-core">
+            <div class="core-circle">
+                <div style="position:absolute; top:0; left:50%; width:10px; height:10px; background:var(--nexus-cyan); border-radius:50%; transform:translateX(-50%); box-shadow:0 0 20px var(--nexus-cyan);"></div>
+            </div>
+            <div class="core-inner">
+                <div class="nexus-logo">CYBER_NEXUS</div>
+                <div style="font-size:0.6rem; color:#444; letter-spacing:5px; margin-top:10px;">DATA_FLOW_INTEGRATION_HUB</div>
+            </div>
+        </section>
+
+        <!-- Right: Secure Log -->
+        <section class="panel" style="border-color: var(--nexus-purple);">
+            <h2 style="color:var(--nexus-purple);"><span style="background:var(--nexus-purple); width:8px; height:8px; border-radius:2px; display:inline-block; margin-right:10px; box-shadow:0 0 10px var(--nexus-purple);"></span>SECURITY_LOGS</h2>
+            <div class="log-stream" id="log-stream">
+                <!-- Logs injected by script.js -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="nexus.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AvalonQ マイニング実績ダッシュボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="logo">
+    <span class="logo-icon">⛏️</span>
+    <span class="logo-text">AvalonQ</span>
+    <span class="logo-sub">Mining Analytics</span>
+  </div>
+  <div class="header-meta">
+    <span class="status-dot"></span>
+    <span>検証期間: 2026/2/13 — 3/15</span>
+    <span class="separator">|</span>
+    <span>アカウント: privatebrown</span>
+  </div>
+</header>
+
+<main class="dashboard">
+
+  <!-- KPI Cards -->
+  <section class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">稼働日数</div>
+      <div class="kpi-value" id="kpi-days">—</div>
+      <div class="kpi-sub">/ 31日間中</div>
+    </div>
+    <div class="kpi-card accent">
+      <div class="kpi-label">累計BTC報酬</div>
+      <div class="kpi-value" id="kpi-total-btc">—</div>
+      <div class="kpi-sub" id="kpi-total-jpy">—</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">平均日次報酬</div>
+      <div class="kpi-value" id="kpi-avg-reward">—</div>
+      <div class="kpi-sub">BTC / 日（稼働日）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">平均ハッシュレート</div>
+      <div class="kpi-value" id="kpi-avg-hash">—</div>
+      <div class="kpi-sub">TH/s</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">月間換算（2台）</div>
+      <div class="kpi-value" id="kpi-monthly">—</div>
+      <div class="kpi-sub" id="kpi-monthly-btc">—</div>
+    </div>
+  </section>
+
+  <!-- BTC Price Slider -->
+  <section class="price-control">
+    <label>BTC/JPY レート調整:</label>
+    <input type="range" id="btcPriceSlider" min="5000000" max="25000000" step="500000" value="14000000">
+    <span class="price-display" id="btcPriceDisplay">¥14,000,000</span>
+  </section>
+
+  <!-- Charts Row 1 -->
+  <section class="chart-row">
+    <div class="chart-panel wide">
+      <div class="chart-title">📊 日次BTC報酬</div>
+      <canvas id="chartReward" height="280"></canvas>
+    </div>
+  </section>
+
+  <!-- Charts Row 2 -->
+  <section class="chart-row two">
+    <div class="chart-panel">
+      <div class="chart-title">⚡ ハッシュレート推移</div>
+      <canvas id="chartHash" height="240"></canvas>
+    </div>
+    <div class="chart-panel">
+      <div class="chart-title">💴 日次収益（JPY換算）</div>
+      <canvas id="chartJPY" height="240"></canvas>
+    </div>
+  </section>
+
+  <!-- Charts Row 3 -->
+  <section class="chart-row two">
+    <div class="chart-panel">
+      <div class="chart-title">📈 累積BTC報酬</div>
+      <canvas id="chartCumulative" height="240"></canvas>
+    </div>
+    <div class="chart-panel">
+      <div class="chart-title">🎯 稼働率・効率分析</div>
+      <canvas id="chartEfficiency" height="240"></canvas>
+    </div>
+  </section>
+
+  <!-- Data Table -->
+  <section class="data-section">
+    <div class="chart-title">📋 日次詳細データ</div>
+    <div class="table-wrap">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>日付</th><th>ハッシュレート</th><th>Reward(PPS)</th>
+            <th>Reward(Total)</th><th>JPY換算</th><th>累積BTC</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Projection -->
+  <section class="projection-section">
+    <div class="chart-title">🔮 月間収益プロジェクション（2台運用）</div>
+    <div class="proj-grid" id="projGrid"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>AvalonQ Mining Analytics Dashboard — 日本政策金融公庫 提出用添付資料</p>
+  <p>データソース: ViaBTC マイニングプール（privatebrown）</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

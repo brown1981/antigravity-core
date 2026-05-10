@@ -1,0 +1,193 @@
+:root {
+    --bg-color: #030305;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #00d2ff;
+    --accent-glow: rgba(0, 210, 255, 0.3);
+    --text: #e0e6ed;
+    --red: #ff4b2b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg-color);
+    color: var(--text);
+    font-family: 'Outfit', 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background 1.5s ease;
+    padding-top: 60px;
+    min-height: 100vh;
+    background-image: radial-gradient(circle at 50% 50%, #0f0c1e 0%, #030305 100%);
+}
+
+body.alert-mode {
+    --bg-color: #1a0000;
+    --accent: #ff4b2b;
+    --accent-glow: rgba(255, 75, 43, 0.4);
+}
+
+#red-alert {
+    display: none;
+    width: 100%;
+    background: var(--red);
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    animation: pulse-alert 2s infinite;
+    position: fixed;
+    top: 0;
+    z-index: 2000;
+}
+
+@keyframes pulse-alert {
+    0% { background: #ff4b2b; box-shadow: 0 0 10px rgba(255,75,43,0.5); }
+    50% { background: #8a0000; box-shadow: 0 0 30px rgba(255,75,43,0.8); }
+    100% { background: #ff4b2b; box-shadow: 0 0 10px rgba(255,75,43,0.5); }
+}
+
+.top-nav {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.back-btn {
+    padding: 8px 20px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    backdrop-filter: blur(15px);
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    border-color: var(--accent);
+    background: rgba(255,255,255,0.1);
+}
+
+.lang-selector {
+    display: flex;
+    gap: 5px;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 5px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.lang-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 700;
+}
+
+.container {
+    max-width: 1100px;
+    width: 90%;
+    padding: 40px 0;
+}
+
+.mood-sphere {
+    width: 100%;
+    height: 180px;
+    border-radius: 24px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    font-weight: 200;
+    margin-bottom: 30px;
+    transition: 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    backdrop-filter: blur(20px);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+}
+
+.card {
+    background: var(--glass);
+    padding: 35px;
+    border-radius: 24px;
+    margin-bottom: 25px;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(25px);
+}
+
+h1 {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    color: var(--accent);
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.chart-container {
+    position: relative;
+    height: 450px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .chart-container { height: 300px; }
+    .mood-sphere { font-size: 1.8rem; height: 140px; }
+}
+
+.price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.price-box {
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.price-box:hover {
+    border-color: var(--accent);
+    background: rgba(0, 210, 255, 0.05);
+}
+
+.price-val {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.price-label {
+    font-size: 0.75rem;
+    opacity: 0.4;
+    letter-spacing: 2px;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCA Fortress | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav style="position:fixed; top:20px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:center; z-index:1000;">
+        <a href="../../index.html" class="back-btn">[ RETURN_TO_NEXUS ]</a>
+        <div class="lang-selector">
+            <button onclick="setLang('ja')" style="background:var(--glass); color:var(--gold); border:1px solid var(--border); padding:5px 15px; cursor:pointer; border-radius:4px;">JP</button>
+            <button onclick="setLang('en')" style="background:var(--glass); color:var(--gold); border:1px solid var(--border); padding:5px 15px; cursor:pointer; border-radius:4px;">EN</button>
+        </div>
+    </nav>
+
+    <main class="fortress-container">
+        <header>
+            <h1>DCA_FORTRESS</h1>
+            <p>TIME-AVERAGED CAPITAL PROTECTION SYSTEM</p>
+        </header>
+
+        <div class="main-grid">
+            <!-- Left: Controls -->
+            <section class="panel">
+                <h2>STRATEGY_PLANNER</h2>
+                <div class="input-group">
+                    <label>MONTHLY_INVESTMENT ($)</label>
+                    <input type="number" id="amount" value="1000" oninput="runSimulation()">
+                </div>
+                <div class="input-group">
+                    <label>DURATION (MONTHS)</label>
+                    <input type="number" id="months" value="12" oninput="runSimulation()">
+                </div>
+                <div class="input-group">
+                    <label>START_PRICE ($)</label>
+                    <input type="number" id="start-price" value="60000" oninput="runSimulation()">
+                </div>
+                <div class="input-group">
+                    <label>END_PRICE ($)</label>
+                    <input type="number" id="end-price" value="95000" oninput="runSimulation()">
+                </div>
+                
+                <button class="action-btn" onclick="runSimulation()">EXECUTE SIMULATION</button>
+            </section>
+
+            <!-- Right: Results -->
+            <section class="visualizer">
+                <div class="stat-row">
+                    <div class="stat-card">
+                        <div class="stat-label">TOTAL_INVESTED</div>
+                        <div class="stat-value" id="val-invested">---</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">CURRENT_VALUE</div>
+                        <div class="stat-value" id="val-value">---</div>
+                    </div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-card">
+                        <div class="stat-label">TOTAL_PROFIT (%)</div>
+                        <div class="stat-value" id="val-profit">---</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">AVG_PURCHASE_PRICE</div>
+                        <div class="stat-value" id="val-avg">---</div>
+                    </div>
+                </div>
+
+                <!-- Visual Chart Area -->
+                <div class="chart-area">
+                    <div class="chart-line"></div>
+                    <div style="z-index:10; font-size:0.7rem; color:var(--gold); letter-spacing:5px;">GROWTH_MATRIX_ACTIVE</div>
+                </div>
+
+                <div style="padding:20px; background:rgba(255,255,255,0.02); border-radius:12px; font-size:0.75rem; color:#666; line-height:1.6;">
+                    <strong style="color:var(--gold);">FORTRESS DOCTRINE:</strong>
+                    市場の短期的なノイズを無視し、数学的な優位性を確保せよ。積立は「意志」ではなく「規律」によってのみ完成する。
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="i18n.js"></script>
+    <script src="dca_engine.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

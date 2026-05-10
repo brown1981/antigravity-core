@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 🏔️ Harmonic Foundation - Optimized for Eye Comfort (Stone/Zinc/Indigo) */
+    --radius: 0.75rem;
+    
+    /* Default Mode: Light (Zen-like) */
+    --background: 30 20% 98%;
+    --foreground: 240 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    --popover: 0 0% 101%;
+    --popover-foreground: 240 10% 10%;
+    --primary: 240 10% 15%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 30 15% 94%;
+    --secondary-foreground: 240 10% 15%;
+    --muted: 30 15% 90%;
+    --muted-foreground: 240 10% 45%;
+    --accent: 230 60% 55%; /* Harmonic Indigo */
+    --accent-foreground: 0 0% 100%;
+    --border: 30 10% 88%;
+    --input: 30 10% 88%;
+    --ring: 230 60% 55%;
+  }
+
+  .dark {
+    /* Default Mode: Dark (Ink-like) */
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 7%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 10% 5%;
+    --secondary: 240 10% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 230 70% 65%; /* Soft Luminous Indigo */
+    --accent-foreground: 0 0% 100%;
+    --border: 240 10% 16%;
+    --input: 240 10% 16%;
+    --ring: 230 70% 65%;
+  }
+
+  /* --- Stylistic Refinements --- */
+  
+  .ink {
+    /* Ink theme focuses on deep graphite & charcoal textures */
+    --accent: 215 50% 50%; /* Slate Blue */
+  }
+
+  .zen {
+    /* Zen theme focuses on warm parchment & stone textures */
+    --background: 35 30% 96%;
+    --secondary: 35 25% 90%;
+    --border: 35 15% 82%;
+  }
+
+  .aether {
+    /* Aether (Glass) theme focuses on translucent layers & azure glow */
+    --accent: 195 90% 45%; /* Azure */
+  }
+
+  html, body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    min-height: 100vh;
+    transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s ease;
+    @apply antialiased overflow-hidden selection:bg-accent/30;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-outfit), var(--font-inter), sans-serif;
+    @apply tracking-tight font-semibold;
+  }
+}
+
+/* --- Premium Esthetics --- */
+
+.glass-morphism {
+  @apply bg-opacity-70 backdrop-blur-2xl border border-white/5;
+}
+
+.liquid-transition {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chat-bubble-p {
+  @apply leading-relaxed tracking-normal px-6 py-4 rounded-[1.25rem] shadow-sm;
+  font-size: 15px;
+}
+
+/* Scrollbar Engineering */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Custom Animations */
+@keyframes softFloat {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-soft-in {
+  animation: softFloat 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.pulse-intelligence {
+  animation: pulse-op 3s ease-in-out infinite;
+}
+
+@keyframes pulse-op {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}

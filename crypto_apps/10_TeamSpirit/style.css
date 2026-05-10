@@ -1,0 +1,116 @@
+:root {
+    --bg: #050508;
+    --amber: #ffaa00;
+    --amber-dim: rgba(255, 170, 0, 0.1);
+    --tech-blue: #0088ff;
+    --glass: rgba(255, 255, 255, 0.02);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #e0e6ed;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 60px 40px;
+    background-image: radial-gradient(circle at 50% 10% , #1a1510 0%, #050508 100%);
+}
+
+.back-btn {
+    position: fixed; top: 20px; left: 20px; padding: 8px 20px;
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 4px; color: var(--amber);
+    text-decoration: none; font-size: 0.75rem; letter-spacing: 2px;
+    backdrop-filter: blur(15px); z-index: 1000; transition: 0.3s;
+}
+.back-btn:hover { background: var(--amber); color: #000; box-shadow: 0 0 20px var(--amber); }
+
+.team-container {
+    max-width: 1200px; margin: 0 auto;
+}
+
+/* SYNC HEADER */
+.sync-header {
+    text-align: center; margin-bottom: 60px;
+}
+
+.sync-header h1 {
+    font-weight: 200; letter-spacing: 15px; font-size: 2.5rem;
+    color: #fff; text-shadow: 0 0 30px var(--amber-dim);
+}
+
+.sync-level {
+    margin-top: 20px; font-size: 0.8rem; letter-spacing: 5px; color: var(--amber);
+}
+
+/* GEM GRID */
+.gem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; margin-bottom: 60px;
+}
+
+.gem-card {
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 20px; padding: 30px; backdrop-filter: blur(30px);
+    transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative; overflow: hidden;
+}
+
+.gem-card:hover { transform: translateY(-10px); border-color: var(--amber); }
+
+.gem-icon {
+    font-size: 2rem; margin-bottom: 20px;
+}
+
+.gem-name {
+    font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; color: #fff;
+}
+
+.gem-role {
+    font-size: 0.65rem; letter-spacing: 2px; color: var(--amber);
+    text-transform: uppercase; margin-bottom: 20px;
+}
+
+.gem-desc {
+    font-size: 0.8rem; color: #888; line-height: 1.6;
+}
+
+.gem-stat {
+    margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between; font-size: 0.7rem;
+}
+
+/* MATRIX SECTION */
+.matrix-section {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+}
+
+.card {
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 20px; padding: 40px;
+}
+
+.card h3 {
+    font-size: 0.75rem; letter-spacing: 3px; color: #666;
+    margin-bottom: 30px; text-transform: uppercase;
+}
+
+/* PROGRESS BAR */
+.progress-container {
+    height: 6px; background: rgba(255,255,255,0.05);
+    border-radius: 3px; overflow: hidden; margin: 10px 0;
+}
+.progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--amber), #ffdd00);
+    width: 0%; transition: width 2s ease-out;
+}
+
+@media (max-width: 900px) {
+    body { padding: 40px 20px; }
+    .sync-header h1 { font-size: 1.5rem; letter-spacing: 5px; }
+    .matrix-section { grid-template-columns: 1fr; }
+}

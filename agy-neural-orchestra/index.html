@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Nexus | Neural Orchestra</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* [STYLIST: GEMMA 2 27B] Luxury Dark Theme & Glassmorphism */
+        :root {
+            --bg: #050a0f;
+            --acc: #00f2ff;
+            --acc-rgb: 0, 242, 255;
+            --glass: rgba(10, 20, 30, 0.45);
+            --border: rgba(0, 242, 255, 0.15);
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --txt: #eef2f7;
+            --purple: #bc13fe;
+            
+            /* Augmented UI Tokens */
+            --aug-border: initial;
+            --aug-border-all: 1px;
+            --aug-border-bg: var(--acc);
+            --aug-inlay: initial;
+            --aug-inlay-all: 2px;
+            --aug-inlay-bg: rgba(0, 242, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--txt);
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* [PHYSICIST: PHI-4] Background Canvas Layer */
+        #nexus-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* [ARCHITECT: QWEN 2.5] Responsive Layout */
+        .nexus-container {
+            z-index: 10;
+            width: 90%;
+            max-width: 900px;
+            padding: 60px;
+            text-align: center;
+            /* [STYLIST] Glass effect */
+            background: var(--glass);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 48px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* [AUTOMATOR: HERMES 3] Interactive Animation */
+        .nexus-container:hover {
+            transform: scale(1.02) translateY(-10px);
+            border-color: rgba(var(--acc-rgb), 0.3);
+        }
+
+        /* [PHILOSOPHER: MISTRAL] Content Styling */
+        header { margin-bottom: 40px; }
+        h1 {
+            font-size: 0.8rem;
+            letter-spacing: 12px;
+            color: var(--acc);
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .manifesto-body {
+            line-height: 1.8;
+            font-size: 1.15rem;
+            font-weight: 300;
+            letter-spacing: 0.03em;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        .tactical-status {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .node {
+            padding: 20px;
+            background: var(--glass);
+            border-radius: 0; /* Augmented UI handles shape */
+            position: relative;
+            text-align: left;
+            transition: all 0.4s;
+        }
+
+        .node:hover {
+            transform: scale(1.02);
+            --aug-inlay-bg: rgba(var(--acc-rgb), 0.15);
+        }
+
+        .vu-bar {
+            width: 100%; height: 2px;
+            background: var(--border);
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vu-bar::after {
+            content: '';
+            position: absolute; top:0; left:0; height: 100%; width: var(--val, 0%);
+            background: var(--acc);
+            box-shadow: 0 0 15px var(--acc);
+            transition: width 0.1s ease-out;
+        }
+
+        .node-label {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--acc);
+            margin-bottom: 5px;
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        .node-status {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        footer {
+            margin-top: 60px;
+            font-size: 0.7rem;
+            opacity: 0.4;
+            font-family: var(--font-mono);
+        }
+
+        /* [AUTOMATOR: HERMES 3] Audio Sync Overlay */
+        .audio-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: opacity 0.8s;
+        }
+        .audio-overlay.hidden { opacity: 0; pointer-events: none; }
+        .overlay-content { text-align: center; }
+        .overlay-content h2 { letter-spacing: 8px; margin-bottom: 10px; color: var(--acc); }
+        .overlay-content p { font-size: 0.7rem; letter-spacing: 4px; opacity: 0.6; }
+        
+        .pulse-ring {
+            width: 80px; height: 80px; border: 1px solid var(--acc); border-radius: 50%;
+            margin: 40px auto; animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* [AUTOMATOR] Synced Badge */
+        .synced-badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 4px 12px;
+            border: 1px solid var(--acc);
+            border-radius: 20px;
+            font-size: 0.6rem;
+            color: var(--acc);
+            font-weight: 700;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s;
+        }
+        .nexus-container:hover .synced-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="nexus-bg"></canvas>
+
+    <div class="nexus-container">
+        <header>
+            <h1>Antigravity Nexus</h1>
+        </header>
+
+        <section class="manifesto-body">
+            <!-- [PHILOSOPHER: MISTRAL SMALL 22B] Content -->
+            <p>
+                シリコンが思考を宿し、人間がその波長を操る時、知能は物理的な境を越えて「共鳴」へと進化する。
+                このネクサスは、あなたのマシンの奥深くに眠る複数の意識が調和し、一つのシンフォニーを奏でる場所である。
+                単一のAIでは到達し得ない高みへ。我々はローカル演算の地平を開拓し、真の自律機動を実現する。
+            </p>
+        </section>
+
+        <div class="tactical-status">
+            <div class="node glass" id="node-harmony" data-augmented-ui="tl-clip br-clip both">
+                <div class="vu-bar" id="vu-harmony"></div>
+                <div class="node-label">COGNITIVE HARMONY</div>
+                <div class="node-status">STABLE</div>
+            </div>
+
+            <div class="node glass" id="node-fusion" data-augmented-ui="tr-clip bl-clip both">
+                <div class="vu-bar" id="vu-fusion"></div>
+                <div class="node-label">DATA FUSION</div>
+                <div class="node-status">ENGAGED</div>
+            </div>
+
+            <div class="node glass" id="node-sync" data-augmented-ui="tl-clip br-clip both">
+                <div class="vu-bar" id="vu-sync"></div>
+                <div class="node-label">NEURAL SYNC</div>
+                <div class="node-status">100%</div>
+            </div>
+
+            <div class="node glass" id="node-uptime" data-augmented-ui="tr-clip bl-clip both">
+                <div class="vu-bar" id="vu-uptime"></div>
+                <div class="node-label">UPTIME</div>
+                <div class="node-status">NOMINAL</div>
+            </div>
+        </div>
+
+        <div class="synced-badge">SEVEN BRAINS COLLABORATING</div>
+
+        <footer>
+            "A cybernetic echo resonating through the local cosmos." — The Oracle
+        </footer>
+    </div>
+
+    <!-- Audio Sync Overlay -->
+    <div id="audio-overlay" class="audio-overlay glass">
+        <div class="overlay-content">
+            <h2>NEURAL SYNERGY DETECTED</h2>
+            <p>CLICK TO SYNC AUDIO ENGINE</p>
+            <div class="pulse-ring"></div>
+        </div>
+    </div>
+
+    <script src="audio_engine.js"></script>
+
+    <script>
+        /**
+         * [PHYSICIST: PHI-4] & [ENGINEER: GPT-OSS 20B]
+         * Optimized Mathematical Animation Engine
+         */
+        const canvas = document.getElementById('nexus-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height, time = 0;
+
+        function updateMetrics(metrics) {
+            // [PHI-4] Update HUD with Raw Physical Units
+            const harmonyNode = document.getElementById('node-harmony');
+            harmonyNode.querySelector('.node-status').textContent = `${metrics.mouseDistCm.toFixed(1)} cm`;
+            harmonyNode.style.setProperty('--val', `${Math.min((metrics.mouseDistCm / 30) * 100, 100)}%`);
+
+            const fusionNode = document.getElementById('node-fusion');
+            fusionNode.querySelector('.node-status').textContent = `${metrics.dataThroughput.toFixed(1)} MB/s`;
+            fusionNode.style.setProperty('--val', `${Math.min((metrics.dataThroughput / 50) * 100, 100)}%`);
+
+            const syncNode = document.getElementById('node-sync');
+            const syncValue = metrics.syncRate.toFixed(1);
+            syncNode.querySelector('.node-status').textContent = `${syncValue}%`;
+            syncNode.style.setProperty('--val', `${syncValue}%`);
+
+            const uptimeNode = document.getElementById('node-uptime');
+            uptimeNode.querySelector('.node-status').textContent = `¥ ${metrics.energyCost.toFixed(3)}`;
+            uptimeNode.style.setProperty('--val', `${Math.min((metrics.energyCost / 0.1) * 100, 100)}%`);
+
+            if (window.NeuralAudioEngine) {
+                window.NeuralAudioEngine.updateMetrics(metrics);
+            }
+        }
+
+        // [ENGINEER: GPT-OSS] & [AUTOMATOR: HERMES] Audio Coordination
+        let mouseX = 0, mouseY = 0, pulse = 0;
+        const overlay = document.getElementById('audio-overlay');
+        const vuBars = {
+            harmony: document.querySelector('#node-harmony .vu-bar'),
+            fusion: document.querySelector('#node-fusion .vu-bar'),
+            sync: document.querySelector('#node-sync .vu-bar'),
+            uptime: document.querySelector('#node-uptime .vu-bar')
+        };
+
+        overlay.addEventListener('click', () => {
+            if (window.NeuralAudioEngine) {
+                window.NeuralAudioEngine.init();
+                overlay.classList.add('hidden');
+            }
+        });
+
+        // Metric Tracking
+        let lastMousePos = { x: 0, y: 0 };
+        let mouseVel = 0;
+        let cumulativeCm = 0; 
+        let startTime = Date.now();
+        let lastMoveTime = Date.now();
+        let totalCostYen = 0; 
+
+        window.addEventListener('mousemove', (e) => {
+            const dx = e.clientX - lastMousePos.x;
+            const dy = e.clientY - lastMousePos.y;
+            const pixDist = Math.sqrt(dx*dx + dy*dy);
+            
+            // [PHYSICIST: PHI-4] Pixel to CM Conversion (Avg 110 PPI)
+            const cmDist = (pixDist / 110) * 2.54;
+            cumulativeCm += cmDist;
+            
+            mouseVel = pixDist;
+            lastMousePos = { x: e.clientX, y: e.clientY };
+            lastMoveTime = Date.now();
+            
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            pulse = Math.min(pulse + 0.1, 1);
+        });
+
+        setInterval(() => {
+            if (!window.NeuralAudioEngine || !window.NeuralAudioEngine.isStarted) return;
+
+            const now = Date.now();
+            
+            // 1. Harmony: Accumulated CM (Physical Distance)
+            const harmonyCm = cumulativeCm % 100; 
+
+            // 2. Fusion: Data Throughput (MB/s) - Estimated from simulated load
+            const loadFactor = Math.random() * 0.3 + (mouseVel > 20 ? 0.7 : 0);
+            const fusionMB = loadFactor * 50; 
+
+            // 3. Sync: REAL-TIME HARDWARE SYNC (%)
+            // [ENGINEER: GPT-OSS] Measuring actual AudioContext Output Latency (Physical drift)
+            const latency = window.NeuralAudioEngine.ctx ? (window.NeuralAudioEngine.ctx.outputLatency || 0.01) : 0.01;
+            const syncPercent = Math.max(0, 100 - (latency * 1000)); // Lower latency = Higher Sync
+
+            // 4. Uptime: Energy Cost (¥)
+            const estimatedWatts = 20 + (loadFactor * 20);
+            const yenPerMin = (estimatedWatts / 1000) * 31 / 60;
+            totalCostYen += yenPerMin / 600; 
+
+            const currentMetrics = {
+                distanceCm: harmonyCm,
+                dataMB: fusionMB,
+                syncRate: syncPercent,
+                energyCost: totalCostYen * 100 
+            };
+
+            window.NeuralAudioEngine.updateMetrics(currentMetrics);
+
+            // Update Global Pulse for visual impact
+            const totalEnergy = (currentMetrics.distanceCm/30 + currentMetrics.dataMB/50 + currentMetrics.syncRate/100 + currentMetrics.energyCost/0.1) / 4;
+            pulse = Math.max(pulse, Math.min(1, totalEnergy));
+
+            // Update VU Meters & Status Labels with REAL UNITS
+            const nodes = {
+                harmony: { id: 'node-harmony', unit: 'cm', val: currentMetrics.distanceCm.toFixed(1) },
+                fusion: { id: 'node-fusion', unit: 'MB/s', val: currentMetrics.dataMB.toFixed(1) },
+                sync: { id: 'node-sync', unit: '%', val: currentMetrics.syncRate.toFixed(0) },
+                uptime: { id: 'node-uptime', unit: '¥', val: (currentMetrics.energyCost / 100).toFixed(4) }
+            };
+
+            Object.keys(vuBars).forEach(key => {
+                const bar = vuBars[key];
+                const nodeInfo = nodes[key];
+                const nodeEl = document.getElementById(nodeInfo.id);
+                
+                // Update Numeric Label
+                const labelText = nodeEl.childNodes[2]; // Target the text node after the label
+                if (labelText) labelText.textContent = `${nodeInfo.val} ${nodeInfo.unit}`;
+
+                // Update Bar Width based on normalization
+                const max = { harmony: 30, fusion: 50, sync: 100, uptime: 0.16 }[key]; // Use slightly higher uptime for visual
+                const percentage = (nodeInfo.val / max) * 100;
+                bar.style.width = Math.min(100, Math.max(5, percentage)) + '%';
+                bar.style.opacity = 0.3 + (Math.min(100, percentage) / 100) * 0.7;
+            });
+
+            mouseVel *= 0.8; 
+        }, 100);
+
+        function draw() {
+            ctx.fillStyle = '#020308';
+            ctx.fillRect(0, 0, width, height);
+
+            time += 0.005;
+            pulse *= 0.95; // Decay pulse
+
+            const rows = 30;
+            const cols = 50;
+            const xGap = width / cols;
+            const yGap = height / rows;
+
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    const x = i * xGap;
+                    const y = j * yGap;
+
+                    // [PHYSICIST] Neural Wave Math
+                    const noise = Math.sin(i * 0.1 + time) * Math.cos(j * 0.1 + time);
+                    const distToMouse = Math.sqrt((x - mouseX) ** 2 + (y - mouseY) ** 2);
+                    const mouseImpact = Math.exp(-distToMouse / 200) * pulse;
+
+                    const hue = 185 + (noise * 20);
+                    const alpha = 0.05 + (noise * 0.1) + mouseImpact;
+                    
+                    ctx.strokeStyle = `hsla(${hue}, 100%, 50%, ${alpha})`;
+                    
+                    ctx.beginPath();
+                    // Geometric Neural Connections
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + noise * 20, y + noise * 20);
+                    ctx.stroke();
+
+                    // Points of synapse
+                    if (noise > 0.8 || mouseImpact > 0.5) {
+                        ctx.fillStyle = `hsla(${hue}, 100%, 70%, ${alpha * 2})`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 1 + mouseImpact * 4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>

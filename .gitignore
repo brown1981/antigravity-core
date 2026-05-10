@@ -1,0 +1,41 @@
+# ========================================
+# Antigravity .gitignore
+# Security & Cleanliness Policy
+# ========================================
+
+# --- 機密情報 (NEVER deploy) ---
+.env
+.env.*
+!.env.example
+credentials/
+*.key
+*.pem
+
+# --- データベース (ローカル専用) ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Python キャッシュ ---
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# --- Node.js (将来用) ---
+node_modules/
+package-lock.json
+
+# --- 一時ファイル ---
+*.log
+*.tmp
+*.temp

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Radar | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav style="position:fixed; top:20px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:center; z-index:1000;">
+        <a href="../../index.html" class="back-btn">[ RETURN_TO_NEXUS ]</a>
+        <div class="lang-selector">
+            <button class="lang-btn" onclick="setLang('ja')" style="background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.1); padding:5px 10px; cursor:pointer;">JP</button>
+            <button class="lang-btn" onclick="setLang('en')" style="background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.1); padding:5px 10px; cursor:pointer;">EN</button>
+        </div>
+    </nav>
+
+    <main class="radar-container">
+        <!-- Visual Radar -->
+        <div class="radar-screen">
+            <div class="radar-grid"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-label">RADAR_ACTIVE</div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid">
+            <div class="card">
+                <strong>BTC DOMINANCE</strong>
+                <div id="dom-val" class="val">--%</div>
+            </div>
+            <div class="card">
+                <strong>MARKET CAP</strong>
+                <div id="cap-val" class="val">$--T</div>
+            </div>
+            <div class="card">
+                <strong>TRENDING</strong>
+                <div id="trend-val" class="val trend-item">...</div>
+            </div>
+            <div class="card">
+                <strong>24H VOLUME</strong>
+                <div id="vol-val" class="val">$--B</div>
+            </div>
+            <div class="card">
+                <strong>EXCHANGES</strong>
+                <div class="val">800+</div>
+            </div>
+            <div class="card">
+                <strong>STATUS</strong>
+                <div id="status-val" class="val" style="color:var(--main); font-size: 0.9rem;">OPTIMAL</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="i18n.js"></script>
+    <script src="engine.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

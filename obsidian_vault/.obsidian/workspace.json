@@ -1,0 +1,168 @@
+{
+  "main": {
+    "id": "cbb44a14f67441b1",
+    "type": "split",
+    "children": [
+      {
+        "id": "44dd4e5b1b88c8fc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e097d00a9c3c6468",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "README"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "34f5c480b7575a65",
+    "type": "split",
+    "children": [
+      {
+        "id": "d89238a81a7b2bf7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1c227e1f1140b940",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "ファイルエクスプローラ"
+            }
+          },
+          {
+            "id": "77e610c0975f6371",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "検索"
+            }
+          },
+          {
+            "id": "10f5f0e2de1d53ad",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "ブックマーク"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "5ada754ea4d7d4d1",
+    "type": "split",
+    "children": [
+      {
+        "id": "dd78da5fd0d5e1f0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e5d0e40cd145f4d3",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "READMEへのバックリンク"
+            }
+          },
+          {
+            "id": "53d67cc23960dc43",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "すべてのプロパティ"
+            }
+          },
+          {
+            "id": "309093dd4cde353f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "README.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "READMEのアウトライン"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "canvas:新規キャンバスを作成": false,
+      "daily-notes:今日のデイリーノートを開く": false,
+      "templates:テンプレートを挿入": false,
+      "command-palette:コマンドパレットを開く": false,
+      "markdown-importer:Markdownインポーターを開く": false,
+      "bases:新規ベースを作成": false
+    }
+  },
+  "active": "e097d00a9c3c6468",
+  "lastOpenFiles": [
+    "meetings/20260419_113548_tesuto\n.md",
+    "meetings/20260419_113505_tesuto\n.md",
+    "meetings/20260419_113229_ULTIMATE PROOF.md",
+    "meetings/20260419_093337_テスト.md",
+    "meetings/20260419_090311_テスト.md",
+    "meetings",
+    "無題のファイル.canvas",
+    "README.md",
+    "2026-04-19.md"
+  ]
+}

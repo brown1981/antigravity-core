@@ -1,0 +1,122 @@
+:root {
+    --bg: #020205;
+    --diamond: #ffffff;
+    --prism-1: #00d2ff;
+    --prism-2: #ff2a7a;
+    --prism-3: #ffcc00;
+    --glass: rgba(255, 255, 255, 0.02);
+    --border: rgba(255, 255, 255, 0.1);
+    --text: #e0e6ed;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(0, 210, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 42, 122, 0.1) 0%, transparent 40%);
+}
+
+.back-btn {
+    position: fixed; top: 20px; left: 20px; padding: 8px 20px;
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 4px; color: #fff;
+    text-decoration: none; font-size: 0.75rem; letter-spacing: 2px;
+    backdrop-filter: blur(15px); z-index: 1000; transition: 0.3s;
+}
+.back-btn:hover { background: #fff; color: #000; }
+
+.fortress-wrapper {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100vh; perspective: 1000px;
+}
+
+/* THE CRYSTAL SHIELD */
+.shield-container {
+    width: 500px; height: 500px; position: relative;
+    transform-style: preserve-3d; animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: rotateY(10deg) translateY(0); }
+    50% { transform: rotateY(-10deg) translateY(-20px); }
+}
+
+.hexagon-grid {
+    position: absolute; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.hex {
+    width: 120px; height: 140px; background: var(--glass);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: 1px solid var(--border); position: absolute;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    backdrop-filter: blur(20px); transition: 0.5s;
+}
+
+.hex:hover { 
+    background: rgba(255, 255, 255, 0.1); border-color: #fff;
+    transform: translateZ(50px) scale(1.1);
+}
+
+.hex-label { font-size: 0.6rem; color: #666; letter-spacing: 2px; }
+.hex-value { font-size: 1rem; font-weight: 700; color: #fff; margin-top: 5px; }
+
+/* PRISM TEXT */
+.fortress-title {
+    position: fixed; bottom: 80px; text-align: center; width: 100%;
+}
+
+.fortress-title h1 {
+    font-weight: 200; letter-spacing: 25px; font-size: 3.5rem;
+    background: linear-gradient(90deg, var(--prism-1), var(--diamond), var(--prism-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(255,255,255,0.2));
+}
+
+.fortress-status {
+    font-size: 0.8rem; color: #444; letter-spacing: 10px; margin-top: 20px;
+    text-transform: uppercase;
+}
+
+/* RISK OVERLAY */
+.risk-panel {
+    position: fixed; right: 40px; top: 50%; transform: translateY(-50%);
+    width: 300px; background: var(--glass); border: 1px solid var(--border);
+    border-radius: 20px; padding: 30px; backdrop-filter: blur(40px);
+}
+
+.risk-panel h2 { font-size: 0.7rem; letter-spacing: 3px; color: #666; margin-bottom: 20px; }
+
+.risk-bar {
+    height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px;
+    margin: 10px 0 25px; position: relative;
+}
+.risk-fill {
+    position: absolute; top: 0; left: 0; height: 100%;
+    background: var(--prism-1); width: 85%; box-shadow: 0 0 15px var(--prism-1);
+}
+
+/* SYMBOL */
+.sacred-geometry {
+    position: absolute; width: 100%; height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="white" stroke-opacity="0.05" stroke-width="0.5"/></svg>');
+    opacity: 0.5; z-index: -1;
+}
+
+@media (max-width: 1000px) {
+    body { overflow-y: auto; height: auto; }
+    .fortress-wrapper { height: auto; padding: 120px 20px 200px; }
+    .shield-container { width: 300px; height: 300px; }
+    .hex { width: 80px; height: 100px; }
+    .hex-value { font-size: 0.7rem; }
+    .risk-panel { position: relative; right: auto; top: auto; transform: none; width: 100%; margin-top: 50px; }
+    .fortress-title h1 { font-size: 1.5rem; letter-spacing: 10px; }
+    .fortress-status { font-size: 0.6rem; letter-spacing: 4px; }
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTIGRAVITY | Nexus Portal (Internal)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030305;
+            --glass: rgba(15, 12, 30, 0.45);
+            --accent: #bc13fe;
+            --cyan: #00d2ff;
+            --text: #e0e6ed;
+            --border: rgba(188, 19, 254, 0.2);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: radial-gradient(circle at 50% 50%, #0f0c1e 0%, #030305 100%);
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 60px 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: 15px;
+            font-weight: 200;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--cyan), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 5px;
+            opacity: 0.5;
+            text-transform: uppercase;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            width: 95%;
+            padding: 40px 20px;
+        }
+
+        .app-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            backdrop-filter: blur(25px);
+            position: relative;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 40px rgba(0, 210, 255, 0.15);
+        }
+
+        .app-num {
+            font-size: 0.7rem;
+            color: var(--cyan);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: block;
+            letter-spacing: 2px;
+        }
+
+        .app-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .app-card p {
+            font-size: 0.85rem;
+            opacity: 0.6;
+            line-height: 1.6;
+        }
+
+        .status-dot {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+        .status-dot.planned { background: #555; box-shadow: none; }
+        .status-dot.new { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+
+        .app-card.planned { opacity: 0.4; cursor: default; }
+        .app-card.planned:hover { transform: none; border-color: var(--border); box-shadow: none; }
+
+        .nav-home {
+            margin-top: 20px;
+            text-decoration: none;
+            color: var(--cyan);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .nav-home:hover { background: rgba(0, 210, 255, 0.1); border-color: var(--cyan); }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Antigravity</h1>
+        <div class="subtitle">Nexus Intelligence System (Internal)</div>
+        <a href="../index.html" class="nav-home">← GO TO MASTER NEXUS</a>
+    </header>
+
+    <div class="grid">
+        <a href="01_MoodOrbit/index.html" class="app-card">
+            <span class="app-num">APP_01</span><div class="status-dot"></div>
+            <h2>Mood Orbit</h2><p>市場感情（F&G）と価格相関の多角的可視化。</p>
+        </a>
+
+        <a href="02_LogicShield/index.html" class="app-card">
+            <span class="app-num">APP_02</span><div class="status-dot"></div>
+            <h2>Logic Shield</h2><p>5つのテクニカル指標による論理的市場分析。</p>
+        </a>
+
+        <a href="03_JoyProfit/index.html" class="app-card">
+            <span class="app-num">APP_03</span><div class="status-dot"></div>
+            <h2>Joy Profit</h2><p>目標達成への進捗と利益確定のシミュレート。</p>
+        </a>
+
+        <a href="04_WhaleSonar/index.html" class="app-card">
+            <span class="app-num">APP_04</span><div class="status-dot"></div>
+            <h2>Whale Sonar</h2><p>オンチェーン上の巨額資金移動をレーダー監視。</p>
+        </a>
+
+        <a href="05_ScamSentinel/index.html" class="app-card">
+            <span class="app-num">APP_05</span><div class="status-dot"></div>
+            <h2>Scam Sentinel</h2><p>コントラクトの脆弱性と詐欺リスクを瞬時に診断。</p>
+        </a>
+
+        <a href="06_GlobalRadar/index.html" class="app-card">
+            <span class="app-num">APP_06</span><div class="status-dot"></div>
+            <h2>Global Radar</h2><p>BTCドミナンス、時価総額等のマクロ市場俯瞰。</p>
+        </a>
+
+        <a href="07_AltHunter/index.html" class="app-card">
+            <span class="app-num">APP_07</span><div class="status-dot"></div>
+            <h2>Alt Hunter</h2><p>1000銘柄の点火・爆発検知と高精度ランキング。</p>
+        </a>
+
+        <a href="08_DailyCompass/index.html" class="app-card">
+            <span class="app-num">APP_08</span><div class="status-dot"></div>
+            <h2>Daily Compass</h2><p>今日のニュースと重要ヘッドラインの統合要約。</p>
+        </a>
+
+        <a href="09_CyberNexus/index.html" class="app-card">
+            <span class="app-num">APP_09</span><div class="status-dot"></div>
+            <h2>Cyber Nexus</h2><p>マクロ統計とオンチェーンデータの動的マトリックス。</p>
+        </a>
+
+        <a href="10_TeamSpirit/index.html" class="app-card">
+            <span class="app-num">APP_10</span><div class="status-dot"></div>
+            <h2>Team Spirit</h2><p>トレンド銘柄とコミュニティセンチメントの抽出。</p>
+        </a>
+
+        <div class="app-card planned">
+            <span class="app-num">APP_11</span><div class="status-dot planned"></div>
+            <h2>DCA Fortress</h2><p>積立・分散投資の論理的実行（計画中）。</p>
+        </div>
+
+        <div class="app-card planned">
+            <span class="app-num">APP_12</span><div class="status-dot planned"></div>
+            <h2>Knowledge Hub</h2><p>AIデータ収集・IHハブ（計画中）。</p>
+        </div>
+
+        <a href="13_ZenTracker/index.html" class="app-card">
+            <span class="app-num">APP_13</span><div class="status-dot new"></div>
+            <h2>Zen Tracker</h2><p>ガス代監視とマインドフルネス（旧04）。</p>
+        </a>
+
+        <div class="app-card planned">
+            <span class="app-num">APP_14</span><div class="status-dot planned"></div>
+            <h2>Quant Sentinel</h2><p>SMC分析・機関投資家追跡（計画中）。</p>
+        </div>
+
+        <a href="15_PortfolioFortress/index.html" class="app-card">
+            <span class="app-num">APP_15</span><div class="status-dot new"></div>
+            <h2>Portfolio Fortress</h2><p>資産リスクの空間的可視化（旧06）。</p>
+        </a>
+    </div>
+</body>
+</html>

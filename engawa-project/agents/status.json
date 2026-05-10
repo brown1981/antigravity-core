@@ -1,0 +1,67 @@
+{
+  "agents": [
+    {
+      "id": "ceo",
+      "name": "Sakana AI / GPT-5",
+      "role": "CEO",
+      "status": "active",
+      "lastActive": "Just now",
+      "model": "Sakana AI / GPT-5 (Pro)",
+      "currentTask": ""
+    },
+    {
+      "id": "cfo",
+      "name": "CFO Agent",
+      "role": "CFO",
+      "status": "active",
+      "lastActive": "Just now",
+      "model": "OpenAI / o1 (Financial Analysis)",
+      "currentTask": ""
+    },
+    {
+      "id": "cto",
+      "name": "CTO Agent",
+      "role": "CTO",
+      "status": "active",
+      "lastActive": "Just now",
+      "model": "Antigravity (System Engine)",
+      "currentTask": ""
+    },
+    {
+      "id": "cmo",
+      "name": "CMO Agent",
+      "role": "CMO",
+      "status": "active",
+      "lastActive": "Just now",
+      "model": "Claude 3.5 Sonnet (Creative)",
+      "currentTask": ""
+    },
+    {
+      "id": "coo",
+      "name": "COO Agent",
+      "role": "COO",
+      "status": "active",
+      "lastActive": "Just now",
+      "model": "Gemini 2.5 Flash (Research)",
+      "currentTask": ""
+    }
+  ],
+  "kpis": {
+    "dscr": {
+      "value": 1.84,
+      "target": 1.71,
+      "trend": "up"
+    },
+    "cashFlow": {
+      "value": 82400,
+      "target": 74000,
+      "trend": "up"
+    },
+    "efficiency": {
+      "value": 92,
+      "target": 95,
+      "trend": "down"
+    }
+  },
+  "lastUpdated": "2026-03-29T17:13:11.738Z"
+}

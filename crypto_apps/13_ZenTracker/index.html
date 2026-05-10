@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen Tracker | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav style="position:fixed; top:20px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:center; z-index:1000;">
+        <a href="../../index.html" class="back-btn">[ RETURN_TO_NEXUS ]</a>
+        <div class="lang-selector">
+            <button onclick="setLang('ja')" style="background:var(--glass); color:var(--zen-teal); border:1px solid var(--border); padding:5px 15px; cursor:pointer; border-radius:30px;">JP</button>
+            <button onclick="setLang('en')" style="background:var(--glass); color:var(--zen-teal); border:1px solid var(--border); padding:5px 15px; cursor:pointer; border-radius:30px;">EN</button>
+        </div>
+    </nav>
+
+    <main class="zen-container">
+        <!-- Gas Oracle Stats -->
+        <section class="gas-oracle">
+            <div class="gas-item">
+                <div class="gas-label">ETH_GAS</div>
+                <div class="gas-value" id="eth-med">-- Gwei</div>
+            </div>
+            <div class="gas-item">
+                <div class="gas-label">BASE_FEE</div>
+                <div class="gas-value" id="base-fee">-- Gwei</div>
+            </div>
+        </section>
+
+        <!-- Breathing Core -->
+        <section class="zen-circle-wrapper">
+            <div class="zen-circle">
+                <div class="zen-phase" id="zen-phase">PEACE</div>
+            </div>
+        </section>
+
+        <!-- Tactical Quote -->
+        <section class="zen-quote" id="zen-quote">
+            市場の喧騒を離れ、呼吸を整えよ。
+        </section>
+
+        <!-- Footer Info -->
+        <footer class="status-indicator">
+            SANCTUARY_ACTIVE | NEURAL_CALM_PROTOCOL_V1
+        </footer>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="i18n.js"></script>
+    <script src="oracle.js"></script>
+    <script src="zen_logic.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

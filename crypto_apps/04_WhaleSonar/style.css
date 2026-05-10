@@ -1,0 +1,147 @@
+:root {
+    --bg: #03050a;
+    --sonar-green: #00ffaa;
+    --sonar-red: #ff2a7a;
+    --sonar-blue: #0088ff;
+    --glass: rgba(0, 255, 170, 0.03);
+    --border: rgba(0, 255, 170, 0.1);
+    --text: #e0e6ed;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-image: radial-gradient(circle at 50% 50%, #0a101a 0%, #03050a 100%);
+}
+
+.back-btn {
+    position: fixed; top: 20px; left: 20px; padding: 8px 20px;
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 4px; color: var(--sonar-green);
+    text-decoration: none; font-size: 0.75rem; letter-spacing: 2px;
+    backdrop-filter: blur(15px); z-index: 1000; transition: 0.3s;
+}
+
+.back-btn:hover { background: var(--sonar-green); color: #000; }
+
+.lang-selector {
+    position: fixed; top: 20px; right: 20px; z-index: 1000;
+    display: flex; gap: 5px;
+}
+
+.lang-btn {
+    background: var(--glass); border: 1px solid var(--border);
+    color: #555; padding: 6px 12px; cursor: pointer; border-radius: 4px;
+    font-size: 0.7rem; transition: 0.3s;
+}
+
+.lang-btn.active { color: #fff; border-color: var(--sonar-green); background: rgba(0, 255, 170, 0.1); }
+
+/* RADAR CORE */
+.radar-container {
+    position: relative; width: 560px; height: 560px;
+    max-width: 90vw; max-height: 90vw;
+    margin: auto; border-radius: 50%;
+    border: 1px solid var(--border);
+    background: radial-gradient(circle, rgba(0, 255, 170, 0.03) 0%, transparent 80%);
+    box-shadow: 0 0 60px rgba(0, 255, 170, 0.05);
+}
+
+.radar-grid {
+    position: absolute; width: 100%; height: 100%;
+    border-radius: 50%;
+    background-image: 
+        repeating-radial-gradient(circle, transparent, transparent 59px, var(--border) 60px),
+        linear-gradient(to right, transparent 49.9%, var(--border) 50%, transparent 50.1%),
+        linear-gradient(to bottom, transparent 49.9%, var(--border) 50%, transparent 50.1%);
+}
+
+.radar-sweep {
+    position: absolute; width: 50%; height: 50%;
+    top: 0; left: 50%;
+    background: linear-gradient(0deg, transparent, rgba(0, 255, 170, 0.15));
+    transform-origin: bottom left;
+    animation: sweep 4s linear infinite;
+    border-top-right-radius: 100%;
+}
+
+@keyframes sweep {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.whale-blip {
+    position: absolute; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--sonar-green);
+    box-shadow: 0 0 20px var(--sonar-green);
+    transform: translate(-50%, -50%);
+    opacity: 0; animation: blip 6s ease-out forwards;
+}
+
+@keyframes blip {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(2.5); }
+    10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+}
+
+.blip-info {
+    position: absolute; top: 18px; left: 18px; font-size: 0.65rem;
+    color: var(--sonar-green); font-family: monospace; white-space: nowrap;
+}
+
+/* SIDEBAR & STATS */
+.sidebar {
+    position: fixed; right: 30px; top: 100px; bottom: 30px;
+    width: 320px; background: var(--glass);
+    backdrop-filter: blur(25px); border: 1px solid var(--border);
+    border-radius: 16px; padding: 25px; display: flex; flex-direction: column; gap: 20px;
+}
+
+.stat-card {
+    background: rgba(255,255,255,0.02); border-radius: 12px; padding: 15px;
+    border-left: 4px solid var(--sonar-green);
+}
+
+.stat-label { font-size: 0.65rem; color: #666; letter-spacing: 2px; text-transform: uppercase; }
+.stat-value { font-size: 1.2rem; font-weight: 700; margin-top: 5px; font-family: monospace; }
+
+.log-container { flex-grow: 1; overflow-y: auto; padding-right: 10px; }
+.log-entry { 
+    font-size: 0.7rem; font-family: monospace; margin-bottom: 12px; 
+    padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+/* GAUGE */
+.sentiment-gauge {
+    position: fixed; left: 30px; top: 100px; width: 50px; height: 350px;
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 25px; display: flex; flex-direction: column-reverse;
+    padding: 4px; z-index: 10;
+}
+
+.gauge-fill {
+    width: 100%; border-radius: 20px; transition: height 2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 20px var(--sonar-blue);
+}
+
+/* TRAINING OVERLAY */
+.training-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    border: 1px solid var(--sonar-green); z-index: 500; pointer-events: none; display: none;
+    box-shadow: inset 0 0 100px rgba(0, 255, 170, 0.1);
+}
+
+@media (max-width: 900px) {
+    body { overflow: auto; height: auto; }
+    .radar-container { margin: 120px auto 40px; width: 320px; height: 320px; }
+    .sidebar { position: relative; width: 90%; right: auto; top: auto; bottom: auto; margin: 20px auto; }
+    .sentiment-gauge { position: absolute; left: 10px; top: 120px; height: 200px; width: 30px; }
+    header h1 { font-size: 1.2rem; letter-spacing: 5px; }
+}

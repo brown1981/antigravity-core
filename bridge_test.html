@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><title>Antigravity Bridge Test</title></head>
+<body>
+<div id="status">⏳ Connecting to Ghost Fleet...</div>
+<div id="result" style="white-space:pre-wrap;"></div>
+<script>
+(async () => {
+    const statusEl = document.getElementById('status');
+    const resultEl = document.getElementById('result');
+    try {
+        const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer YOUR_GROQ_API_KEY_HERE',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'llama-3.1-8b-instant',
+                messages: [{role: 'user', content: 'Reply with exactly: BRIDGE_TEST_SUCCESS'}]
+            })
+        });
+        const data = await resp.json();
+        if (data.choices && data.choices[0]) {
+            statusEl.textContent = '✅ CONNECTION SUCCESS';
+            resultEl.textContent = data.choices[0].message.content;
+        } else {
+            statusEl.textContent = '❌ API returned unexpected format';
+            resultEl.textContent = JSON.stringify(data, null, 2);
+        }
+    } catch (e) {
+        statusEl.textContent = '❌ CONNECTION FAILED: ' + e.message;
+        resultEl.textContent = e.toString();
+    }
+})();
+</script>
+</body>
+</html>

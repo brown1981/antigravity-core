@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactical Briefing | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="../../index.html" class="back-btn" id="lbl-back">[ RETURN_TO_NEXUS ]</a>
+    </nav>
+
+    <main class="briefing-container">
+        <!-- Header -->
+        <header class="briefing-header">
+            <div class="title-group">
+                <h1 id="lbl-title">TACTICAL BRIEFING</h1>
+                <p id="lbl-subtitle">STRATEGIC INTELLIGENCE REPORT v1.0</p>
+            </div>
+            <div class="status-badge" id="lbl-status">LIVE_FEED: ACTIVE</div>
+        </header>
+
+        <!-- Main Intelligence Grid -->
+        <div class="briefing-grid">
+            <!-- Left: Main Report -->
+            <section class="card">
+                <div class="loading-scan"></div>
+                <h2 id="lbl-intel-title">INTELLIGENCE_SUMMARY (24H)</h2>
+                <div class="intel-report" id="lbl-report">
+                    <!-- Report text injected by i18n.js -->
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <h2 id="lbl-scenario-title">SCENARIO_ANALYSIS</h2>
+                    <div class="scenario-box" id="scenario-container">
+                        <!-- Scenarios injected by script.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right: Action Plan -->
+            <aside class="card" style="border-left: 4px solid var(--gold);">
+                <h2 id="lbl-action-title">ACTION_PLAN</h2>
+                <div id="action-container">
+                    <!-- Actions injected by script.js -->
+                </div>
+
+                <!-- Strategic Memo -->
+                <div style="margin-top: 40px; padding: 20px; background: rgba(255,204,0,0.03); border: 1px solid rgba(255,204,0,0.1); border-radius: 12px; font-size: 0.75rem; color: #888;">
+                    <strong style="color:var(--gold); display:block; margin-bottom:10px;">COMMANDER'S NOTE:</strong>
+                    感情に支配されず、数値を信じよ。Layer 1 の各アプリ（01-07）から得られるシグナルを統合し、独自の判断を下すことが勝利への唯一の道である。
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="i18n.js"></script>
+    <script src="intelligence.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

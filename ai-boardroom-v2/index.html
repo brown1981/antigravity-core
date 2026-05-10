@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Strategic Boardroom</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Outfit:wght@300;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="crystalline-bg">
+    <div class="overlay"></div>
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="pulse-ring"></div>
+            <h1 class="glitch" data-text="ANTIGRAVITY">ANTIGRAVITY</h1>
+        </div>
+        <div class="system-status">
+            <span class="status-dot"></span>
+            <span class="status-text">NEURAL CORE ACTIVE</span>
+            <span class="version">V16.2</span>
+        </div>
+    </header>
+
+    <main class="boardroom-grid">
+        <!-- LEFT PANE: STRATEGIC PLANNING -->
+        <section class="pane glass-panel" id="pane-left">
+            <div class="pane-header">
+                <span class="pane-icon">◢</span>
+                <h2>STRATEGIC CORE</h2>
+                <div class="pane-badge">SECTOR_01</div>
+            </div>
+            <div class="chat-container" id="chat-left">
+                <!-- Messages for Astra and Nova will appear here -->
+            </div>
+        </section>
+
+        <!-- MIDDLE PANE: TACTICAL EXECUTION -->
+        <section class="pane glass-panel" id="pane-middle">
+            <div class="pane-header">
+                <span class="pane-icon">◈</span>
+                <h2>TACTICAL FEED</h2>
+                <div class="pane-badge">SECTOR_02</div>
+            </div>
+            <div class="chat-container" id="chat-middle">
+                <!-- Messages for Vortex and Cipher will appear here -->
+            </div>
+        </section>
+
+        <!-- RIGHT PANE: ANALYTICS & GUARD -->
+        <section class="pane glass-panel" id="pane-right">
+            <div class="pane-header">
+                <span class="pane-icon">◥</span>
+                <h2>NEURAL ANALYSIS</h2>
+                <div class="pane-badge">SECTOR_03</div>
+            </div>
+            <div class="chat-container" id="chat-right">
+                <!-- Messages for Echo and Zenith will appear here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="controls">
+        <button id="wake-up-btn" class="btn-primary">
+            <span class="btn-text">INITIALIZE AGENTS</span>
+            <span class="btn-glow"></span>
+        </button>
+        <div class="footer-stats">
+            <div class="stat-item">
+                <span class="label">ACTIVE_NODES:</span>
+                <span class="value" id="node-count">0/6</span>
+            </div>
+            <div class="stat-item">
+                <span class="label">COGNITION_SYNC:</span>
+                <span class="value" id="sync-level">0%</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

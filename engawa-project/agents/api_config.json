@@ -1,0 +1,35 @@
+{
+  "miningPool": {
+    "provider": "f2pool",
+    "accountName": "privatebrown",
+    "currency": "zec",
+    "apiKey": ""
+  },
+  "wallets": [
+    {
+      "address": "0x...",
+      "chain": "zec"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "bitFlyer",
+      "apiKey": "",
+      "apiSecret": ""
+    }
+  ],
+  "aiKeys": {
+    "openai": "YOUR_OPENAI_API_KEY_HERE",
+    "anthropic": "",
+    "google": "YOUR_GOOGLE_API_KEY_HERE",
+    "sakana": ""
+  },
+  "agentAssignments": {
+    "ceo": "openai",
+    "cfo": "openai",
+    "cto": "openai",
+    "cmo": "openai",
+    "coo": "google"
+  },
+  "walletAddress": ""
+}

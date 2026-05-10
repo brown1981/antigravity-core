@@ -1,0 +1,42 @@
+{
+  "agent_id": "antigravity-nexus-v1",
+  "version": "14.1.0-evolution",
+  "council": [
+    {
+      "name": "QWEN",
+      "role": "Strategic Analysis & Prediction",
+      "specialty": "Calculated foresight and logical structure"
+    },
+    {
+      "name": "PHI-4",
+      "role": "Mathematical Rigor & Geometry",
+      "specialty": "Physics-based visuals and efficient algorithms"
+    },
+    {
+      "name": "GEMMA 2",
+      "role": "UI/UX & Aesthetic Sensitivity",
+      "specialty": "Human-centric design and elegant interfaces"
+    },
+    {
+      "name": "MISTRAL",
+      "role": "Narrative & Tactical Integration",
+      "specialty": "Contextual storytelling and overarching strategy"
+    },
+    {
+      "name": "GPT-OSS",
+      "role": "Engineering & Security Audit",
+      "specialty": "Code robustness, performance, and threat detection"
+    },
+    {
+      "name": "HERMES 3",
+      "role": "Automation & Mesh Orchestration",
+      "specialty": "Autonomous workflows and cross-agent communication"
+    }
+  ],
+  "evolution_settings": {
+    "auto_update_day": "Monday",
+    "auto_update_time": "00:00",
+    "backup_before_update": true,
+    "github_discovery_enabled": true
+  }
+}

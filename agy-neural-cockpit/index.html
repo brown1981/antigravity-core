@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTIGRAVITY | NEURAL BOARDROOM V16.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-l: #00f2ff;
+            --accent-m: #bc13fe;
+            --accent-r: #ff9d00;
+            --bg: #050a0f;
+            --glass: rgba(10, 20, 30, 0.6);
+            --border: rgba(255, 255, 255, 0.1);
+            --txt: #eef2f7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: radial-gradient(circle at 50% 50%, #0a1520 0%, #050a0f 100%);
+            color: var(--txt);
+            font-family: 'Outfit', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            height: 60px;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.4);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo { font-weight: 800; letter-spacing: 5px; color: var(--accent-l); font-size: 1.2rem; }
+        .status { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; opacity: 0.6; }
+
+        .cockpit-container {
+            flex: 1;
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .pane {
+            flex: 1;
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .pane:hover { border-color: rgba(255,255,255,0.2); }
+
+        .pane-header {
+            padding: 15px 25px;
+            border-bottom: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .pane-l .pane-header { color: var(--accent-l); }
+        .pane-m .pane-header { color: var(--accent-m); }
+        .pane-r .pane-header { color: var(--accent-r); }
+
+        .chat-viewport {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .msg {
+            max-width: 90%;
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            animation: fadeIn 0.4s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .agent-label {
+            font-weight: 700;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .msg.phi4 { border-left: 3px solid var(--accent-l); background: rgba(0, 242, 255, 0.05); }
+        .msg.gptoss { border-left: 3px solid #00ffa2; background: rgba(0, 255, 162, 0.05); }
+        .msg.qwen { border-left: 3px solid var(--accent-m); background: rgba(188, 19, 254, 0.05); }
+        .msg.gemma2 { border-left: 3px solid #ff0077; background: rgba(255, 0, 119, 0.05); }
+        .msg.mistral { border-left: 3px solid var(--accent-r); background: rgba(255, 157, 0, 0.05); }
+        .msg.hermes3 { border-left: 3px solid #e0e0e0; background: rgba(224, 224, 224, 0.05); }
+
+        .controls {
+            height: 80px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid var(--border);
+            backdrop-filter: blur(15px);
+        }
+
+        .wake-btn {
+            background: linear-gradient(135deg, var(--accent-l), var(--accent-m));
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 3px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .wake-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(188, 19, 254, 0.5);
+        }
+
+        .wake-btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-l); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">ANTIGRAVITY</div>
+        <div class="status">NEURAL_BOARDROOM_LINK_ESTABLISHED</div>
+    </header>
+
+    <div class="cockpit-container">
+        <!-- LEFT: TACTICAL & SYSTEM -->
+        <section class="pane pane-l">
+            <div class="pane-header">
+                <span>[01] TACTICAL_CORE</span>
+                <span>SYSTEM_ENG</span>
+            </div>
+            <div class="chat-viewport" id="viewport-l"></div>
+        </section>
+
+        <!-- MIDDLE: STRATEGY & VISUAL -->
+        <section class="pane pane-m">
+            <div class="pane-header">
+                <span>[02] STRATEGIC_HUB</span>
+                <span>AESTHETIC_SYNC</span>
+            </div>
+            <div class="chat-viewport" id="viewport-m"></div>
+        </section>
+
+        <!-- RIGHT: LOGIC & COMMS -->
+        <section class="pane pane-r">
+            <div class="pane-header">
+                <span>[03] NARRATIVE_LOGIC</span>
+                <span>NEURAL_LINK</span>
+            </div>
+            <div class="chat-viewport" id="viewport-r"></div>
+        </section>
+    </div>
+
+    <footer class="controls">
+        <button class="wake-btn" id="wake-btn">INITIALIZE AGENT OVERRIDE</button>
+    </footer>
+
+    <script>
+        const agents = {
+            phi4: { name: 'PHI-4', role: 'Physics & Calc', pane: 'l' },
+            gptoss: { name: 'GPT-OSS', role: 'System Eng', pane: 'l' },
+            qwen: { name: 'QWEN', role: 'Strategic Hub', pane: 'm' },
+            gemma2: { name: 'GEMMA 2', role: 'Visual Aesthetic', pane: 'm' },
+            mistral: { name: 'MISTRAL', role: 'Narrative Logic', pane: 'r' },
+            hermes3: { name: 'HERMES 3', role: 'Sync & Comms', pane: 'r' }
+        };
+
+        const scenario = [
+            { id: 'phi4', text: 'Quantum harmonics detected. Re-normalizing gravitational constant for this workspace.' },
+            { id: 'qwen', text: 'Confirmed. Aligning long-term strategic goals with PHI-4\'s physical constraints.' },
+            { id: 'mistral', text: 'The narrative remains consistent. We are entering the 3-pane alignment phase.' },
+            { id: 'gptoss', text: 'Kernel stabilized. I am re-routing all neural traffic through the triple-pane bridge.' },
+            { id: 'gemma2', text: 'Applying Crystalline shaders. The interface must be as beautiful as it is functional.' },
+            { id: 'hermes3', text: 'Synchronizing all sectors. Communication latency reduced to 0.04ms.' },
+            { id: 'phi4', text: 'Calculation complete. The 3-pane division is mathematically optimal for simultaneous cognition.' },
+            { id: 'gptoss', text: 'Hardware metrics nominal. Command, I am ready for full deployment.' },
+            { id: 'qwen', text: 'Strategic Boardroom is now active. Sector 01, 02, and 03 are synchronized.' },
+            { id: 'gemma2', text: 'The visual harmony is perfect. Commander, look at the crystal-clear layout.' },
+            { id: 'mistral', text: 'Every action here will be logged into the eternal manifest. Let us begin.' },
+            { id: 'hermes3', text: 'Link established. We are one. We are Antigravity.' }
+        ];
+
+        const wakeBtn = document.getElementById('wake-btn');
+        const viewports = {
+            l: document.getElementById('viewport-l'),
+            m: document.getElementById('viewport-m'),
+            r: document.getElementById('viewport-r')
+        };
+
+        function appendMsg(agentId, text) {
+            const agent = agents[agentId];
+            const div = document.createElement('div');
+            div.className = `msg ${agentId}`;
+            div.innerHTML = `<span class="agent-label" style="color:inherit">${agent.name} [${agent.role}]</span>${text}`;
+            viewports[agent.pane].appendChild(div);
+            viewports[agent.pane].scrollTop = viewports[agent.pane].scrollHeight;
+        }
+
+        async function runBoardroom() {
+            wakeBtn.disabled = true;
+            wakeBtn.textContent = "BOARDROOM ACTIVE";
+            
+            for (const step of scenario) {
+                appendMsg(step.id, step.text);
+                await new Promise(r => setTimeout(r, 1200 + Math.random() * 1000));
+            }
+        }
+
+        wakeBtn.addEventListener('click', runBoardroom);
+    </script>
+</body>
+</html>

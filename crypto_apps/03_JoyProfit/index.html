@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joy Profit | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- EPIC OVERLAY (Cinematic) -->
+    <div id="epic-overlay" class="epic-overlay">
+        <div class="epic-content">
+            <div class="epic-subtitle" id="epic-sub">OBJECTIVE SECURED</div>
+            <h1 class="epic-title" id="epic-goal-name">ASSET_NAME</h1>
+            <div id="epic-desc" style="color:#888; letter-spacing: 5px; margin-bottom: 50px;">
+                The asset is now within your grasp.
+            </div>
+            <button class="add-btn" id="epic-btn" onclick="closeEpic()" style="padding: 15px 40px; font-size: 1rem;">
+                AUTHORIZE
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="../../index.html" class="back-btn" id="lbl-back">← Nexus Portal</a>
+        <div class="lang-selector">
+            <button class="lang-btn active" id="btn-ja" onclick="setLang('ja')">JP</button>
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Goal Panel -->
+        <section class="goal-panel">
+            <h2 id="lbl-title" style="margin-bottom: 30px; letter-spacing: 5px; font-weight: 200;">JOY PROFIT TRACKER</h2>
+            
+            <div class="goal-inputs">
+                <div class="input-group">
+                    <label id="lbl-target">Target Item</label>
+                    <input type="text" id="goal-name">
+                </div>
+                <div class="input-group">
+                    <label id="lbl-price">Target Price ($)</label>
+                    <input type="number" id="goal-price">
+                </div>
+            </div>
+
+            <div class="progress-wrapper">
+                <div class="progress-fill" id="progress-bar"></div>
+                <div class="progress-text" id="progress-text">0%</div>
+            </div>
+
+            <div class="tax-shield">
+                <span id="lbl-tax">TAX SHIELD MODE</span>
+                <label class="switch">
+                    <input type="checkbox" id="tax-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Portfolio -->
+        <section>
+            <div class="portfolio-header">
+                <span id="lbl-port" style="letter-spacing: 2px; opacity: 0.7;">PORTFOLIO</span>
+                <button class="add-btn" id="btn-add">+ ADD ASSET</button>
+            </div>
+
+            <div id="portfolio-container">
+                <!-- Asset Rows injected by script.js -->
+            </div>
+
+            <button class="calc-btn" id="btn-calc">🔄 RECALCULATE PRICES</button>
+            
+            <div class="total-summary">
+                <span id="lbl-total" style="font-size: 0.8rem; vertical-align: middle; opacity: 0.5;">PROFIT:</span>
+                <span id="total-profit-display">$0.00</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="simulation.js"></script>
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

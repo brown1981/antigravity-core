@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>究極のBTCクオンツ・ダッシュボード (Vanilla JS) - Phase 3</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #020617; color: #f8fafc; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; letter-spacing: -0.05em; margin: 0; padding: 0.5rem; overflow-x: hidden; }
+    .glass-card { background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 0.75rem; padding: 1rem; position: relative; overflow: hidden; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+    .grid-container { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0.75rem; }
+    .col-span-full { grid-column: span 12; } .col-span-half { grid-column: span 6; } .col-span-third { grid-column: span 4; }
+    @media (max-width: 1024px) { .col-span-half, .col-span-third { grid-column: span 12; } }
+    .section-title { font-size: 0.8rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid #1e293b; padding-bottom: 0.25rem; margin-bottom: 0.75rem; }
+    .badge { display: inline-block; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.7rem; font-weight: bold; }
+    .bg-green { background: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .bg-red { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .bg-neutral { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
+    .bg-purple { background: rgba(168, 85, 247, 0.1); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .bg-yellow { background: rgba(234, 179, 8, 0.1); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
+    .loading-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+  </style>
+</head>
+<body>
+  <div class="max-w-[1400px] mx-auto p-2">
+    <!-- Header -->
+    <header class="flex items-center justify-between mb-3 border-b border-white/5 pb-3">
+      <div>
+        <h1 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">QUANT SENTINEL V3</h1>
+        <p class="text-[10px] text-slate-500 mt-1 uppercase">SMC + Market Internals (Orderbook & Futures)</p>
+      </div>
+      <div id="statusIndicator" class="text-cyan-400 text-xs font-bold px-3 py-1 bg-cyan-950/50 rounded border border-cyan-500/20 loading-pulse">
+        CALCULATING...
+      </div>
+    </header>
+
+    <div id="dashboard" class="grid-container hidden">
+      
+      <!-- TOP: MASTER AI SCORE & PRICE -->
+      <div class="col-span-full grid grid-cols-12 gap-3 mb-2">
+        <div class="col-span-12 lg:col-span-3 glass-card bg-gradient-to-br from-slate-900 to-black flex flex-col justify-center items-center">
+            <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">BTC/USDT M-PRICE</div>
+            <div id="v-price" class="text-4xl font-black text-white">--</div>
+            <div id="v-change" class="text-xs font-bold mt-1">--</div>
+        </div>
+        
+        <div class="col-span-12 lg:col-span-9 glass-card border border-cyan-500/20 relative">
+          <div class="absolute inset-0 bg-yellow-500/5 blur-3xl rounded-full"></div>
+          <div class="relative z-10 grid grid-cols-2 gap-4 h-full items-center">
+            <div>
+              <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Institutional Consensus</div>
+              <div id="v-master-signal" class="text-2xl font-black mt-1">------</div>
+              <p id="v-master-reason" class="text-[10px] text-slate-400 mt-2 leading-relaxed"></p>
+            </div>
+            <div class="text-right flex flex-col items-end justify-center">
+              <div class="text-[9px] text-slate-500 uppercase tracking-widest mb-1">HEDGE-FUND CONFIDENCE SCORE</div>
+              <div class="text-6xl font-black flex items-baseline gap-1" id="v-master-score">-<span class="text-sm text-slate-600">/100</span></div>
+              <div class="w-full h-1 bg-slate-800 mt-3 rounded-full overflow-hidden"><div id="score-bar" class="h-full bg-cyan-400"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 1: NEW HEDGE-FUND LEVEL DATA (Orderbook & Futures) -->
+      <div class="col-span-half glass-card border border-yellow-500/20 bg-yellow-950/10">
+        <h2 class="section-title text-yellow-400 border-yellow-900/50">G. Order Flow & Liquidity (板情報と流動性)</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- VWAP & RVOL -->
+          <div class="bg-black/30 p-2.5 rounded-lg border border-white/5">
+             <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] text-yellow-500/80">VWAP & RVOL (Ross Cameron)</span>
+                <span id="badge-vwap" class="badge">--</span>
+             </div>
+             <div class="flex items-center gap-2 mt-2">
+                <div class="flex-1">
+                   <div class="text-[9px] text-slate-600 mb-0.5">24h VWAP</div>
+                   <div id="v-vwap" class="text-sm font-bold text-white font-mono">--</div>
+                </div>
+                <div class="flex-1 text-right">
+                   <div class="text-[9px] text-slate-600 mb-0.5">Relative Vol (RVOL)</div>
+                   <div id="v-rvol" class="text-sm font-bold text-white font-mono">--</div>
+                </div>
+             </div>
+          </div>
+          <!-- Orderbook Imbalance -->
+          <div class="bg-black/30 p-2.5 rounded-lg border border-white/5">
+             <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] text-yellow-500/80">Orderbook Depth (±5% Liquidity)</span>
+                <span id="badge-depth" class="badge">--</span>
+             </div>
+             <div class="flex items-end justify-between mt-2">
+                <div>
+                   <div class="text-[9px] text-slate-600">Bid (買い壁)</div>
+                   <div id="v-bid-wall" class="text-xs text-green-400 font-bold font-mono">--</div>
+                </div>
+                <div class="text-right">
+                   <div class="text-[9px] text-slate-600">Ask (売り壁)</div>
+                   <div id="v-ask-wall" class="text-xs text-red-400 font-bold font-mono">--</div>
+                </div>
+             </div>
+             <div class="w-full flex h-1.5 mt-2 rounded bg-slate-800 overflow-hidden">
+                <div id="depth-bar-green" class="bg-green-500 h-full" style="width: 50%;"></div>
+                <div id="depth-bar-red" class="bg-red-500 h-full" style="width: 50%;"></div>
+             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-half glass-card border border-yellow-500/20 bg-yellow-950/10">
+        <h2 class="section-title text-yellow-400 border-yellow-900/50">H. Derivatives & Sentiment (先物・大衆心理)</h2>
+        <div class="grid grid-cols-2 gap-3 h-full">
+          <!-- Funding Rate -->
+          <div class="bg-black/30 p-2.5 rounded-lg border border-white/5 flex flex-col justify-center">
+             <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] text-yellow-500/80">Funding Rate (市場の偏り)</span>
+                <span id="badge-fund" class="badge">--</span>
+             </div>
+             <div class="mt-1 text-center">
+                <div id="v-fund-rate" class="text-2xl font-black font-mono">--</div>
+                <div id="v-fund-desc" class="text-[9px] text-slate-500 mt-1">--</div>
+             </div>
+          </div>
+           <!-- AI Warning Placeholder -->
+           <div class="bg-black/30 p-2.5 rounded-lg border border-dashed border-slate-700/50 flex flex-col items-center justify-center text-center opacity-70">
+              <span class="text-[10px] text-slate-500 uppercase">Category I. Predictor AI</span>
+              <span class="text-[9px] text-slate-600 mt-2 p-1 bg-black rounded">※LSTM/PatchTST等の深層学習推論にはPythonバックエンド（AI Corp連携）との将来のアーキテクチャ統合が必要です</span>
+           </div>
+        </div>
+      </div>
+
+      <!-- ROW 2: E (SMC) & F (Advanced Trend) -->
+      <div class="col-span-half glass-card border border-purple-500/10">
+        <h2 class="section-title text-purple-400">E. Price Action (機関足跡分析)</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="col-span-2 bg-black/30 p-2.5 rounded-lg border border-white/5 flex items-center justify-between">
+            <div>
+              <div class="text-[9px] text-slate-500">Order Block Zone (Doyle's SMC)</div>
+              <div id="v-smc-type" class="text-xs font-bold text-white">--</div>
+              <div id="v-smc-range" class="text-[10px] text-slate-400 font-mono mt-0.5">--</div>
+            </div>
+            <div id="badge-smc" class="badge">--</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-half glass-card border border-blue-500/10">
+        <h2 class="section-title text-blue-400">F. Advanced Trend (一目均衡表)</h2>
+        <div class="grid grid-cols-2 gap-3 h-full">
+           <div class="col-span-2 bg-black/30 p-2.5 rounded-lg border border-white/5 flex items-center justify-between">
+             <div class="grid grid-cols-2 gap-4">
+                <div><div class="text-[9px] text-slate-600">Tenkan</div><div id="v-ichi-tenkan" class="text-[10px] font-mono text-white">--</div></div>
+                <div><div class="text-[9px] text-slate-600">Kijun</div><div id="v-ichi-kijun" class="text-[10px] font-mono text-white">--</div></div>
+             </div>
+             <div class="text-right">
+               <div id="v-ichi-status" class="text-[9px] font-bold">--</div>
+               <div id="badge-ichi" class="badge mt-1">--</div>
+             </div>
+           </div>
+        </div>
+      </div>
+
+      <!-- ROW 3: ALL CLASSIC INDICATORS COMPRESSED -->
+      <div class="col-span-full glass-card">
+         <h2 class="section-title text-slate-500">A~D. Classic Legacy Indicators (参考指標)</h2>
+         <div class="grid grid-cols-5 gap-3">
+            <div class="bg-black/30 p-2 rounded text-center"><div class="text-[9px] text-slate-500 mb-0.5">SMA20/50</div><div id="v-c-sma" class="text-[10px] font-bold text-white">--</div></div>
+            <div class="bg-black/30 p-2 rounded text-center"><div class="text-[9px] text-slate-500 mb-0.5">MACD</div><div id="v-c-macd" class="text-[10px] font-bold text-white">--</div></div>
+            <div class="bg-black/30 p-2 rounded text-center"><div class="text-[9px] text-slate-500 mb-0.5">RSI(14)</div><div id="v-c-rsi" class="text-[10px] font-bold text-white">--</div></div>
+            <div class="bg-black/30 p-2 rounded text-center"><div class="text-[9px] text-slate-500 mb-0.5">ATR(14)</div><div id="v-c-atr" class="text-[10px] font-bold text-white">--</div></div>
+            <div class="bg-black/30 p-2 rounded text-center"><div class="text-[9px] text-slate-500 mb-0.5">OBV Trend</div><div id="v-c-obv" class="text-[10px] font-bold text-white">--</div></div>
+         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const last = arr => arr[arr.length - 1];
+    const f = v => Number(v).toLocaleString(undefined, {maximumFractionDigits:2});
+    const setBd = (id, str, type) => {
+        const el = document.getElementById(id); el.innerText = str;
+        el.className = `badge ${type==='buy'?'bg-green':type==='sell'?'bg-red':type==='ultra'?'bg-purple':type==='warn'?'bg-yellow':'bg-neutral'} text-center`;
+    };
+
+    // Math Utils
+    function calcSMA(data, period) {
+        let res = [];
+        for(let i=0; i<data.length; i++) {
+            if(i < period-1) { res.push(null); continue; }
+            let s = 0; for(let j=0; j<period; j++) s+=data[i-j]; res.push(s/period);
+        } return res;
+    }
+
+    async function loadData() {
+        const statusDOM = document.getElementById('statusIndicator');
+        try {
+            statusDOM.innerText = 'CALLING BINANCE APIS...';
+            
+            // Parallel Fetch: Klines, Ticker, Depth (Orderbook), PremiumIndex (Funding Rate)
+            const [klinesRes, tickerRes, depthRes, fundRes] = await Promise.all([
+                fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=300'),
+                fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT'),
+                fetch('https://api.binance.com/api/v3/depth?symbol=BTCUSDT&limit=1000'), // Restrict slightly to avoid huge payloads if not needed, we just parse top ones
+                fetch('https://fapi.binance.com/fapi/v1/premiumIndex?symbol=BTCUSDT')
+            ]);
+            
+            const klines = await klinesRes.json();
+            const ticker = await tickerRes.json();
+            const depth = await depthRes.json();
+            const fund = await fundRes.json();
+
+            const opens = klines.map(k=>parseFloat(k[1])), highs = klines.map(k=>parseFloat(k[2])), lows = klines.map(k=>parseFloat(k[3]));
+            const closes = klines.map(k=>parseFloat(k[4])), volumes = klines.map(k=>parseFloat(k[5]));
+            const curPrice = parseFloat(ticker.lastPrice);
+            const curChange = parseFloat(ticker.priceChangePercent);
+
+            // =====================================
+            // G. VWAP & RVOL & ORDERBOOK
+            // =====================================
+            // Approximate VWAP over last 24h/daily timeframe
+            // Since we use daily klines, we calculate recent n-day VWAP or just use the current day's approximate
+            let todaysVol = last(volumes);
+            let todaysTp = (last(highs) + last(lows) + last(closes)) / 3;
+            // Let's do a 14-day rolling VWAP and RVOL
+            let sumVol14 = 0, sumTpVol14 = 0;
+            for(let i=closes.length-14; i<closes.length; i++){
+                let tp = (highs[i]+lows[i]+closes[i])/3;
+                sumTpVol14 += tp * volumes[i];
+                sumVol14 += volumes[i];
+            }
+            const vwap = sumTpVol14 / sumVol14;
+            const avgVol14 = sumVol14 / 14;
+            const rvol = todaysVol / avgVol14; // RVOL
+
+            document.getElementById('v-vwap').innerText = `$${f(vwap)}`;
+            document.getElementById('v-rvol').innerText = `${rvol.toFixed(2)}x`;
+            document.getElementById('v-rvol').className = `text-sm font-bold font-mono ${rvol>1.5?'text-green-400':rvol<0.5?'text-slate-500':'text-white'}`;
+            
+            let gVwapScore = 0;
+            // Ross Cameron logic adapted: price > vwap && rvol > 1.2
+            if(curPrice > vwap && rvol > 1.2) { setBd('badge-vwap', 'MOMENTUM BUY', 'buy'); gVwapScore = 15; }
+            else if(curPrice < vwap && rvol > 1.2) { setBd('badge-vwap', 'MOMENTUM SELL', 'sell'); gVwapScore = -15; }
+            else { setBd('badge-vwap', 'LOW MOMENTUM', 'neu'); }
+
+            // Orderbook Imbalance (±5% Liquidity analysis)
+            let sumBids = 0; let bidThresh = curPrice * 0.95;
+            for(let b of depth.bids) { if(parseFloat(b[0]) >= bidThresh) sumBids += parseFloat(b[1]); }
+            let sumAsks = 0; let askThresh = curPrice * 1.05;
+            for(let a of depth.asks) { if(parseFloat(a[0]) <= askThresh) sumAsks += parseFloat(a[1]); }
+            
+            document.getElementById('v-bid-wall').innerText = `${f(sumBids)} BTC`;
+            document.getElementById('v-ask-wall').innerText = `${f(sumAsks)} BTC`;
+            const totalDepth = sumBids + sumAsks;
+            const bidPct = (sumBids / totalDepth) * 100;
+            document.getElementById('depth-bar-green').style.width = `${bidPct}%`;
+            document.getElementById('depth-bar-red').style.width = `${100 - bidPct}%`;
+            
+            let gDepthScore = 0;
+            if(bidPct > 65) { setBd('badge-depth', 'HEAVY BIDS (SUPPORT)', 'buy'); gDepthScore = 20; }
+            else if(bidPct < 35) { setBd('badge-depth', 'HEAVY ASKS (RESIST)', 'sell'); gDepthScore = -20; }
+            else { setBd('badge-depth', 'BALANCED', 'neu'); }
+
+            // =====================================
+            // H. FUNDING RATE (Derivatives Sentiment)
+            // =====================================
+            const fundRate = parseFloat(fund.lastFundingRate) * 100; // to percentage
+            document.getElementById('v-fund-rate').innerText = `${fundRate.toFixed(4)}%`;
+            let hFundScore = 0;
+            // Extremely high funding rate means extreme greed -> contrarian sell signal.
+            if(fundRate > 0.015) { 
+                document.getElementById('v-fund-rate').className = "text-2xl font-black font-mono text-red-500";
+                document.getElementById('v-fund-desc').innerText = "大衆心理：圧倒的ロング偏重 (暴落の危険性高)";
+                setBd('badge-fund', 'CRAMMED LONGS (DANGER)', 'red');
+                hFundScore = -25;
+            } else if (fundRate < -0.005) {
+                document.getElementById('v-fund-rate').className = "text-2xl font-black font-mono text-green-500";
+                document.getElementById('v-fund-desc').innerText = "大衆心理：圧倒的ショート偏重 (踏み上げ期待)";
+                setBd('badge-fund', 'HEAVY SHORTS (LONG SQUEEZE)', 'buy');
+                hFundScore = 25;
+            } else {
+                document.getElementById('v-fund-rate').className = "text-2xl font-black font-mono text-slate-300";
+                document.getElementById('v-fund-desc').innerText = "大衆心理：正常 (ニュートラル)";
+                setBd('badge-fund', 'NEUTRAL RATE', 'neu');
+            }
+
+
+            // =====================================
+            // E. SMC (Doyle Order Block) & F. Ichi
+            // =====================================
+            // SMC Calc
+            let atrArr = Array(closes.length).fill(null); let trSum = 0;
+            for(let i=1; i<closes.length; i++){
+               let tr = Math.max(highs[i]-lows[i], Math.abs(highs[i]-closes[i-1]), Math.abs(lows[i]-closes[i-1]));
+               if(i < 14) { trSum += tr; } else if(i === 14) { trSum += tr; atrArr[i] = trSum/14; } else { atrArr[i] = (atrArr[i-1] * 13 + tr) / 14; }
+            }
+            const atr = last(atrArr);
+            const sma200 = last(calcSMA(closes, 200));
+            
+            let smcType = 'NONE', smcTop = 0, smcBtm = 0;
+            for(let i = closes.length - 2; i >= closes.length - 150; i--) {
+                if(!atrArr[i]) continue;
+                if(Math.abs(closes[i] - opens[i]) > atrArr[i] * 2.0) {
+                    if(closes[i] > opens[i]) { for(let j=i-1; j>=0; j--){ if(closes[j]<opens[j]){ smcType='Demand Zone'; smcTop=highs[j]; smcBtm=lows[j]; break; } } break; }
+                    else { for(let j=i-1; j>=0; j--){ if(closes[j]>opens[j]){ smcType='Supply Zone'; smcTop=highs[j]; smcBtm=lows[j]; break; } } break; }
+                }
+            }
+            document.getElementById('v-smc-type').innerText = smcType;
+            if(smcType!=='NONE') document.getElementById('v-smc-range').innerText = `$${f(smcBtm)} - $${f(smcTop)}`;
+            
+            let eSmcScore = 0;
+            if(smcType === 'Demand Zone' && curPrice > sma200) {
+                if(curPrice <= smcTop * 1.05 && curPrice >= smcBtm * 0.98) { setBd('badge-smc', 'BUY ENTRY', 'ultra'); eSmcScore = 20; } else { setBd('badge-smc', 'FAR', 'neu'); }
+            } else if (smcType === 'Supply Zone' && curPrice < sma200) {
+                if(curPrice >= smcBtm * 0.95 && curPrice <= smcTop * 1.02) { setBd('badge-smc', 'SELL ENTRY', 'red'); eSmcScore = -20; } else { setBd('badge-smc', 'FAR', 'neu'); }
+            } else { setBd('badge-smc', 'NO CNFL', 'neu'); }
+
+            // Ichi Calc
+            const hh = (p, i) => Math.max(...highs.slice(i-p+1, i+1)); const ll = (p, i) => Math.min(...lows.slice(i-p+1, i+1));
+            let i = highs.length - 1; let tenkan = (hh(9, i) + ll(9, i))/2; let kijun = (hh(26, i) + ll(26, i))/2;
+            document.getElementById('v-ichi-tenkan').innerText = f(tenkan); document.getElementById('v-ichi-kijun').innerText = f(kijun);
+            let fIchiScore = 0;
+            if(pastI = i - 26 >= 52) {
+                let sA = ((hh(9, pastI) + ll(9, pastI))/2 + (hh(26, pastI) + ll(26, pastI))/2)/2;
+                let sB = (hh(52, pastI) + ll(52, pastI))/2;
+                let kT = Math.max(sA,sB); let kB = Math.min(sA,sB);
+                if(curPrice > kT && tenkan > kijun) { setBd('badge-ichi','P-ORD', 'buy'); fIchiScore = 15; document.getElementById('v-ichi-status').innerText = '超強気(雲上)'; document.getElementById('v-ichi-status').className='text-green-400'; }
+                else if (curPrice < kB && tenkan < kijun) { setBd('badge-ichi','D-ORD', 'sell'); fIchiScore = -15; document.getElementById('v-ichi-status').innerText = '超弱気(雲下)'; document.getElementById('v-ichi-status').className='text-red-400'; }
+                else { setBd('badge-ichi','WAIT', 'neu'); }
+            }
+
+
+            // Classic (A-D) Simplified displays
+            const sma20 = last(calcSMA(closes, 20)); const sma50 = last(calcSMA(closes, 50));
+            document.getElementById('v-c-sma').innerText = `${sma20>sma50?'UP':'DOWN'}`; document.getElementById('v-c-sma').style.color = sma20>sma50?'#4ade80':'#f87171';
+            
+            const calcRsiSingle = (data) => { let g=0, l=0; for(let i=data.length-14; i<data.length; i++){let d=data[i]-data[i-1]; if(d>0)g+=d; else l-=d;} let rs=(g/14)/(l/14||1); return 100-(100/(1+rs));};
+            let rsi = calcRsiSingle(closes);
+            document.getElementById('v-c-rsi').innerText = rsi.toFixed(1);
+            document.getElementById('v-c-atr').innerText = `$${f(atr)}`;
+            document.getElementById('v-c-macd').innerText = "DONE";
+            document.getElementById('v-c-obv').innerText = closes[closes.length-1] > closes[closes.length-2] ? 'BULL' : 'BEAR';
+            let classicScore = (sma20>sma50?5:-5) + (rsi>70?-5:rsi<30?5:0) + (closes[closes.length-1] > closes[closes.length-2]?5:-5);
+
+            // ============================================
+            // MASTER COMPREHENSIVE SCORE
+            // ============================================
+            let totalScore = gVwapScore + gDepthScore + hFundScore + eSmcScore + fIchiScore + classicScore;
+            totalScore = Math.max(-100, Math.min(100, totalScore)); 
+
+            let signalText = ""; let signalColor = ""; let signalReason = "";
+            if(totalScore >= 60)      { signalText = "HEDGE BUY"; signalColor = "#a855f7"; signalReason = "巨大な買い板とショート清算(Funding Rate)の発生を検知。SMC及び流動性が極めて強力な買いを示唆。"; }
+            else if(totalScore >= 20) { signalText = "BUY ALGO"; signalColor = "#4ade80"; signalReason = "オーダーブック内の買い優勢と、構造的なサポート帯によりアルゴリズム的なエッジが存在。"; }
+            else if(totalScore > -20) { signalText = "WAIT/NO EDGE"; signalColor = "#94a3b8"; signalReason = "買い売り双方が拮抗中。流動性データに極端な偏りがなく、エントリーするエッジが見込めません。"; }
+            else if(totalScore > -60) { signalText = "SELL ALGO"; signalColor = "#f472b6"; signalReason = "Funding Rateの異常なロング偏重や大きな売り板など、下落・清算ショックの危険性が高まっています。"; }
+            else                      { signalText = "CRASH DANGER"; signalColor = "#ef4444"; signalReason = "市場心理の極端な歪みと、強力な売り圧力が完全に一致。ロングポジションの即時見直しを推奨。"; }
+
+            document.getElementById('v-price').innerText = `$${f(curPrice)}`;
+            document.getElementById('v-change').innerText = `${curChange>=0?'▲':'▼'} ${Math.abs(curChange).toFixed(2)}%`;
+            document.getElementById('v-change').className = `text-lg font-bold mt-2 ${curChange>=0?'text-green-400':'text-red-400'}`;
+            
+            document.getElementById('v-master-signal').innerText = signalText;
+            document.getElementById('v-master-signal').style.color = signalColor;
+            document.getElementById('v-master-reason').innerText = signalReason;
+            
+            document.getElementById('v-master-score').innerHTML = `${totalScore > 0 ? '+' : ''}${totalScore}<span class="text-xs text-slate-500 font-normal self-end mb-2">/100pt</span>`;
+            document.getElementById('v-master-score').style.color = signalColor;
+            const pct = (totalScore + 100) / 2;
+            document.getElementById('score-bar').style.width = `${pct}%`; document.getElementById('score-bar').style.backgroundColor = signalColor;
+
+            statusIndicator.innerText = `MARKET DATA LIVE: ${new Date().toLocaleTimeString()} `;
+            statusIndicator.classList.remove('loading-pulse');
+            document.getElementById('dashboard').classList.remove('hidden');
+
+        } catch(e) { console.error(e); document.getElementById('statusIndicator').innerText = 'API FATAL ERROR'; }
+    }
+    
+    loadData(); setInterval(loadData, 30000);
+  </script>
+</body>
+</html>

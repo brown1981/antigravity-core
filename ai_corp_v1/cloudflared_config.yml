@@ -1,0 +1,7 @@
+tunnel: 148fa62c-0751-4db8-883e-fc205a54b455
+credentials-file: /Users/ooshirokazuki2/.cloudflared/148fa62c-0751-4db8-883e-fc205a54b455.json
+
+ingress:
+  - hostname: ai-corp.engawacycle.com
+    service: http://localhost:8501
+  - service: http_status:404

@@ -1,0 +1,425 @@
+:root {
+  /* Material 3 Customizations (overriding default M3 variables) */
+  --md-sys-color-primary: #00e5ff;
+  --md-sys-color-on-primary: #000000;
+  --md-sys-color-surface: rgba(20, 24, 36, 0.6);
+  --md-sys-color-on-surface: #e0e0e0;
+  
+  /* Antigravity Premium Aesthetic Tokens */
+  --bg-dark: #0a0c10;
+  --glass-bg: rgba(20, 24, 36, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  /* AI Persona Colors */
+  --color-ceo: #00e5ff; /* Neon Cyan */
+  --color-sec: #ff3366; /* Neon Pink/Red */
+  --color-dev: #b388ff; /* Neon Purple */
+  --color-pr:  #00e676; /* Neon Green */
+  --color-rev: #ffb300; /* Neon Amber */
+  --color-cur: #2979ff; /* Royal Blue */
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: white;
+  overflow: hidden; /* Prevent body scroll, handle inside columns */
+}
+
+/* 1. Dynamic Background Animation (Premium Feel) */
+.ambient-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+}
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.4;
+  animation: float 20s infinite ease-in-out alternate;
+}
+.orb-1 {
+  top: -10%; left: -10%;
+  width: 50vw; height: 50vw;
+  background: radial-gradient(circle, rgba(0,229,255,0.15) 0%, rgba(0,0,0,0) 70%);
+}
+.orb-2 {
+  bottom: -20%; right: -10%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(179,136,255,0.15) 0%, rgba(0,0,0,0) 70%);
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(5%, 10%) scale(1.1); }
+}
+
+/* 2. Layout Structure */
+.app-container {
+  display: flex;
+  height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+  gap: 16px;
+}
+
+/* 3. Glassmorphism Utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: var(--glass-shadow);
+}
+
+/* 4. Sidebar (Left Panel) */
+.sidebar {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  flex-shrink: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.brand-icon {
+  color: var(--md-sys-color-primary);
+  font-size: 28px;
+  text-shadow: 0 0 10px var(--md-sys-color-primary);
+}
+.brand-text {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.agent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+}
+.agent-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+  border-radius: 16px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+.agent-item:hover {
+  background: rgba(255,255,255,0.05);
+  transform: translateX(4px); /* Micro-animation */
+}
+
+/* Glowing Avatar Rings */
+.avatar-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  padding: 2px;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-clip: padding-box;
+  position: relative;
+}
+.avatar-ring::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border-radius: 50%;
+  z-index: -1;
+}
+.color-ceo::before { background: var(--color-ceo); box-shadow: 0 0 12px var(--color-ceo); }
+.color-sec::before { background: var(--color-sec); box-shadow: 0 0 12px var(--color-sec); }
+.color-dev::before { background: var(--color-dev); box-shadow: 0 0 12px var(--color-dev); }
+.color-pr::before { background: var(--color-pr); box-shadow: 0 0 12px var(--color-pr); }
+.color-rev::before { background: var(--color-rev); box-shadow: 0 0 12px var(--color-rev); }
+.color-cur::before { background: var(--color-cur); box-shadow: 0 0 12px var(--color-cur); }
+
+.avatar-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #1a1f2e; /* Base background for bots */
+}
+.agent-name {
+  font-weight: 500;
+  font-size: 14px;
+  color: #c9d1d9;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+}
+md-filled-button {
+  width: 100%;
+  --md-filled-button-container-shape: 16px;
+  --md-sys-color-primary: var(--color-ceo);
+}
+
+/* 5. Kanban Board Layout */
+.kanban-board {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: 20px;
+}
+.header-titles h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+.header-titles p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #8b949e;
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Kanban Columns */
+.columns-container {
+  display: flex;
+  gap: 16px;
+  flex-grow: 1;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.kanban-column {
+  flex: 1;
+  min-width: 150px; /* Allows columns to shrink and fit on smaller screens */
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 12, 16, 0.4);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 16px;
+}
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.column-header h2 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin: 0;
+  color: #8b949e;
+}
+.task-count {
+  background: rgba(255,255,255,0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Typography Glows for Columns */
+.text-glow-blue { color: var(--color-ceo) !important; text-shadow: 0 0 8px rgba(0,229,255,0.5); }
+.text-glow-yellow { color: var(--color-rev) !important; text-shadow: 0 0 8px rgba(255,179,0,0.5); }
+.text-glow-green { color: var(--color-pr) !important; text-shadow: 0 0 8px rgba(0,230,118,0.5); }
+
+.task-list {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 4px; /* Space for scrollbar */
+}
+
+/* 6. Task Card (Material Elevation + Glass) */
+.task-card {
+  position: relative;
+  background: rgba(30, 35, 50, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden; /* For md-ripple */
+}
+.task-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  border-color: rgba(255,255,255,0.2);
+}
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.task-id {
+  font-size: 11px;
+  color: #8b949e;
+  font-family: monospace;
+  background: rgba(0,0,0,0.3);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.task-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+.task-result-preview {
+  background: rgba(0, 230, 118, 0.05);
+  border: 1px solid rgba(0, 230, 118, 0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.task-result-preview p {
+  margin: 0;
+  font-size: 12px;
+  color: #c9d1d9;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+.task-agent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.task-agent img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: #1a1f2e;
+}
+.task-agent span {
+  font-size: 12px;
+  color: #c9d1d9;
+  font-weight: 500;
+}
+.task-depth {
+  font-size: 11px;
+  background: rgba(255,255,255,0.1);
+  padding: 2px 8px;
+  border-radius: 6px;
+  color: #8b949e;
+}
+
+/* Custom Scrollbar for a sleek look */
+::-webkit-scrollbar { width: 6px; height: 6px;}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* Task Modal Styles */
+dialog {
+  border: none;
+  color: white;
+  padding: 32px;
+  width: 90%;
+  max-width: 500px;
+  background: rgba(20, 24, 36, 0.85);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.modal-header h2 { margin: 0; font-size: 20px; color: var(--color-ceo); }
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-group label { font-size: 13px; font-weight: 600; color: #8b949e; }
+.form-group input, .form-group select, .form-group textarea {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-ceo);
+  box-shadow: 0 0 8px rgba(0,229,255,0.2);
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+.btn-cancel {
+  background: transparent;
+  color: #8b949e;
+  border: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  font-weight: 600;
+}
+.btn-cancel:hover { color: white; }
+.btn-submit {
+  background: var(--color-ceo);
+  color: black;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0,229,255,0.4);
+}
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0,229,255,0.6);
+}

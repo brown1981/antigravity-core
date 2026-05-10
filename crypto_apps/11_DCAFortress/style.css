@@ -1,0 +1,122 @@
+:root {
+    --bg: #0a0b0d;
+    --iron: #2c3e50;
+    --gold: #ffcc00;
+    --gold-dim: rgba(255, 204, 0, 0.1);
+    --glass: rgba(255, 255, 255, 0.02);
+    --border: rgba(255, 255, 255, 0.1);
+    --text: #e0e6ed;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 60px 40px;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100px 100px;
+}
+
+.back-btn {
+    position: fixed; top: 20px; left: 20px; padding: 8px 20px;
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 4px; color: var(--gold);
+    text-decoration: none; font-size: 0.75rem; letter-spacing: 2px;
+    backdrop-filter: blur(15px); z-index: 1000; transition: 0.3s;
+}
+.back-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+
+.fortress-container {
+    max-width: 1000px; margin: 0 auto;
+}
+
+/* HEADER */
+header {
+    text-align: center; margin-bottom: 60px;
+}
+
+header h1 {
+    font-weight: 200; letter-spacing: 15px; font-size: 2.5rem;
+    color: #fff; text-shadow: 0 0 30px var(--gold-dim);
+}
+
+header p {
+    font-size: 0.7rem; color: #666; letter-spacing: 5px; margin-top: 10px;
+}
+
+/* MAIN LAYOUT */
+.main-grid {
+    display: grid; grid-template-columns: 350px 1fr; gap: 30px;
+}
+
+.panel {
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 20px; padding: 35px; backdrop-filter: blur(30px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.panel h2 {
+    font-size: 0.75rem; letter-spacing: 3px; color: var(--gold);
+    margin-bottom: 25px; text-transform: uppercase;
+}
+
+/* INPUT CONTROLS */
+.input-group { margin-bottom: 25px; }
+.input-group label { display: block; font-size: 0.65rem; color: #666; margin-bottom: 8px; letter-spacing: 1px; }
+input {
+    width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+    padding: 12px 15px; border-radius: 8px; color: #fff; font-size: 1rem;
+    font-family: monospace; outline: none; transition: 0.3s;
+}
+input:focus { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-dim); }
+
+.action-btn {
+    width: 100%; background: var(--gold); color: #000; border: none;
+    padding: 15px; border-radius: 8px; font-weight: 700; cursor: pointer;
+    font-size: 0.9rem; letter-spacing: 2px; transition: 0.3s;
+}
+.action-btn:hover { transform: scale(1.02); box-shadow: 0 0 30px var(--gold); }
+
+/* VISUALIZER */
+.visualizer {
+    display: flex; flex-direction: column; gap: 20px;
+}
+
+.stat-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+
+.stat-card {
+    background: rgba(255,255,255,0.02); border-radius: 12px; padding: 20px;
+    border-left: 3px solid var(--gold);
+}
+
+.stat-label { font-size: 0.6rem; color: #666; margin-bottom: 5px; text-transform: uppercase; }
+.stat-value { font-size: 1.4rem; font-weight: 700; font-family: monospace; }
+
+/* GROWTH CHART PLACEHOLDER */
+.chart-area {
+    flex-grow: 1; background: rgba(0,0,0,0.2); border-radius: 12px;
+    border: 1px dashed var(--border); position: relative; overflow: hidden;
+    height: 300px; display: flex; align-items: center; justify-content: center;
+}
+
+.chart-line {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    height: 100%; background: linear-gradient(transparent, var(--gold-dim));
+    clip-path: polygon(0% 100%, 0% 80%, 20% 70%, 40% 75%, 60% 40%, 80% 50%, 100% 20%, 100% 100%);
+    transition: 1s ease-in-out;
+}
+
+@media (max-width: 900px) {
+    body { padding: 40px 20px; }
+    header h1 { font-size: 1.6rem; letter-spacing: 5px; }
+    .main-grid { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr; }
+    .chart-area { height: 200px; }
+}

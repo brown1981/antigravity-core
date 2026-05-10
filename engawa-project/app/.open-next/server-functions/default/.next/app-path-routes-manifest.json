@@ -1,0 +1,14 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/ai-test/route": "/api/ai-test",
+  "/api/auth/init-user/route": "/api/auth/init-user",
+  "/api/diagnostics/route": "/api/diagnostics",
+  "/api/emails/send/route": "/api/emails/send",
+  "/favicon.ico/route": "/favicon.ico",
+  "/api/chat/route": "/api/chat",
+  "/api/inbound/route": "/api/inbound",
+  "/api/debug-env/route": "/api/debug-env",
+  "/api/auth/config/route": "/api/auth/config",
+  "/api/settings/secure-config/route": "/api/settings/secure-config",
+  "/page": "/"
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whale Sonar | Antigravity Tactical</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Training Overlay -->
+    <div id="training-overlay" class="training-overlay">
+        <div style="position:absolute; top:20px; left:50%; transform:translateX(-50%); background:var(--sonar-green); color:#000; padding:5px 20px; border-radius:20px; font-weight:bold; font-size:0.8rem;">
+            TRAINING_MODE
+        </div>
+        <button onclick="stopTraining()" style="position:absolute; bottom:40px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.8); border:1px solid var(--sonar-green); color:var(--sonar-green); padding:10px 30px; cursor:pointer; border-radius:4px;">EXIT_TRAINING</button>
+    </div>
+
+    <!-- Modal for Training Center -->
+    <div id="modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(15px);">
+        <div style="width:80%; max-width:800px; background:#05080a; border:1px solid var(--border); border-radius:12px; padding:40px; position:relative; text-align:center;">
+            <span onclick="closeModal()" style="position:absolute; top:20px; right:20px; font-size:1.5rem; cursor:pointer; opacity:0.5;">&times;</span>
+            <h2 id="lbl-modal-title" style="letter-spacing:5px; color:var(--sonar-green);">TACTICAL TRAINING CENTER</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-top:40px;">
+                <div onclick="startTraining('noise')" style="padding:20px; border:1px solid var(--border); border-radius:8px; cursor:pointer;">
+                    <h3 id="lbl-sc-noise-title">NOISE</h3>
+                </div>
+                <div onclick="startTraining('omen')" style="padding:20px; border:1px solid var(--border); border-radius:8px; cursor:pointer;">
+                    <h3 id="lbl-sc-omen-title">OMEN</h3>
+                </div>
+                <div onclick="startTraining('trap')" style="padding:20px; border:1px solid var(--border); border-radius:8px; cursor:pointer;">
+                    <h3 id="lbl-sc-trap-title">TRAP</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="../../index.html" class="back-btn" id="lbl-back">[ RETURN_TO_NEXUS ]</a>
+        <div class="lang-selector">
+            <button class="lang-btn active" id="btn-ja" onclick="setLang('ja')">JP</button>
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header style="position:fixed; top:60px; width:100%; text-align:center; z-index:10; pointer-events:none;">
+        <h1 id="lbl-title" style="font-weight:200; letter-spacing:10px; color:var(--sonar-green);">WHALE SONAR</h1>
+        <div id="lbl-subtitle" style="font-size:0.6rem; color:#444; margin-top:5px; letter-spacing:2px;">ON-CHAIN DIVERGENCE DETECTION SYSTEM</div>
+    </header>
+
+    <!-- Sentiment Gauge -->
+    <div class="sentiment-gauge">
+        <div style="position:absolute; top:-30px; width:100%; text-align:center; font-size:0.6rem; color:#555;" id="lbl-hype">HYPE</div>
+        <div class="gauge-fill" id="gauge-fill" style="height: 50%; background: var(--sonar-blue);"></div>
+    </div>
+
+    <!-- Radar Core -->
+    <div class="radar-container">
+        <div class="radar-grid"></div>
+        <div class="radar-sweep"></div>
+        <div id="blip-layer"></div>
+    </div>
+
+    <!-- Sidebar Stats -->
+    <aside class="sidebar">
+        <div class="stat-card">
+            <div class="stat-label" id="lbl-status">SYSTEM STATUS</div>
+            <div class="stat-value" id="status-val" style="color:var(--sonar-green);">SCANNING...</div>
+        </div>
+        <div class="stat-card" style="border-color: var(--sonar-blue);">
+            <div class="stat-label" id="lbl-divergence">DIVERGENCE SCORE</div>
+            <div class="stat-value" id="div-score">0.00</div>
+        </div>
+        
+        <div id="lbl-log" style="font-size:0.6rem; color:#444; letter-spacing:2px; margin-top:10px;">MISSION LOG (LAST 24H)</div>
+        <div class="log-container" id="log">
+            <!-- Entries injected by script.js -->
+        </div>
+    </aside>
+
+    <!-- Training Launcher -->
+    <button onclick="openModal()" style="position:fixed; bottom:20px; left:20px; background:var(--glass); border:1px solid var(--border); color:var(--sonar-green); padding:10px 20px; border-radius:30px; cursor:pointer; font-size:0.7rem; backdrop-filter:blur(10px); z-index:1000;" id="btn-training">
+        🎓 TACTICAL GUIDE
+    </button>
+
+    <!-- Scripts (SOLID) -->
+    <script src="i18n.js"></script>
+    <script src="simulation.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

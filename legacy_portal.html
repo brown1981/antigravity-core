@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTIGRAVITY | Unified Nexus Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #00f2ff;
+            --bg: #050a0f;
+            --glass: rgba(10, 20, 30, 0.7);
+            --border: rgba(0, 242, 255, 0.2);
+            --purple: #bc13fe;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 2rem;
+            overflow-x: hidden;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .portal-container {
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .title-group {
+            margin-bottom: 5rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 5rem;
+            letter-spacing: 1rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--accent);
+            opacity: 0.7;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+        }
+
+        .panel {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(25px);
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 420px;
+            text-align: left;
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent) 0%, transparent 60%);
+            opacity: 0;
+            transition: 0.6s;
+        }
+
+        .panel:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 255, 0.15);
+        }
+
+        .panel:hover::before {
+            opacity: 0.08;
+        }
+
+        .panel-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.3));
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1rem;
+            color: #fff;
+        }
+
+        .panel-desc {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            opacity: 0.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .enter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 1.2rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: 0.4s;
+            width: 100%;
+            text-align: center;
+        }
+
+        .panel:hover .enter-btn {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            margin-top: 6rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            opacity: 0.4;
+            letter-spacing: 0.5rem;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 0.6rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: rgba(0, 242, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="portal-container">
+        <div class="title-group">
+            <h1>Antigravity</h1>
+            <div class="subtitle">UNIFIED NEXUS PORTAL | V15.6</div>
+        </div>
+
+        <div class="grid">
+            <!-- 1. Memory Vitals -->
+            <div class="panel" onclick="window.location.href='file:///Users/ooshirokazuki2/.gemini/antigravity/scratch/agy-memory-vitals/index.html'">
+                <div class="status-badge">Active</div>
+                <div>
+                    <div class="panel-icon">📊</div>
+                    <div class="panel-title">Memory Vitals</div>
+                    <div class="panel-desc">
+                        マシンの深層リソースを監視するタクティカル・ダッシュボード。
+                        リアルタイムのCPU、メモリ、ネットワークの脈動を可視化。
+                    </div>
+                </div>
+                <div class="enter-btn">Initialize Vitals</div>
+            </div>
+
+            <!-- 2. Neural Orchestra -->
+            <div class="panel" onclick="window.location.href='file:///Users/ooshirokazuki2/.gemini/antigravity/scratch/agy-neural-orchestra/index.html'">
+                <div class="status-badge">Active</div>
+                <div>
+                    <div class="panel-icon">🎻</div>
+                    <div class="panel-title">Neural Orchestra</div>
+                    <div class="panel-desc">
+                        生体反応と物理実数を音楽へ変換する生成エンジン。
+                        移動距離(cm)や電力(¥)が、唯一無二のシンフォニーを奏でる。
+                    </div>
+                </div>
+                <div class="enter-btn">Initialize Orchestra</div>
+            </div>
+
+            <!-- 3. Engawa Cycle AI -->
+            <div class="panel" onclick="window.location.href='file:///Users/ooshirokazuki2/.gemini/antigravity/scratch/engawa-project/app/'">
+                <div class="status-badge">Standby</div>
+                <div>
+                    <div class="panel-icon">🚲</div>
+                    <div class="panel-title">Engawa Cycle AI</div>
+                    <div class="panel-desc">
+                        ビジネスと意志決定のための司令塔。
+                        コマンダーとしての実務を支える統合AIインターフェース。
+                    </div>
+                </div>
+                <div class="enter-btn">Command Access</div>
+            </div>
+
+            <!-- 4. AI Corp V1 -->
+            <div class="panel" onclick="window.location.href='file:///Users/ooshirokazuki2/.gemini/antigravity/scratch/ai_corp_v1/'">
+                <div class="status-badge">Syncing</div>
+                <div>
+                    <div class="panel-icon">🏢</div>
+                    <div class="panel-title">AI Corp V1</div>
+                    <div class="panel-desc">
+                        10名のAI役員が集う仮想企業ポータル。
+                        組織図、会議室、議事録のすべてを一元管理。
+                    </div>
+                </div>
+                <div class="enter-btn">Corporate Gate</div>
+            </div>
+
+            <!-- 5. Neural Cockpit -->
+            <div class="panel" onclick="window.location.href='file:///Users/ooshirokazuki2/.gemini/antigravity/scratch/agy-neural-cockpit/index.html'">
+                <div class="status-badge">Experimental</div>
+                <div>
+                    <div class="panel-icon">🕹️</div>
+                    <div class="panel-title">Neural Cockpit</div>
+                    <div class="panel-desc">
+                        コードとAIが交差する、次世代の3分割開発環境。
+                        エンジニアのための超効率的ワークスペース。
+                    </div>
+                </div>
+                <div class="enter-btn">Dock Cockpit</div>
+            </div>
+
+            <!-- 6. Crypto Sentinel -->
+            <div class="panel" onclick="window.location.href='file:///Users/ooshirokazuki2/.gemini/antigravity/scratch/crypto-sentinel/btc_dashboard.html'">
+                <div class="status-badge">Secured</div>
+                <div>
+                    <div class="panel-icon">🛡️</div>
+                    <div class="panel-title">Crypto Sentinel</div>
+                    <div class="panel-desc">
+                        資産とセキュリティを守る、自律型センチネル。
+                        リスク検知とポートフォリオ監視をリアルタイムで遂行。
+                    </div>
+                </div>
+                <div class="enter-btn">Activate Sentinel</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>RESTORED INDEPENDENCE | EST. 2026</footer>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const particles = [];
+        for(let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 250 + 100,
+                vx: Math.random() * 0.8 - 0.4,
+                vy: Math.random() * 0.8 - 0.4,
+                color: `hsla(${180 + Math.random() * 60}, 100%, 50%, 0.12)`
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if(p.x < -p.size) p.x = canvas.width + p.size;
+                if(p.x > canvas.width + p.size) p.x = -p.size;
+                if(p.y < -p.size) p.y = canvas.height + p.size;
+                if(p.y > canvas.height + p.size) p.y = -p.size;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>

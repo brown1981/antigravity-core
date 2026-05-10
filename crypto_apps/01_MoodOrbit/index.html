@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Orbit | Antigravity Tactical</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="app-body">
+    <!-- Alert Banner -->
+    <div id="red-alert">EXTREME GREED DETECTED</div>
+    
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <a href="../../index.html" class="back-btn" id="lbl-back">← Nexus Portal</a>
+        <div class="lang-selector">
+            <button class="lang-btn active" onclick="setLang('ja', this)">JP</button>
+            <button class="lang-btn" onclick="setLang('en', this)">EN</button>
+            <button class="lang-btn" onclick="setLang('fr', this)">FR</button>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <!-- Mood Sphere -->
+        <div id="mood-sphere" class="mood-sphere">SCANNING</div>
+        
+        <!-- Correlation Chart -->
+        <section class="card">
+            <h1 id="lbl-chart-title">30-Day Correlation</h1>
+            <p id="lbl-chart-desc" style="font-size: 0.8rem; opacity: 0.5; margin-bottom: 20px;">
+                Comparing Emotion vs Top 4 Crypto Assets
+            </p>
+            <div class="chart-container">
+                <canvas id="moodChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Market Prices -->
+        <section class="card">
+            <h1 id="lbl-current">Current Prices</h1>
+            <div class="price-grid">
+                <div class="price-box"><div class="price-label">BTC</div><div id="p-btc" class="price-val">--</div></div>
+                <div class="price-box"><div class="price-label">ETH</div><div id="p-eth" class="price-val">--</div></div>
+                <div class="price-box"><div class="price-label">SOL</div><div id="p-sol" class="price-val">--</div></div>
+                <div class="price-box"><div class="price-label">XRP</div><div id="p-xrp" class="price-val">--</div></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

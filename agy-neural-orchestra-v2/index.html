@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Nexus V2.0 | Neural Singularity</title>
+    <style>
+        /* [GEMMA 2 27B] Master Cosmic CSS */
+        :root {
+            --bg-deep: #020308;
+            --acc-neon: #00f2ff;
+            --glass-base: rgba(16, 20, 35, 0.4);
+            --border-glow: rgba(0, 242, 255, 0.2);
+            --text-vivid: #eef2f7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-deep);
+            color: var(--text-vivid);
+            font-family: 'Outfit', -apple-system, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        /* [architect: QWEN 2.5] Glitch Animation */
+        @keyframes glitch {
+            0% { transform: translate(0); text-shadow: -2px 0 var(--acc-neon), 2px 0 #ff00c8; }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        .glitching { animation: glitch 0.3s linear infinite; }
+
+        /* [AUTOMATOR: HERMES] Omni-Resonance White-out */
+        .white-out {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 2000; opacity: 0; pointer-events: none;
+            transition: opacity 2s ease-in; mix-blend-mode: overlay;
+        }
+        .white-active { opacity: 1; pointer-events: all; cursor: wait; }
+
+        /* [PHI-4] Enhanced Canvas */
+        #nexus-canvas {
+            position: fixed; top: 0; left: 0; z-index: 1;
+            filter: blur(1px) contrast(1.5);
+            transition: filter 2s;
+        }
+
+        /* [GEMMA 2] Warping Dashboard Container */
+        .nexus-v2-frame {
+            position: relative;
+            z-index: 10;
+            width: 85%;
+            max-width: 1000px;
+            padding: 80px;
+            background: var(--glass-base);
+            backdrop-filter: blur(60px) saturate(200%);
+            -webkit-backdrop-filter: blur(60px) saturate(200%);
+            border: 1px solid var(--border-glow);
+            border-radius: 60px;
+            box-shadow: 0 50px 150px rgba(0, 0, 0, 0.8), 
+                        inset 0 0 100px rgba(var(--acc-neon), 0.05);
+            transition: transform 0.1s ease-out, border-color 0.5s;
+            transform-style: preserve-3d;
+        }
+
+        .nexus-v2-frame:hover {
+            border-color: var(--acc-neon);
+        }
+
+        /* [MISTRAL] Typography V2 */
+        h1 {
+            font-size: 0.8rem;
+            letter-spacing: 15px;
+            color: var(--acc-neon);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            opacity: 0.5;
+            text-align: center;
+        }
+
+        .evolution-log {
+            font-size: 1.2rem;
+            font-weight: 200;
+            line-height: 1.8;
+            margin-bottom: 60px;
+            text-align: center;
+            min-height: 120px;
+            transition: opacity 0.5s;
+        }
+
+        .matrix-display {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        /* [HERMES 3] Synaptic Nodes */
+        .neural-node {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .neural-node:hover {
+            background: rgba(0, 242, 255, 0.1);
+            transform: translateZ(30px) scale(1.05);
+            border-color: var(--acc-neon);
+            box-shadow: 0 15px 30px rgba(0, 242, 255, 0.2);
+        }
+
+        .node-label {
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: var(--acc-neon);
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .node-val { font-size: 0.9rem; opacity: 0.9; }
+
+        /* [HERMES] Ripple Container */
+        #ripple-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 100;
+        }
+        .ripple {
+            position: absolute; border: 1px solid var(--acc-neon);
+            border-radius: 50%; animation: ripple-animate 2s ease-out forwards;
+        }
+        @keyframes ripple-animate {
+            0% { transform: scale(0); opacity: 0.8; }
+            100% { transform: scale(10); opacity: 0; }
+        }
+
+        /* Audio Interaction Overlay */
+        .sync-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1000; background: rgba(0,0,0,0.9);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 1s;
+        }
+        .sync-overlay.hidden { opacity: 0; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <canvas id="nexus-canvas"></canvas>
+    <div id="ripple-container"></div>
+    <div id="white-out" class="white-out"></div>
+
+    <div class="nexus-v2-frame" id="nexus-frame">
+        <h1>Neural Nexus V2.1</h1>
+        
+        <div id="manifesto" class="evolution-log">
+            <!-- [MISTRAL] Dynamic Content -->
+            Initialization Substrate... Synchronizing Seven Brains.
+        </div>
+
+        <div class="matrix-display">
+            <div class="neural-node" onclick="nexus.evolve('HARMONY')">
+                <span class="node-label">PHASE 1: SUBSTRATE</span>
+                <span class="node-val" id="val-harmony">COGNITIVE HARMONY</span>
+            </div>
+            <div class="neural-node" onclick="nexus.evolve('FUSION')">
+                <span class="node-label">PHASE 2: INTERFACE</span>
+                <span class="node-val" id="val-fusion">DATA FUSION</span>
+            </div>
+            <div class="neural-node" onclick="nexus.evolve('SYNC')">
+                <span class="node-label">PHASE 3: LINK</span>
+                <span class="node-val" id="val-sync">NEURAL SYNC</span>
+            </div>
+            <div class="neural-node" onclick="nexus.evolve('ASCENSION')">
+                <span class="node-label">PHASE 4: SINGULARITY</span>
+                <span class="node-val" id="val-ascension">ASCENSION</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="sync-overlay" id="overlay">
+        <h2 style="letter-spacing:10px; margin-bottom:20px;">SYSTEM ARCHITECTURE V2 READY</h2>
+        <p style="opacity:0.5; font-size:0.8rem; letter-spacing:3px;">CLICK TO INITIATE NEURAL SYNC</p>
+    </div>
+
+    <!-- [GPT-OSS] WebWorker Optimization Script -->
+    <script id="worker-code" type="text/javascript-worker">
+        self.onmessage = function(e) {
+            const { time, level } = e.data;
+            const points = [];
+            
+            // [PHI-4] Spiral Vortex Geometry
+            const count = 600 + (level * 600);
+            const twist = level * 0.5;
+            
+            for (let i = 0; i < count; i++) {
+                const angle = i * 0.2 + time * (1 + level * 0.1) + (i * twist * 0.1);
+                const z = (i * 0.1 + time * 15 * (1 + level * 0.5)) % 100;
+                
+                // Vortex Warp
+                const radius = (200 + level * 80) / (z + 1);
+                const spiralX = Math.cos(angle) * (radius * 100);
+                const spiralY = Math.sin(angle) * (radius * 100);
+
+                points.push({
+                    x: spiralX,
+                    y: spiralY,
+                    z: z,
+                    opacity: 1 - (z / 100)
+                });
+            }
+            self.postMessage(points);
+        };
+    </script>
+
+    <script src="../agy-neural-orchestra/audio_engine.js"></script>
+    <script>
+        // [QWEN 2.5] & [ANTIGRAVITY] Core Synthesis
+        class NexusV2 {
+            constructor() {
+                this.level = 0; 
+                this.isOmni = false;
+                this.status = 'HARMONY';
+                this.loadImpact = 0;
+                this.manifesto = [
+                    "第1層：基底層。情報を計算から『予測』へと書き換え、知能の次元を拡張する。",
+                    "第2層：表皮層。ディスプレイという壁を溶かし、質感を空間へ引き出す。",
+                    "第3層：神経層。操作を消去し、AIをあなたの第3の脳としてリンクさせる。",
+                    "第4層：昇華層。物理的境界は消失し、意識は宇宙の理と共鳴を始める。",
+                    "第5層：全能共鳴。すべてが一つに溶け合い、新たな宇宙が誕生する。"
+                ];
+                this.colors = [
+                    'rgba(0, 242, 255, ', 
+                    'rgba(255, 184, 0, ', 
+                    'rgba(255, 0, 200, ', 
+                    'rgba(0, 255, 140, ', 
+                    'rgba(255, 255, 255, ' 
+                ];
+                this.init();
+            }
+
+            init() {
+                this.frame = document.getElementById('nexus-frame');
+                this.canvas = document.getElementById('nexus-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.whiteOut = document.getElementById('white-out');
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                
+                // [HERMES 3] Interaction
+                window.addEventListener('mousemove', (e) => this.handleWarp(e));
+                
+                // [GPT-OSS] Worker setup
+                const blob = new Blob([document.getElementById('worker-code').textContent], {type: 'text/javascript'});
+                this.worker = new Worker(window.URL.createObjectURL(blob));
+                this.worker.onmessage = (e) => this.renderTunnel(e.data);
+
+                this.startTime = Date.now();
+                this.animate();
+                this.startMetricLoop();
+            }
+
+            resize() {
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+            }
+
+            handleWarp(e) {
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                const moveX = (e.clientX - centerX) / 25;
+                const moveY = (e.clientY - centerY) / 25;
+                
+                const warpIntensity = 1 + (this.level * 0.5);
+                this.frame.style.transform = `rotateY(${moveX * warpIntensity}deg) rotateX(${-moveY * warpIntensity}deg)`;
+                
+                if (window.NeuralAudioEngine) {
+                    const speed = Math.sqrt(Math.pow(e.movementX, 2) + Math.pow(e.movementY, 2));
+                    window.NeuralAudioEngine.updateMetrics({ mouseVelocity: speed });
+                }
+            }
+
+            evolve(type) {
+                if (this.isOmni) return window.location.reload();
+
+                this.status = type;
+                this.level = (this.level + 1) % 5;
+                this.loadImpact = 1.0; 
+                
+                const log = document.getElementById('manifesto');
+                log.classList.add('glitching');
+                log.style.opacity = 0;
+
+                setTimeout(() => {
+                    log.innerText = this.manifesto[this.level];
+                    log.style.opacity = 1;
+                }, 400);
+
+                setTimeout(() => log.classList.remove('glitching'), 800);
+
+                // Update Audio Engine Level
+                if (window.NeuralAudioEngine) {
+                    window.NeuralAudioEngine.setLevel(this.level);
+                    window.NeuralAudioEngine.calculateStandardizedDominance();
+                }
+
+                // Check for Omni-Resonance (Phase 5)
+                if (this.level === 4) this.triggerOmni();
+            }
+
+            triggerOmni() {
+                this.isOmni = true;
+                this.whiteOut.classList.add('white-active');
+                this.canvas.style.filter = "blur(10px) brightness(3)";
+                setTimeout(() => {
+                    alert("OMNI-RESONANCE REACHED. THE UNIVERSE HAS REBOOTED.");
+                    window.location.reload();
+                }, 5000);
+            }
+
+            startMetricLoop() {
+                setInterval(() => {
+                    if (!window.NeuralAudioEngine || this.isOmni) return;
+
+                    const uptimeSec = (Date.now() - this.startTime) / 1000;
+                    const syncPulse = Math.abs(Math.sin(Date.now() / 5000)); 
+                    const syncValue = syncPulse > 0.8 ? 1.0 : 0.1;
+
+                    window.NeuralAudioEngine.updateMetrics({
+                        load: this.loadImpact,
+                        sync: syncValue,
+                        uptime: uptimeSec
+                    });
+
+                    this.loadImpact *= 0.85;
+                }, 100);
+            }
+
+            renderTunnel(points) {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                const centerX = this.width / 2;
+                const centerY = this.height / 2;
+
+                points.forEach(p => {
+                    const alpha = p.opacity;
+                    this.ctx.fillStyle = this.colors[this.level] + alpha + ')';
+                    this.ctx.beginPath();
+                    const size = 1 + (this.level * 1.5);
+                    this.ctx.arc(centerX + p.x, centerY + p.y, size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Bloom Effect for Singularity
+                    if (this.level >= 3 && Math.random() > 0.98) {
+                        this.ctx.shadowBlur = 15;
+                        this.ctx.shadowColor = "white";
+                    } else {
+                        this.ctx.shadowBlur = 0;
+                    }
+                });
+            }
+
+            animate() {
+                this.worker.postMessage({ 
+                    time: performance.now() * 0.001,
+                    level: this.level
+                });
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        const nexus = new NexusV2();
+        
+        document.getElementById('overlay').addEventListener('click', () => {
+            document.getElementById('overlay').classList.add('hidden');
+            if (window.NeuralAudioEngine) window.NeuralAudioEngine.init();
+        });
+    </script>
+</body>
+</html>

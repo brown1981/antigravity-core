@@ -1,0 +1,1 @@
+[ERROR] {"error":{"message":"No endpoints found for liquid/lfm-40b:free.","code":404},"user_id":"user_3CPnMrEPidOVoPpueGpjkPhZlU3"}

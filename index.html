@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTIGRAVITY | Nexus Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020308;
+            --glass: rgba(255, 255, 255, 0.02);
+            --accent: #00d2ff;
+            --purple: #bc13fe;
+            --gold: #ffcc00;
+            --text: #e0e6ed;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(0, 210, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(188, 19, 254, 0.05) 0%, transparent 50%);
+            overflow-x: hidden;
+            padding-bottom: 60px;
+        }
+
+        header {
+            padding: 80px 20px 40px;
+            text-align: center;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 4rem;
+            letter-spacing: 25px;
+            font-weight: 200;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--accent), #fff, var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.2));
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 8px;
+            opacity: 0.5;
+            text-transform: uppercase;
+        }
+
+        .layer-title {
+            width: 90%;
+            max-width: 1400px;
+            margin: 40px 0 20px;
+            padding-left: 10px;
+            border-left: 2px solid var(--accent);
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            width: 90%;
+            margin-bottom: 40px;
+        }
+
+        .app-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            backdrop-filter: blur(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .app-num {
+            font-size: 0.65rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+            letter-spacing: 2px;
+        }
+
+        .app-card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .app-card p {
+            font-size: 0.8rem;
+            opacity: 0.5;
+            line-height: 1.6;
+        }
+
+        .status-dot {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .layer-2 .app-num { color: var(--gold); }
+        .layer-2 .status-dot { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+
+        .layer-3 .app-num { color: #fff; }
+        .layer-3 .status-dot { background: #fff; box-shadow: 0 0 10px #fff; }
+
+        footer {
+            margin-top: auto;
+            padding: 60px;
+            opacity: 0.2;
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Antigravity</h1>
+        <div class="subtitle">Nexus Strategic Intelligence Fortress</div>
+    </header>
+
+    <!-- Layer 1 -->
+    <div class="layer-title">Layer 1: Tactical Response Unit</div>
+    <div class="grid">
+        <a href="crypto_apps/01_MoodOrbit/index.html" class="app-card">
+            <span class="app-num">APP_01</span><div class="status-dot"></div>
+            <h2>Mood Orbit</h2>
+            <p>市場感情（Fear & Greed）と価格相関の多角的可視化。</p>
+        </a>
+        <a href="crypto_apps/02_LogicShield/index.html" class="app-card">
+            <span class="app-num">APP_02</span><div class="status-dot"></div>
+            <h2>Logic Shield</h2>
+            <p>5指標によるテクニカル分析と論理的シグナル生成。</p>
+        </a>
+        <a href="crypto_apps/03_JoyProfit/index.html" class="app-card">
+            <span class="app-num">APP_03</span><div class="status-dot"></div>
+            <h2>Joy Profit</h2>
+            <p>目標達成への進捗と利益確定のシミュレート。</p>
+        </a>
+        <a href="crypto_apps/04_WhaleSonar/index.html" class="app-card">
+            <span class="app-num">APP_04</span><div class="status-dot"></div>
+            <h2>Whale Sonar</h2>
+            <p>オンチェーン上の巨額資金移動とSNS乖離の監視。</p>
+        </a>
+        <a href="crypto_apps/05_ScamSentinel/index.html" class="app-card">
+            <span class="app-num">APP_05</span><div class="status-dot"></div>
+            <h2>Scam Sentinel</h2>
+            <p>コントラクトの脆弱性と詐欺リスクの精密診断。</p>
+        </a>
+        <a href="crypto_apps/06_GlobalRadar/index.html" class="app-card">
+            <span class="app-num">APP_06</span><div class="status-dot"></div>
+            <h2>Global Radar</h2>
+            <p>BTCドミナンスと全市場のマクロトレンド監視。</p>
+        </a>
+        <a href="crypto_apps/07_AltHunter/index.html" class="app-card">
+            <span class="app-num">APP_07</span><div class="status-dot"></div>
+            <h2>Alt Hunter</h2>
+            <p>1000銘柄の点火・爆発検知と高精度ランキング。</p>
+        </a>
+    </div>
+
+    <!-- Layer 2 -->
+    <div class="layer-title" style="border-color: var(--gold); color: var(--gold);">Layer 2: Strategic Stability Unit</div>
+    <div class="grid layer-2">
+        <a href="crypto_apps/08_TacticalBriefing/index.html" class="app-card">
+            <span class="app-num">APP_08</span><div class="status-dot"></div>
+            <h2>Tactical Briefing</h2>
+            <p>AI参謀による戦略ブリーフィングとシナリオ分析。</p>
+        </a>
+        <a href="crypto_apps/09_CyberNexus/index.html" class="app-card">
+            <span class="app-num">APP_09</span><div class="status-dot"></div>
+            <h2>Cyber Nexus</h2>
+            <p>全データの神経系。ネットワークとトラフィックの可視化。</p>
+        </a>
+        <a href="crypto_apps/10_TeamSpirit/index.html" class="app-card">
+            <span class="app-num">APP_10</span><div class="status-dot"></div>
+            <h2>Team Spirit</h2>
+            <p>AI評議会の同調と同調率・システム姿勢の管理。</p>
+        </a>
+    </div>
+
+    <!-- Layer 3 -->
+    <div class="layer-title" style="border-color: #fff; color: #fff;">Layer 3: Autonomous Fortress Unit</div>
+    <div class="grid layer-3">
+        <a href="crypto_apps/11_DCAFortress/index.html" class="app-card">
+            <span class="app-num">APP_11</span><div class="status-dot"></div>
+            <h2>DCA Fortress</h2>
+            <p>感情を排した数学的積立とリスク分散の鉄壁実行。</p>
+        </a>
+        <a href="crypto_apps/12_IntelligenceHub/index.html" class="app-card">
+            <span class="app-num">APP_12</span><div class="status-dot"></div>
+            <h2>Intelligence Hub</h2>
+            <p>IH (Intelligence Harvester) の知能アーカイブと制御。</p>
+        </a>
+        <a href="crypto_apps/13_ZenTracker/index.html" class="app-card">
+            <span class="app-num">APP_13</span><div class="status-dot"></div>
+            <h2>Zen Tracker</h2>
+            <p>ガス代監視とマインドフルネスによる精神の調律。</p>
+        </a>
+        <a href="crypto_apps/14_QuantSentinel/index.html" class="app-card">
+            <span class="app-num">APP_14</span><div class="status-dot"></div>
+            <h2>Quant Sentinel</h2>
+            <p>SMC分析・機関投資家（スマートマネー）の足跡追跡。</p>
+        </a>
+        <a href="crypto_apps/15_PortfolioFortress/index.html" class="app-card">
+            <span class="app-num">APP_15</span><div class="status-dot"></div>
+            <h2>Portfolio Fortress</h2>
+            <p>資産リスクの多次元シミュレーション。不落の最終城塞。</p>
+        </a>
+    </div>
+
+    <footer>
+        &copy; 2026 ANTIGRAVITY MISSION CONTROL | ALL_NODES_ACTIVE
+    </footer>
+</body>
+</html>

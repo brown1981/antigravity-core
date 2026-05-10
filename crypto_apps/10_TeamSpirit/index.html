@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Spirit | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="../../index.html" class="back-btn">[ RETURN_TO_NEXUS ]</a>
+    </nav>
+
+    <main class="team-container">
+        <!-- Header -->
+        <header class="sync-header">
+            <h1>TEAM_SPIRIT</h1>
+            <div class="sync-level">SYSTEM_NEURAL_SYNC: <span id="total-sync">--%</span></div>
+            <div class="lang-selector" style="margin-top:20px;">
+                <button onclick="setLang('ja')" style="background:var(--glass); color:var(--amber); border:1px solid var(--border); padding:5px 15px; cursor:pointer; border-radius:4px;">JP</button>
+                <button onclick="setLang('en')" style="background:var(--glass); color:var(--amber); border:1px solid var(--border); padding:5px 15px; cursor:pointer; border-radius:4px;">EN</button>
+            </div>
+        </header>
+
+        <!-- Gems Grid -->
+        <div class="gem-grid" id="gem-grid">
+            <!-- Gems injected by script.js -->
+        </div>
+
+        <!-- System Stance Matrix -->
+        <div class="matrix-section">
+            <section class="card">
+                <h3>SYSTEM_PURIFICATION_STATUS</h3>
+                <div style="margin-bottom:20px;">
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:5px;">
+                        <span>LAYER_1: FOUNDATION</span>
+                        <span style="color:var(--amber);">100%</span>
+                    </div>
+                    <div class="progress-container"><div class="progress-fill" style="width:100%;"></div></div>
+                </div>
+                <div style="margin-bottom:20px;">
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:5px;">
+                        <span>LAYER_2: SCALING</span>
+                        <span style="color:var(--amber);">100%</span>
+                    </div>
+                    <div class="progress-container"><div class="progress-fill" style="width:100%;"></div></div>
+                </div>
+                <div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:5px;">
+                        <span>LAYER_3: FORTRESS</span>
+                        <span style="color:var(--amber);">100%</span>
+                    </div>
+                    <div class="progress-container"><div class="progress-fill" style="width:0%;"></div></div>
+                </div>
+            </section>
+
+            <section class="card" style="border-color: var(--tech-blue);">
+                <h3>BOARDROOM_STANCE</h3>
+                <div style="font-size: 0.85rem; line-height: 1.8; color: #aaa;">
+                    現在のボードルームは **「Analytical (分析的)」** 姿勢を強化しています。Layer 1 の浄化完了に伴い、データの精度が向上したため、より高度な戦略的推論が可能になりました。Layer 2 の構築が進むにつれ、**「Creative (創造的)」** なアプローチが解放される予定です。
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="i18n.js"></script>
+    <script src="boardroom.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

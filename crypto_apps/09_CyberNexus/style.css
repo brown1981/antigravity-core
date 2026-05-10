@@ -1,0 +1,139 @@
+:root {
+    --bg: #010810;
+    --nexus-cyan: #00f3ff;
+    --nexus-purple: #9d00ff;
+    --glass: rgba(0, 243, 255, 0.03);
+    --border: rgba(0, 243, 255, 0.15);
+    --text: #e0e6ed;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background-image: 
+        linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+.back-btn {
+    position: fixed; top: 20px; left: 20px; padding: 8px 20px;
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 4px; color: var(--nexus-cyan);
+    text-decoration: none; font-size: 0.75rem; letter-spacing: 2px;
+    backdrop-filter: blur(15px); z-index: 1000; transition: 0.3s;
+}
+.back-btn:hover { background: var(--nexus-cyan); color: #000; box-shadow: 0 0 20px var(--nexus-cyan); }
+
+/* NEXUS CONTAINER */
+.nexus-wrapper {
+    display: grid;
+    grid-template-columns: 350px 1fr 350px;
+    height: 100vh;
+    padding: 80px 40px 40px;
+    gap: 30px;
+}
+
+.panel {
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 12px; backdrop-filter: blur(25px);
+    display: flex; flex-direction: column; padding: 25px;
+    position: relative; overflow: hidden;
+}
+
+.panel h2 {
+    font-size: 0.75rem; letter-spacing: 4px; color: var(--nexus-cyan);
+    margin-bottom: 25px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+}
+
+.panel h2::before {
+    content: ''; width: 8px; height: 8px; background: var(--nexus-cyan);
+    box-shadow: 0 0 10px var(--nexus-cyan); border-radius: 2px;
+}
+
+/* NODE GRID */
+.node-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 15px; flex-grow: 1; align-content: start;
+}
+
+.node {
+    aspect-ratio: 1; border: 1px solid var(--border);
+    border-radius: 8px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; font-size: 0.65rem;
+    color: #444; transition: 0.3s; position: relative;
+}
+
+.node.active { 
+    color: var(--nexus-cyan); border-color: var(--nexus-cyan);
+    background: rgba(0, 243, 255, 0.05);
+}
+
+.node.purified::after {
+    content: 'P'; position: absolute; top: 2px; right: 4px;
+    font-size: 0.5rem; color: var(--nexus-cyan); font-weight: bold;
+}
+
+/* DATA FLOW LOG */
+.log-stream {
+    flex-grow: 1; overflow-y: auto; font-family: monospace;
+    font-size: 0.7rem; color: #555;
+}
+
+.log-entry { margin-bottom: 8px; line-height: 1.4; }
+.log-entry span { color: var(--nexus-cyan); }
+
+/* CENTRAL VISUAL */
+.central-core {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative;
+}
+
+.core-circle {
+    width: 300px; height: 300px; border: 2px solid var(--border);
+    border-radius: 50%; position: relative;
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.core-inner {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.nexus-logo {
+    font-size: 1.5rem; font-weight: 200; letter-spacing: 15px;
+    color: #fff; text-shadow: 0 0 20px var(--nexus-cyan);
+}
+
+/* SCANLINE */
+.scanline {
+    position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(to right, transparent, var(--nexus-cyan), transparent);
+    opacity: 0.3; animation: scan 4s infinite linear;
+}
+
+@keyframes scan {
+    from { top: -10%; }
+    to { top: 110%; }
+}
+
+@media (max-width: 1000px) {
+    body { overflow-y: auto; height: auto; }
+    .nexus-wrapper { 
+        grid-template-columns: 1fr; height: auto; padding: 100px 20px 40px; gap: 40px;
+    }
+    .core-circle { width: 200px; height: 200px; }
+    .central-core { order: -1; margin-bottom: 20px; }
+    .nexus-logo { font-size: 1.1rem; letter-spacing: 5px; }
+}

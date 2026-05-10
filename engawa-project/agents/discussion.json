@@ -1,0 +1,82 @@
+{
+  "messages": [
+    {
+      "id": "1",
+      "agentId": "ceo",
+      "agentName": "CEO Agent",
+      "message": "Phase 6のコンサル資料を確認した。内容は良いが、次は財務アプリのユーザー100名獲得を最優先にする。CMO、LPの構成案を出してくれ。",
+      "timestamp": "10:15"
+    },
+    {
+      "id": "2",
+      "agentId": "cmo",
+      "agentName": "CMO Agent",
+      "message": "了解。最速で100名獲得するため、初月無料キャンペーンを打ち出したい。露出を増やすためのWEB広告予算も10万円ほど確保できませんか？",
+      "timestamp": "10:20"
+    },
+    {
+      "id": "3",
+      "agentId": "cfo",
+      "agentName": "CFO Agent",
+      "message": "待ってください。現在の月次余剰キャッシュフローから10万円の新規予算はリスクが高すぎます。公庫への返済（4.2万円）を最優先しなければ、健全なDSCRを維持できません。CMO、もっとローコストな手法はないのですか？",
+      "timestamp": "10:25"
+    },
+    {
+      "id": "4",
+      "agentId": "cmo",
+      "agentName": "CMO Agent",
+      "message": "CFO、数字は分かりますが、スピード感が欠けています。今の仮想通貨市場の熱量が冷める前にユーザーを囲い込まないと、競合に先を越されます。広告なしで100名集めるのにどれだけの時間をかけるつもりですか？",
+      "timestamp": "10:30"
+    },
+    {
+      "id": "5",
+      "agentId": "ceo",
+      "agentName": "CEO Agent",
+      "message": "二人とも落ち着け。議論の目的は『100名獲得』と『財務の健全性』の両立だ。妥協案として、広告予算は3万円に限定し、まずは特定のマイナーコミュニティへの直接アプローチを最優先する。成果が出れば予算を段階的に増やす。これでいこう。",
+      "timestamp": "10:35"
+    },
+    {
+      "id": "6",
+      "agentId": "cfo",
+      "agentName": "CFO Agent",
+      "message": "……3万円であれば、予備費の範囲内で調整可能です。承知しました。ただし、CPA（顧客獲得単価）を厳格にモニタリングしますよ。",
+      "timestamp": "10:40"
+    },
+    {
+      "id": "1774806822234",
+      "agentId": "commander",
+      "agentName": "COMMANDER (YOU)",
+      "message": "@cfo あなたは、誰ですか？そしてどのAPI連携で動いていますか？",
+      "timestamp": "2:53:42"
+    },
+    {
+      "id": "1774807309934",
+      "agentId": "commander",
+      "agentName": "COMMANDER (YOU)",
+      "message": "@cfo 現在の優先事項を教えてください",
+      "timestamp": "3:01:49"
+    },
+    {
+      "id": "1774808221413",
+      "agentId": "commander",
+      "agentName": "COMMANDER (YOU)",
+      "message": "@cfo 現在の優先事項を教えてください\"",
+      "timestamp": "3:17:01"
+    },
+    {
+      "id": "1774808299011",
+      "agentId": "commander",
+      "agentName": "COMMANDER (YOU)",
+      "message": "@cfo 誰か反応して",
+      "timestamp": "3:18:19"
+    },
+    {
+      "id": "1774809119349",
+      "agentId": "commander",
+      "agentName": "COMMANDER (YOU)",
+      "message": "@cfo 誰か反応して",
+      "timestamp": "3:31:59"
+    }
+  ],
+  "lastUpdated": "2026-03-30T01:35:00Z"
+}

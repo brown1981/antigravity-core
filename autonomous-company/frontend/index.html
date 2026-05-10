@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Corp. Management Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>AI Corp. OS</h2>
+        </div>
+        <div class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')">📊 ダッシュボード</div>
+        <div class="nav-item" id="nav-officers" onclick="showPage('officers')">👥 役員・組織一覧</div>
+        <div class="nav-item" id="nav-reports" onclick="showPage('reports')">📄 議事録・レポート</div>
+        <div class="nav-item" id="nav-settings" onclick="showPage('settings')">⚙️ システム設定</div>
+    </nav>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <h1 id="page-title">全社経営サマリー</h1>
+            <div class="user-profile">
+                <span>大城 和樹 (President)</span>
+                <div class="avatar-circle">👤</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <section id="page-dashboard" class="page-section dashboard-container">
+            <div style="background:#fff; padding:25px; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.05);">
+                <div class="tabs" style="display:flex; border-bottom:1px solid #eee; margin-bottom:20px;">
+                    <div class="tab-item active" id="tab-status" onclick="showDashboardTab('status')" style="padding:10px 20px; cursor:pointer; font-weight:600; border-bottom:2px solid #3f51b5;">📊 会議状況</div>
+                    <div class="tab-item" id="tab-boardroom" onclick="showDashboardTab('boardroom')" style="padding:10px 20px; cursor:pointer; color:#666;">🤝 役員会議</div>
+                    <div class="tab-item" id="tab-lab" onclick="showDashboardTab('lab')" style="padding:10px 20px; cursor:pointer; color:#666;">🧪 技術ラボ</div>
+                </div>
+
+                <!-- Status Tab -->
+                <div id="section-status" class="dashboard-section">
+                    <div class="grid" id="officer-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:20px;">
+                        <!-- Officers will be listed here -->
+                    </div>
+                </div>
+
+                <!-- Boardroom Tab -->
+                <div id="section-boardroom" class="dashboard-section" style="display:none;">
+                    <div style="max-width:800px; margin:0 auto;">
+                        <textarea id="agenda-input" placeholder="議題を入力してください... (例: 来期の経営戦略について)" style="width:100%; height:100px; padding:15px; border-radius:12px; border:1px solid #e0e0e0; margin-bottom:20px; font-size:1rem; line-height:1.6;"></textarea>
+                        <button onclick="startMeeting()" id="start-btn" style="background:linear-gradient(135deg, #3f51b5, #1a237e); color:#fff; border:none; padding:12px 30px; border-radius:30px; font-size:1rem; font-weight:700; cursor:pointer; box-shadow:0 10px 20px rgba(63,81,181,0.2);">
+                            役員会議を招集する
+                        </button>
+                    </div>
+
+                    <div id="meeting-stream" style="margin-top:30px; display:none;">
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                            <div class="pulse" style="width:10px; height:10px; background:#f44336; border-radius:50%;"></div>
+                            <h3 style="margin:0;">LIVE: 会議ストリーム</h3>
+                        </div>
+                        <div id="stream-content" style="background:#f9f9f9; border-radius:12px; padding:20px; border:1px solid #eee; line-height:1.6; display:flex; flex-direction:column; gap:15px;">
+                            <!-- Messages -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab Tab -->
+                <div id="section-lab" class="dashboard-section" style="display:none;">
+                    <div style="background:#1a1a1a; color:#00ff00; padding:20px; border-radius:8px; font-family: 'Courier New', Courier, monospace; min-height:400px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
+                        <h3 style="color:#00ff00; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:15px;">💻 AI-CORP DEVELOPER CONSOLE</h3>
+                        <div id="lab-log" style="font-size:0.9rem; line-height:1.4;">
+                            > System Initialized.<br>
+                            > Waiting for technical agenda...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Officers Page -->
+        <section id="page-officers" class="page-section dashboard-container" style="display:none;">
+            <h2>👥 役員・組織一覧</h2>
+            <div id="officers-detail-list" class="grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; margin-top:20px;">
+                <!-- Full details populated by JS -->
+            </div>
+        </section>
+
+        <!-- Reports Page -->
+        <section id="page-reports" class="page-section dashboard-container" style="display:none;">
+            <h2>📄 議事録・レポートアーカイブ</h2>
+            <div id="reports-list" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                <!-- Reports -->
+            </div>
+        </section>
+
+        <!-- Settings Page -->
+        <section id="page-settings" class="page-section dashboard-container" style="display:none;">
+            <div style="background:#fff; padding:30px; border-radius:12px; border:1px solid #e0e0e0; max-width:800px;">
+                <h3 style="margin-bottom:20px;">🔒 APIキー設定</h3>
+                <div id="settings-form" style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:20px;">
+                    <div>
+                        <label style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:4px;">OpenRouter API Key</label>
+                        <input type="password" id="set-OPENROUTER_API_KEY" placeholder="sk-..." style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:4px;">Gemini API Key</label>
+                        <input type="password" id="set-GEMINI_API_KEY" placeholder="AIza..." style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:4px;">Groq API Key</label>
+                        <input type="password" id="set-GROQ_API_KEY" placeholder="gsk_..." style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                    </div>
+                </div>
+                <button onclick="saveSettings()" style="background:#4caf50; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; margin-bottom:30px;">キーを保存</button>
+
+                <h3 style="margin:30px 0 15px; border-top:1px solid #eee; padding-top:20px;">🤖 役員別モデル設定</h3>
+                <div id="model-settings-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:20px;">
+                    <!-- Populated by JS -->
+                </div>
+                <button onclick="saveModelSettings()" style="background:#3f51b5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">モデル設定を保存</button>
+                <div id="settings-status" style="margin-top:15px; font-size:0.9rem;"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const iconMap = { CEO:'👑', CTO:'⚙️', CFO:'💰', CMO:'📢', CLO:'⚖️', CSO:'🔭', CKO:'📚', CDO:'🎨', Specialist:'🔬' };
+        const roleData = {
+            CEO: { name: "Hermes", desc: "経営戦略の最終決定、全役員の統括。強みを増幅し弱点を是正する判断を行う。" },
+            CTO: { name: "Taro", desc: "技術選定、アーキテクチャ設計、開発保守管理。実現可能性とスケーラビリティを重視。" },
+            CFO: { name: "Kai", desc: "財務管理、キャッシュフロー、税務リスク。投資回収率と財務健全性を評価。 " },
+            CMO: { name: "Mira", desc: "マーケティング戦略、広報、市場トレンド分析。顧客価値とブランド品質を管理。" },
+            CLO: { name: "Lex", desc: "法的コンプライアンス、契約監査、規制調査。実働部隊を統括。" },
+            CSO: { name: "Stratos", desc: "中長期戦略の立案、競合分析、事業ロードマップ策定。俯瞰的な経営判断を支援。" },
+            CKO: { name: "Lexi", desc: "社内知識の蓄積、RAG用ナレッジ管理。全役員の記憶装置として機能。" },
+            CDO: { name: "Sora", desc: "デザイン一貫性、UX品質、ブランディング。美的品質と使い勝手の両立を追求。" },
+            Specialist: { name: "理系専務", desc: "クオンツ運用エンジンの自律監視。BTC等の期待値演算とリスク分析を担当。" }
+        };
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
+            const target = document.getElementById('page-' + pageId);
+            if(target) target.style.display = 'block';
+            
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const nav = document.getElementById('nav-' + pageId);
+            if(nav) nav.classList.add('active');
+
+            if(pageId === 'reports') loadHistory();
+            if(pageId === 'settings') loadSettings();
+            if(pageId === 'officers') loadOfficersDetail();
+        }
+
+        function showDashboardTab(tabId) {
+            document.querySelectorAll('.dashboard-section').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.tab-item').forEach(t => {
+                t.classList.remove('active');
+                t.style.borderBottom = 'none';
+                t.style.fontWeight = '400';
+            });
+
+            document.getElementById('section-' + tabId).style.display = 'block';
+            const activeTab = document.getElementById('tab-' + tabId);
+            if(activeTab) {
+                activeTab.classList.add('active');
+                activeTab.style.borderBottom = '2px solid #3f51b5';
+                activeTab.style.fontWeight = '600';
+            }
+        }
+
+        async function fetchStatus() {
+            try {
+                const res = await fetch('/api/status');
+                const data = await res.json();
+                const grid = document.getElementById('officer-grid');
+                grid.innerHTML = '';
+                
+                data.officers.forEach(o => {
+                    const info = roleData[o.id] || { name: o.name, desc: "専門領域の自律支援" };
+                    const card = document.createElement('div');
+                    card.className = 'officer-card';
+                    card.innerHTML = `
+                        <div class="officer-header">
+                            <div class="officer-photo" style="display:flex; align-items:center; justify-content:center; background:#e8eaf6; font-size:1.5rem;">${iconMap[o.id] || '👤'}</div>
+                            <div class="officer-info"><span>${o.dept}</span><h3>${info.name} (${o.id})</h3></div>
+                        </div>
+                        <div class="officer-body">${info.desc}</div>
+                        <div class="status-badge ${o.status === 'Active' ? 'active' : ''}"><div class="dot"></div> ${o.status}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (err) { console.error("Fetch Status failed:", err); }
+        }
+
+        async function startMeeting() {
+            const agenda = document.getElementById('agenda-input').value;
+            if (!agenda) return alert("議題を入力してください");
+
+            const stream = document.getElementById('meeting-stream');
+            const content = document.getElementById('stream-content');
+            const labLog = document.getElementById('lab-log');
+            const btn = document.getElementById('start-btn');
+            
+            stream.style.display = 'block';
+            content.innerHTML = '<div style="background:#e3f2fd; padding:15px; border-radius:8px; margin-bottom:15px;">📢 <b>President:</b> ' + agenda + '</div>';
+            labLog.innerHTML += `> New technical task detected: ${agenda}<br>> Initializing OpenCode logic...<br>`;
+            
+            btn.disabled = true; btn.innerText = "⚡ 会議進行中...";
+
+            try {
+                const response = await fetch('/api/meeting/start', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({agenda: agenda})
+                });
+                if (!response.ok) throw new Error(await response.text());
+                const data = await response.json();
+                
+                data.reports.forEach(r => {
+                    const msg = document.createElement('div');
+                    msg.style.padding = '15px'; msg.style.background = '#fff'; msg.style.border = '1px solid #eee'; msg.style.borderRadius = '8px';
+                    
+                    let subAiBadge = r.sub_ai_active ? 
+                        `<span style="background:#e3f2fd; color:#1976d2; font-size:0.7rem; padding:2px 8px; border-radius:10px; margin-left:10px; font-weight:700; border:1px solid #bbdefb;">⚡ サブAI部隊稼働中</span>` : '';
+                    
+                    msg.innerHTML = `<b>${iconMap[r.role] || '👤'} ${r.name} (${r.role}):</b> ${subAiBadge}<br>${r.content.replace(/\n/g, '<br>')}`;
+                    content.appendChild(msg);
+
+                    if (r.role === 'CTO' && (r.content.includes('📁') || r.content.includes('📄') || r.content.includes('FILE:'))) {
+                        const lines = r.content.split('<br>');
+                        lines.forEach(line => {
+                            if (line.includes('📁') || line.includes('📄') || line.includes('FILE:')) {
+                                labLog.innerHTML += `<span style="color:#ffff00">> [EXTRACTED] ${line}</span><br>`;
+                            }
+                        });
+                        labLog.innerHTML += `> Analysis complete for ${r.name}.<br>`;
+                    }
+                });
+
+                if (data.decision) {
+                    const dec = document.createElement('div');
+                    dec.style.padding = '20px'; dec.style.background = '#fff9c4'; dec.style.border = '1px solid #fbc02d'; dec.style.borderRadius = '8px';
+                    dec.innerHTML = `<h3>👑 CEO決断: ${roleData.CEO.name}</h3> ${data.decision.replace(/\n/g, '<br>')}`;
+                    content.appendChild(dec);
+                }
+            } catch (err) {
+                content.innerHTML += `<div style="color:red; background:#ffebee; padding:10px; border-radius:4px; margin-top:10px;">🔴 会議エラー: ${err.message}</div>`;
+            } finally {
+                btn.disabled = false; btn.innerText = "役員会議を招集する";
+            }
+        }
+
+        async function loadSettings() {
+            const res = await fetch('/api/settings');
+            const data = await res.json();
+            const settings = data.settings || {};
+            const defaults = data.defaults || {};
+
+            const keys = ["OPENROUTER_API_KEY", "GEMINI_API_KEY", "GROQ_API_KEY"];
+            keys.forEach(k => {
+                const el = document.getElementById('set-' + k);
+                if(el) el.placeholder = settings[k] || "未設定";
+            });
+
+            const grid = document.getElementById('model-settings-grid');
+            grid.innerHTML = '';
+            const modelOptions = [
+                { val: "groq/llama-3.3-70b-versatile", label: "Groq: Llama 3.3 70B" },
+                { val: "groq/llama-3.1-8b-instant", label: "Groq: Llama 3.1 8B" },
+                { val: "openrouter/anthropic/claude-4.7-opus", label: "OpenRouter: Claude Opus 4.7" },
+                { val: "openrouter/openrouter/elephant", label: "OpenRouter: Elephant (FREE)" },
+                { val: "openrouter/google/gemini-2.0-flash-001", label: "OpenRouter: Gemini 2.0" }
+            ];
+
+            const friendlyNames = {
+                "groq/llama-3.3-70b-versatile": "Groq 70B",
+                "groq/llama-3.1-8b-instant": "Groq 8B",
+                "openrouter/anthropic/claude-4.7-opus": "Claude 4.7 Opus",
+                "openrouter/openrouter/elephant": "Elephant (Free)",
+                "openrouter/google/gemini-2.0-flash-001": "Gemini 2.0",
+                "openrouter/google/gemini-pro": "Gemini Pro",
+                "openrouter/openai/gpt-4o": "GPT-4o"
+            };
+
+            Object.keys(roleData).forEach(role => {
+                const container = document.createElement('div');
+                const envKey = `ROLE_${role}_MODEL`;
+                const currentVal = settings[envKey] || "";
+                const rawDefault = defaults[envKey] || "";
+                const defaultLabel = friendlyNames[rawDefault] || rawDefault || "未設定";
+                
+                container.innerHTML = `
+                    <label style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:4px;">${iconMap[role]} ${role}</label>
+                    <select id="set-${envKey}" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px; font-size:0.8rem;">
+                        <option value="">(標準: ${defaultLabel})</option>
+                        ${modelOptions.map(opt => `<option value="${opt.val}" ${currentVal === opt.val ? 'selected' : ''}>${opt.label}</option>`).join('')}
+                    </select>
+                `;
+                grid.appendChild(container);
+            });
+        }
+
+        async function saveSettings() {
+            const keys = ["OPENROUTER_API_KEY", "GEMINI_API_KEY", "GROQ_API_KEY"];
+            const payload = {};
+            keys.forEach(k => { payload[k] = document.getElementById('set-' + k).value; });
+            const res = await fetch('/api/settings', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({keys: payload})
+            });
+            const status = document.getElementById('settings-status');
+            if(res.ok) { status.innerText = "✅ キー保存成功"; status.style.color = "green"; }
+        }
+
+        async function saveModelSettings() {
+            const payload = {};
+            Object.keys(roleData).forEach(role => {
+                const envKey = `ROLE_${role}_MODEL`;
+                payload[envKey] = document.getElementById(`set-${envKey}`).value;
+            });
+            const res = await fetch('/api/settings', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({keys: payload})
+            });
+            const status = document.getElementById('settings-status');
+            if(res.ok) { status.innerText = "✅ モデル設定保存成功"; status.style.color = "green"; }
+        }
+
+        async function loadHistory() {
+            const res = await fetch('/api/meeting/history');
+            const data = await res.json();
+            const list = document.getElementById('reports-list');
+            list.innerHTML = '';
+            data.forEach(m => {
+                const item = document.createElement('div');
+                item.style.background = '#fff'; item.style.padding = '15px'; item.style.borderRadius = '8px'; item.style.border = '1px solid #e0e0e0';
+                item.innerHTML = `<h4>議題: ${m.agenda}</h4><button onclick="showPage('dashboard'); showDashboardTab('boardroom'); viewHistory(${JSON.stringify(m).replace(/"/g, '&quot;')})" style="border:1px solid #3f51b5; color:#3f51b5; border-radius:4px; cursor:pointer;">内容を復元</button>`;
+                list.appendChild(item);
+            });
+        }
+
+        function viewHistory(m) {
+            document.getElementById('meeting-stream').style.display = 'block';
+            const content = document.getElementById('stream-content');
+            content.innerHTML = `<div style="text-align:center; color:#999; margin-bottom:20px;">--- アーカイブ会議: ${m.agenda} ---</div>`;
+            m.reports.forEach(r => {
+                content.innerHTML += `<div style="padding:15px; background:#fff; border:1px solid #eee; border-radius:8px; margin-bottom:10px;"><b>${iconMap[r.role]} ${r.name}:</b><br>${r.content.replace(/\n/g, '<br>')}</div>`;
+            });
+            content.innerHTML += `<div style="padding:20px; background:#fff9c4; border:1px solid #fbc02d; border-radius:8px;"><h3>👑 CEO決断</h3> ${m.decision.replace(/\n/g, '<br>')}</div>`;
+        }
+
+        async function loadOfficersDetail() {
+            const res = await fetch('/api/settings');
+            const settingsData = await res.json();
+            const defaults = settingsData.defaults || {};
+
+            const container = document.getElementById('officers-detail-list');
+            container.innerHTML = '';
+
+            const subAiMap = {
+                CLO: "Legal Researcher v1 (法的リサーチ部隊)",
+                CTO: "OpenCode Engine (リポジトリ解析部隊)",
+                CMO: "Market Analyst (市場分析部隊)",
+                CKO: "Knowledge RAG (ナレッジ検索部隊)",
+                Specialist: "Quants Logic (クオンツ演算部隊)"
+            };
+
+            Object.entries(roleData).forEach(([role, info]) => {
+                const envKey = `ROLE_${role}_MODEL`;
+                const model = defaults[envKey] || "未設定";
+                const subAi = subAiMap[role] || "なし";
+
+                const card = document.createElement('div');
+                card.style.background = '#fff'; card.style.padding = '25px'; card.style.borderRadius = '16px'; 
+                card.style.border = '1px solid #e0e0e0'; card.style.boxShadow = '0 4px 12px rgba(0,0,0,0.03)';
+                card.innerHTML = `
+                    <div style="display:flex; align-items:flex-start; gap:20px;">
+                        <div style="font-size:3rem; background:#f5f5f5; width:80px; height:80px; display:flex; align-items:center; justify-content:center; border-radius:12px;">${iconMap[role]}</div>
+                        <div style="flex:1;">
+                            <h3 style="margin:0 0 5px 0; color:#1a237e;">${info.name}</h3>
+                            <div style="font-size:0.8rem; color:#666; font-weight:600; text-transform:uppercase; margin-bottom:10px;">${role}</div>
+                            <p style="font-size:0.9rem; line-height:1.5; color:#444; margin-bottom:15px;">${info.desc}</p>
+                            
+                            <div style="background:#f8f9fa; padding:12px; border-radius:8px; font-size:0.8rem; display:flex; flex-direction:column; gap:8px;">
+                                <div><span style="color:#999;">使用脳(AI):</span> <code style="color:#e91e63;">${model}</code></div>
+                                <div><span style="color:#999;">実働部隊:</span> <span style="color:#1a237e; font-weight:600;">${subAi}</span></div>
+                                <div style="display:flex; align-items:center; gap:5px;">
+                                    <span style="color:#999;">ステータス:</span> 
+                                    <span style="color:#4caf50; font-weight:700;">🟢 Online</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.onload = () => { fetchStatus(); setInterval(fetchStatus, 30000); };
+    </script>
+</body>
+</html>

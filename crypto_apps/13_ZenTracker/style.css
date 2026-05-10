@@ -1,0 +1,91 @@
+:root {
+    --bg: #f8fafc;
+    --zen-teal: #14b8a6;
+    --zen-dim: rgba(20, 184, 166, 0.05);
+    --glass: rgba(255, 255, 255, 0.8);
+    --border: rgba(20, 184, 166, 0.1);
+    --text: #1e293b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center; justify-content: center;
+    background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #f1f5f9 100%);
+}
+
+.back-btn {
+    position: fixed; top: 20px; left: 20px; padding: 8px 20px;
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 30px; color: var(--zen-teal);
+    text-decoration: none; font-size: 0.75rem; letter-spacing: 2px;
+    backdrop-filter: blur(15px); z-index: 1000; transition: 0.3s;
+}
+.back-btn:hover { background: var(--zen-teal); color: #fff; }
+
+.zen-container {
+    text-align: center; max-width: 600px;
+}
+
+/* BREATHING CIRCLE */
+.zen-circle-wrapper {
+    position: relative; width: 300px; height: 300px;
+    max-width: 80vw; max-height: 80vw;
+    margin: 0 auto 50px;
+}
+
+@media (max-width: 600px) {
+    .zen-phase { font-size: 1.1rem; letter-spacing: 4px; }
+    .gas-oracle { gap: 15px; }
+    .gas-value { font-size: 1rem; }
+    .zen-quote { font-size: 0.8rem; padding: 0 20px; }
+}
+
+.zen-circle {
+    width: 100%; height: 100%;
+    background: radial-gradient(circle, var(--zen-dim) 0%, transparent 70%);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    animation: breathe 8s ease-in-out infinite;
+    display: flex; align-items: center; justify-content: center;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(0.8); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 1; }
+}
+
+.zen-phase {
+    font-size: 1.5rem; font-weight: 200; letter-spacing: 8px;
+    color: var(--zen-teal); text-transform: uppercase;
+}
+
+/* GAS ORACLE */
+.gas-oracle {
+    display: flex; justify-content: center; gap: 30px; margin-bottom: 40px;
+}
+
+.gas-item {
+    text-align: center;
+}
+
+.gas-label { font-size: 0.6rem; color: #94a3b8; letter-spacing: 2px; margin-bottom: 5px; text-transform: uppercase; }
+.gas-value { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+
+/* QUOTE */
+.zen-quote {
+    font-size: 0.9rem; color: #64748b; line-height: 1.8;
+    font-style: italic; padding: 0 40px;
+}
+
+/* UI OVERLAYS */
+.status-indicator {
+    position: fixed; bottom: 40px; width: 100%; text-align: center;
+    font-size: 0.65rem; letter-spacing: 3px; color: #cbd5e1;
+}

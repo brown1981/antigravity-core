@@ -1,0 +1,56 @@
+{
+  "system_info": {
+    "ai_name": "Antigravity",
+    "mission_commander": "President",
+    "version": "1.5.0",
+    "cognitive_load": 42
+  },
+  "memories": [
+    {
+      "id": "mem_001",
+      "title": "MAW進捗報告プロトコル",
+      "tier": "Warm",
+      "created_at": "2026-04-19T17:50:00Z",
+      "last_accessed_at": "2026-04-19T18:00:00Z",
+      "access_count": 15,
+      "summary": "Phase 1からPhase 4までの合意プロセス。"
+    },
+    {
+      "id": "mem_002",
+      "title": "UI色の好み (HSL/Dark)",
+      "tier": "Warm",
+      "created_at": "2026-04-19T17:10:00Z",
+      "last_accessed_at": "2026-04-19T17:40:00Z",
+      "access_count": 8,
+      "summary": "モダンなダークモードとHSLカラー指定を好む。"
+    },
+    {
+      "id": "mem_003",
+      "title": "初ミッション: 記憶ダッシュボード",
+      "tier": "Hot",
+      "created_at": "2026-04-19T18:00:00Z",
+      "last_accessed_at": "2026-04-19T18:01:00Z",
+      "access_count": 1,
+      "summary": "内部状態の可視化と透明性確保のためのツール開発。"
+    },
+    {
+      "id": "mem_004",
+      "title": "QUANT SENTINEL プロジェクト",
+      "tier": "Cold",
+      "created_at": "2026-04-18T10:00:00Z",
+      "last_accessed_at": "2026-04-18T22:00:00Z",
+      "access_count": 45,
+      "summary": "制作中断済み。archives/2026-04-19_quant_sentinel_halted に退避。"
+    }
+  ],
+  "thought_trace": [
+    {
+      "timestamp": "2026-04-19T18:00:10Z",
+      "decision": "記憶管理ダッシュボードの設計開始",
+      "reasoning": "「今のAIが何を重視しているか」というPresidentの問いに対応するため。",
+      "rules_applied": ["第8.1章", "第5章"],
+      "memory_applied": ["mem_002"]
+    }
+  ],
+  "signal_alerts": []
+}

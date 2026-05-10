@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8"><title>Daily Compass | Antigravity</title>
+    <script src="../config.js"></script>
+    <style>
+        body { margin: 0; background: #fff; color: #333; font-family: 'Georgia', serif; padding: 40px; line-height: 1.6; }
+        .back-btn { position: fixed; top: 20px; left: 20px; padding: 10px 20px; border: 1px solid #333; color: #333; text-decoration: none; font-size: 0.8rem; background: #fff; z-index: 1000; }
+        .paper { max-width: 650px; margin: 40px auto 0; border: 1px solid #ddd; padding: 50px; box-shadow: 15px 15px 0 #f0f0f0; }
+        h1 { border-bottom: 3px solid #333; padding-bottom: 15px; text-transform: uppercase; letter-spacing: 4px; font-size: 2rem; margin-bottom: 10px; }
+        .date { font-style: italic; border-bottom: 1px solid #eee; margin-bottom: 30px; padding-bottom: 5px; color: #777; }
+        .section { margin-bottom: 30px; }
+        .section h2 { font-size: 1rem; color: #000; margin-bottom: 10px; text-decoration: underline; }
+        .news-item { margin-bottom: 15px; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Archive</a>
+    <div class="paper">
+        <h1>Daily Compass</h1>
+        <div id="current-date" class="date">...</div>
+        
+        <div class="section">
+            <h2>Market Briefing</h2>
+            <p id="market-brief">Fetching global market status...</p>
+        </div>
+
+        <div class="section">
+            <h2>Headlines</h2>
+            <div id="news-list">
+                Loading news signals...
+            </div>
+        </div>
+
+        <div class="section" style="border-top: 1px solid #eee; padding-top: 20px; font-size: 0.8rem; color: #999;">
+            "Discipline is the bridge between goals and accomplishment."
+        </div>
+    </div>
+
+    <script>
+        const KEY = window.ANTIGRAVITY_CONFIG.COINGECKO_API_KEY;
+
+        async function updateCompass() {
+            document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            try {
+                // 1. Global Status
+                const globalRes = await fetch('https://api.coingecko.com/api/v3/global');
+                const globalData = await globalRes.json();
+                const d = globalData.data;
+                document.getElementById('market-brief').innerText = `Total Market Cap stands at $${(d.total_market_cap.usd / 1e12).toFixed(2)}T. Market dominance is led by Bitcoin at ${d.market_cap_percentage.btc.toFixed(1)}%. Volatility is ${d.market_cap_change_percentage_24h_usd.toFixed(2)}% in 24h.`;
+
+                // 2. News (Using Trending as News proxy for high-quality symbols)
+                const trendRes = await fetch(`https://api.coingecko.com/api/v3/search/trending?x_cg_demo_api_key=${KEY}`);
+                const trendData = await trendRes.json();
+                let html = '';
+                trendData.coins.slice(0, 4).forEach(c => {
+                    html += `<div class="news-item">● High interest detected in <strong>${c.item.name}</strong>. Ranked #${c.item.market_cap_rank || '?'} in market cap.</div>`;
+                });
+                document.getElementById('news-list').innerHTML = html;
+
+            } catch(e) { console.error(e); }
+        }
+        updateCompass();
+    </script>
+</body>
+</html>

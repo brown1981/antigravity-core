@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity | Memory Vitals V15.6</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 1. Neural Core (Background) -->
+    <canvas id="neural-canvas"></canvas>
+    <div class="vignette"></div>
+    <div id="scroll-driver"></div>
+
+    <!-- 2. The Theater -->
+    <div class="theater">
+        
+        <!-- STAGE: HERO -->
+        <section id="stage-hero" class="stage">
+            <div class="hero-wrap">
+                <h1 id="type-v9">MEMORY VITALS: ANALYZING RESILIENT CORE...</h1>
+                <div class="hero-hint">
+                    <p>SCROLL TO DIVE INTO COGNITION</p>
+                    <div class="indicator-v9"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE: DASHBOARD -->
+        <main id="stage-dash" class="stage">
+            <header class="v9-header glass" data-augmented-ui="tl-clip br-clip exe">
+                <div class="header-l">
+                    <span class="logo">ANTIGRAVITY</span>
+                    <span class="badge-v9 initializing">V14.1 UNIVERSAL CORE</span>
+                </div>
+                <div class="header-r">
+                    <button id="theme-toggle" class="theme-btn"></button>
+                </div>
+            </header>
+
+            <div class="v9-grid">
+                <!-- PANEL: CONSTITUTION -->
+                <aside class="panel glass" data-augmented-ui="tl-clip br-clip exe both">
+                    <div class="panel-head"><h3>1-9: CONSTITUTION</h3></div>
+                    <div class="panel-body" id="r-list"></div>
+                </aside>
+
+                <!-- PANEL: CENTER (Metrics & Vitals) -->
+                <div class="panel-center">
+                    <div class="stats">
+                        <div class="stat-card glass" data-augmented-ui="tr-clip bl-clip both">
+                            <label>COGNITIVE LOAD</label>
+                            <div class="pg-bg"><div id="pg-fill"></div></div>
+                            <span class="val" id="pg-val">38%</span>
+                        </div>
+                        <div class="stat-card glass" data-augmented-ui="tr-clip bl-clip both">
+                            <label>NEURAL STATE</label>
+                            <span class="val">LEAN</span>
+                        </div>
+                    </div>
+
+                    <div class="panel glass" data-augmented-ui="tl-clip br-clip both">
+                        <div class="panel-head"><h3>MEMORY VITALS</h3></div>
+                        <div class="panel-body" id="m-list"></div>
+                    </div>
+                </div>
+
+                <!-- PANEL: TRACE -->
+                <aside class="panel glass" data-augmented-ui="tr-clip bl-clip both">
+                    <div class="panel-head"><h3>THOUGHT TRACE</h3></div>
+                    <div class="panel-body" id="l-list"></div>
+                    <div class="footer-msg">SYNERGY: 100%</div>
+                </aside>
+            </div>
+        </main>
+        
+        <!-- STAGE: AUTOMATION HUB (Liquid Zapier) -->
+        <section id="stage-auto" class="stage">
+            <div class="v9-auto-container">
+                <div class="v9-auto-hero">
+                    <h2 class="v9-auto-title">NEURAL AUTOMATION</h2>
+                    <div class="synapse-input-wrap glass">
+                        <input type="text" id="auto-prompt" placeholder="What would you like to automate?">
+                        <button id="auto-create-btn">SYNC</button>
+                    </div>
+                </div>
+                
+                <div id="v9-flow-builder" class="v9-flow-builder">
+                    <!-- Vertical Node Flow -->
+                    <div class="v9-empty-state">
+                        <p>NO ACTIVE SYNAPSES</p>
+                        <span>START BY TYPING A COMMAND ABOVE</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 3. LIQUID MODAL V9 -->
+    <div id="modal-v9" class="modal-v9">
+        <div class="modal-wrap glass">
+            <div class="modal-top">
+                <h2 id="m-title">TITLE</h2>
+                <button id="close-v9">CLOSE</button>
+            </div>
+            <div class="modal-content-v9" id="m-body"></div>
+        </div>
+    </div>
+
+    <!-- Engine & Data -->
+    <!-- V14.0 Steel Symphony: Modular Intelligence Chain -->
+    <script src="data_bridge.js"></script>
+    <script src="connector_library.js"></script>
+    <script src="knowledge_cortex.js"></script>
+    <script src="core_registry.js"></script>
+    <script src="memory_inspector.js"></script>
+    <script src="synapse_parser.js"></script>
+    <script src="workflow_engine.js"></script>
+    <script src="neural_engine.js"></script>
+    <script src="automation_hub.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

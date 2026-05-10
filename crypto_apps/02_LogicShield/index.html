@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic Shield | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <a href="../../index.html" class="back-btn">[ RETURN_TO_NEXUS ]</a>
+    
+    <!-- Main UI -->
+    <div class="shield-container">
+        <header class="header">
+            <span>LOGIC_SHIELD // 5-FACTOR_ANALYSIS</span>
+            <span id="sys-time">00:00:00</span>
+        </header>
+        
+        <!-- Loading State -->
+        <div id="loading" style="text-align:center; padding: 100px;">
+            [ RUNNING_HEURISTIC_ALGORITHMS... ]
+        </div>
+
+        <!-- Analysis Content -->
+        <div id="content" style="display: none;">
+            <div class="signal-grid" id="coin-grid">
+                <!-- Coin Boxes injected by script.js -->
+            </div>
+            
+            <div class="overall-box">
+                <div class="overall-title">GLOBAL TACTICAL ASSESSMENT</div>
+                <div id="overall-eval" class="overall-text">
+                    Calculating multi-factor logic...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic Engine (Pure Math) -->
+    <script src="i18n.js"></script>
+    <script src="logic.js"></script>
+    <!-- Orchestrator (API/UI) -->
+    <script src="script.js"></script>
+</body>
+</html>

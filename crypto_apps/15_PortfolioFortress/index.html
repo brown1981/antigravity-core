@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Fortress | Antigravity Strategic</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Dependencies -->
+    <script src="../config.js"></script>
+    
+    <!-- Internal Assets (SOLID) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav style="position:fixed; top:20px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:center; z-index:1000;">
+        <a href="../../index.html" class="back-btn">[ RETURN_TO_NEXUS ]</a>
+        <div class="lang-selector">
+            <button onclick="setLang('ja')" style="background:var(--glass); color:#fff; border:1px solid var(--border); padding:5px 15px; cursor:pointer; border-radius:4px;">JP</button>
+            <button onclick="setLang('en')" style="background:var(--glass); color:#fff; border:1px solid var(--border); padding:5px 15px; cursor:pointer; border-radius:4px;">EN</button>
+        </div>
+    </nav>
+
+    <div class="sacred-geometry"></div>
+
+    <main class="fortress-wrapper">
+        <!-- 3D Shield Grid -->
+        <div class="shield-container">
+            <div class="hexagon-grid" id="shield-grid">
+                <!-- Hexagons injected by script.js -->
+            </div>
+        </div>
+
+        <!-- Risk Side Panel -->
+        <aside class="risk-panel">
+            <h2>FORTRESS_STRESS_TEST</h2>
+            
+            <div style="margin-bottom: 30px;">
+                <div style="font-size:0.6rem; color:#444; letter-spacing:1px;">MARKET_CRASH_SIMULATION (BTC -35%)</div>
+                <div style="font-size:1.4rem; font-weight:700; color:var(--prism-2);" id="market-crash">---</div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <div style="font-size:0.6rem; color:#444; letter-spacing:1px;">FORTRESS_SURVIVAL_DRAWDOWN</div>
+                <div style="font-size:1.4rem; font-weight:700; color:var(--prism-1);" id="fortress-survival">---</div>
+                <div class="risk-bar"><div class="risk-fill"></div></div>
+            </div>
+
+            <div style="padding:20px; background:rgba(255,255,255,0.02); border-radius:12px; font-size:0.7rem; color:#666; line-height:1.6;">
+                <strong style="color:#fff; display:block; margin-bottom:10px;">DEFENSE_STRATEGY:</strong>
+                分散（Diversification）は、無知に対する保険ではない。それは、予測不可能な事態に対する唯一の「数学的な防壁」である。
+            </div>
+        </aside>
+
+        <!-- Centered Title -->
+        <div class="fortress-title">
+            <h1>PORTFOLIO_FORTRESS</h1>
+            <div class="fortress-status">THE_FINAL_BASTION_OPERATIONAL | V3.1_COMPLETE</div>
+        </div>
+    </main>
+
+    <!-- Scripts (SOLID) -->
+    <script src="i18n.js"></script>
+    <script src="fortress_engine.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

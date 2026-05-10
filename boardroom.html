@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Boardroom - Antigravity Native</title>
+  
+  <!-- Google Fonts: Inter & Material Symbols M3 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  
+  <style>
+    md-icon { font-family: 'Material Symbols Outlined'; }
+  </style>
+  
+  <!-- Material Web Components (M3) via direct ESM (Bypassing Safari redirect bugs) -->
+  <script type="module" src="https://esm.run/@material/web/all.js"></script>
+
+  <link rel="stylesheet" href="boardroom.css">
+</head>
+<body class="dark-theme">
+  <!-- Dynamic Ambient Background -->
+  <div class="ambient-bg">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Left Sidebar: AI Agents -->
+    <aside class="sidebar glass-panel">
+      <div class="brand">
+        <md-icon class="brand-icon">target</md-icon>
+        <span class="brand-text">BOARDROOM</span>
+      </div>
+      
+      <div class="agent-list">
+        <!-- CEO -->
+        <div class="agent-item" data-agent="ceo">
+          <div class="avatar-ring color-ceo">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ceo&backgroundColor=transparent" alt="CEO">
+          </div>
+          <span class="agent-name">CEO (Llama3)</span>
+        </div>
+        <!-- Security -->
+        <div class="agent-item" data-agent="security">
+          <div class="avatar-ring color-sec">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=sec&backgroundColor=transparent" alt="Security">
+          </div>
+          <span class="agent-name">Security (Mistral)</span>
+        </div>
+        <!-- Developer -->
+        <div class="agent-item" data-agent="developer">
+          <div class="avatar-ring color-dev">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=dev&backgroundColor=transparent" alt="Developer">
+          </div>
+          <span class="agent-name">Dev (Qwen2)</span>
+        </div>
+        <!-- PR -->
+        <div class="agent-item" data-agent="pr">
+          <div class="avatar-ring color-pr">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=pr&backgroundColor=transparent" alt="PR">
+          </div>
+          <span class="agent-name">PR (Gemma2)</span>
+        </div>
+        <!-- Reviewer -->
+        <div class="agent-item" data-agent="reviewer">
+          <div class="avatar-ring color-rev">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=rev&backgroundColor=transparent" alt="Reviewer">
+          </div>
+          <span class="agent-name">Reviewer (Phi3)</span>
+        </div>
+        <!-- Curator -->
+        <div class="agent-item" data-agent="curator">
+          <div class="avatar-ring color-cur">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=cur&backgroundColor=transparent" alt="Curator">
+          </div>
+          <span class="agent-name">Curator (Nemo)</span>
+        </div>
+      </div>
+      
+      <div class="sidebar-footer">
+        <md-filled-button id="btn-new-task">
+          <md-icon slot="icon">add</md-icon>
+          New Task
+        </md-filled-button>
+      </div>
+    </aside>
+
+    <!-- Main Kanban Area -->
+    <main class="kanban-board">
+      <header class="board-header glass-panel">
+        <div class="header-titles">
+          <h1>Corporate Agile Workflow</h1>
+          <p>Project: Alpha Strategy 2026</p>
+        </div>
+        <div class="header-actions">
+           <!-- Using Material 3 Web Components -->
+           <md-icon-button><md-icon>search</md-icon></md-icon-button>
+           <md-icon-button><md-icon>notifications</md-icon></md-icon-button>
+           <md-icon-button><md-icon>settings</md-icon></md-icon-button>
+        </div>
+      </header>
+
+      <div class="columns-container">
+        <!-- TODO Column -->
+        <section class="kanban-column" id="col-todo">
+          <div class="column-header">
+            <h2>TODO</h2>
+            <span class="task-count">0</span>
+          </div>
+          <div class="task-list" id="list-todo">
+             <!-- Tasks will be injected here via JS -->
+          </div>
+        </section>
+
+        <!-- IN PROGRESS Column -->
+        <section class="kanban-column" id="col-progress">
+          <div class="column-header">
+            <h2 class="text-glow-blue">IN PROGRESS</h2>
+            <span class="task-count">0</span>
+          </div>
+          <div class="task-list" id="list-progress"></div>
+        </section>
+
+        <!-- REVIEW Column -->
+        <section class="kanban-column" id="col-review">
+          <div class="column-header">
+            <h2 class="text-glow-yellow">REVIEW</h2>
+            <span class="task-count">0</span>
+          </div>
+          <div class="task-list" id="list-review"></div>
+        </section>
+
+        <!-- DONE Column -->
+        <section class="kanban-column" id="col-done">
+          <div class="column-header">
+            <h2 class="text-glow-green">DONE</h2>
+            <span class="task-count">0</span>
+          </div>
+          <div class="task-list" id="list-done"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Task Creation Modal -->
+  <dialog id="task-modal" class="glass-panel">
+    <div class="modal-header">
+      <h2>Create New Mission</h2>
+      <md-icon-button id="close-modal"><md-icon>close</md-icon></md-icon-button>
+    </div>
+    <form id="task-form">
+      <div class="form-group">
+        <label>Mission Title</label>
+        <input type="text" id="task-title" required placeholder="e.g. Implement Mood Orbit Logic">
+      </div>
+      <div class="form-group">
+        <label>Assign To (Primary AI)</label>
+        <select id="task-assignee">
+          <option value="ceo">CEO (Llama3)</option>
+          <option value="security">Security (Mistral)</option>
+          <option value="developer">Developer (Qwen2)</option>
+          <option value="pr">PR (Gemma2)</option>
+          <option value="reviewer">Reviewer (Phi3)</option>
+          <option value="curator">Curator (Nemo)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Detailed Briefing</label>
+        <textarea id="task-desc" rows="4" placeholder="Provide context and requirements..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" id="btn-cancel-task">Cancel</button>
+        <button type="submit" class="btn-submit">Deploy Task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="boardroom.js"></script>
+</body>
+</html>
