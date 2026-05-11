@@ -50,7 +50,8 @@ def send_command():
         # CEOロジックに直接指示を渡して処理させる
         # フロントエンドからは 'instruction' と 'title' が送られてくる
         title = data.get('title', 'Direct Mission')
-        result = autonomous_patrol.execute_direct_mission(instruction, title=title)
+        description = data.get('description', '')
+        result = autonomous_patrol.execute_direct_mission(instruction, title=title, description=description)
         return jsonify(result)
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500

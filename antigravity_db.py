@@ -48,26 +48,30 @@ def init_db():
     finally:
         conn.close()
 
-def create_task(instruction, agent_name="Hermes", title="Direct Mission"):
+def create_task(instruction, agent_name="Hermes", title=None, description=None):
     """新しいタスクを登録する"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
-        # instructionの先頭にタイトルを付与するか、将来的にカラムを増やす。
-        # 現在のスキーマに合わせて、指示内容にタイトルをマージして保存します。
-        full_instruction = f"[{title}] {instruction}"
+        # 既存のスキーマに合わせて情報を統合
+        # titleやdescriptionがあれば、それをinstructionに含めて保存する
+        full_text = instruction
+        if title:
+            full_text = f"[{title}] {full_text}"
+        if description:
+            full_text = f"{full_text}\n\nDetails: {description}"
+            
         cursor.execute(
             "INSERT INTO tasks (instruction, agent_name, status) VALUES (?, ?, ?)",
-            (full_instruction, agent_name, 'executing')
+            (full_text, agent_name, 'executing')
         )
         conn.commit()
         return cursor.lastrowid
     except Exception as e:
         print(f"❌ [DB] create_task Error: {e}")
-        # もしテーブルがないと言われたら、その場で初期化して再試行
         if "no such table" in str(e):
             init_db()
-            return create_task(instruction, agent_name)
+            return create_task(instruction, agent_name, title, description)
         raise
     finally:
         conn.close()

@@ -85,22 +85,19 @@ def run_ai_board_meeting():
     except Exception as e:
         print(f"❌ AI Board Meeting Error: {e}")
 
-def execute_direct_mission(instruction, title=None):
+def execute_direct_mission(instruction, title=None, description=None):
     """
     Web画面から送られた人間からの直接指示（Mission）を即座に処理する関数
     """
-    print(f"🎯 [DIRECT COMMAND] Received from Web UI: {instruction}")
+    print(f"🎯 [DIRECT COMMAND] Received Mission: {title or instruction}")
     
-    # 実際にはここでLLM（Gemini等）を呼び出して指示に対する回答を生成しますが、
-    # まずは受け取った指示をシステムが認識してタスクとして発行するロジックを組みます。
-    
-    title = f"緊急ミッション受領: {instruction[:15]}..."
-    description = f"【Direct Command】\nユーザーから以下の直接指示を受け取りました。\n\n『{instruction}』\n\n"
-    description += "ステータス: 処理中（次回の経営会議にてデータ分析結果と合わせて報告予定）"
+    # 指示の概要と詳細を組み合わせてDBに登録
+    final_title = title or f"緊急ミッション受領: {instruction[:15]}..."
+    final_desc = description or f"【Direct Command】\nユーザーから以下の直接指示を受け取りました。\n\n『{instruction}』"
     
     print("📡 [AI COMPANY] Submitting Direct Mission to Boardroom...")
-    db.create_task(title=title, description=description, assignee="Hermes CEO")
-    return {"status": "success", "message": "Mission acknowledged and queued."}
+    db.create_task(instruction, title=final_title, description=final_desc, agent_name="Hermes CEO")
+    return {"status": "success", "message": "Mission acknowledged and recorded."}
 
 def start_background_loop(interval=300):
     """
