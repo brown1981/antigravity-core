@@ -59,6 +59,8 @@ def send_command():
 
 def start_ai_company():
     """すべてのAI部署をバックグラウンドスレッドで起動します"""
+    print("🚀 [HQ] Initializing Knowledge Base...")
+    db.init_db() # 起動時にテーブル作成を保証
     print("🚀 [HQ] Starting Antigravity Engine (AI Company)...")
     
     # 1. データ収集部 (2分間隔)
