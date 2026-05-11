@@ -91,6 +91,7 @@ def create_task(title, description, assignee, context_summary="", context_payloa
         
         log_audit(cursor, 'human_or_system', 'task_created', task_id, {"title": title, "assignee": assignee})
         cursor.execute('COMMIT')
+        export_to_js() # JSへの書き出し
         print(f"✅ タスク作成完了: {task_id} ({title})")
         return task_id
     except Exception as e:
@@ -108,6 +109,15 @@ def get_todo_task():
     task = cursor.fetchone()
     conn.close()
     return dict(task) if task else None
+
+def export_to_js():
+    """全タスクを tasks_data.js として書き出し、サーバーレスでUIと同期する"""
+    tasks = get_all_tasks()
+    js_content = f"window.ANTIGRAVITY_TASKS = {json.dumps(tasks, ensure_ascii=False, indent=2)};"
+    js_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tasks_data.js')
+    with open(js_path, 'w', encoding='utf-8') as f:
+        f.write(js_content)
+    # print(f"📊 UIデータ同期完了: {js_path}")
 
 def get_all_tasks():
     """全タスクを取得する（UI用）"""
@@ -141,6 +151,7 @@ def update_task_status(task_id, new_status, actor="engine", reason=None, result=
             
         log_audit(cursor, actor, 'status_updated', task_id, {"new_status": new_status, "reason": reason})
         cursor.execute('COMMIT')
+        export_to_js() # JSへの書き出し
     except Exception as e:
         cursor.execute('ROLLBACK')
         raise

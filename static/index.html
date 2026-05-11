@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antigravity Boardroom - Neural Command Center</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  
+  <script type="module" src="https://esm.run/@material/web/all.js"></script>
+  <link rel="stylesheet" href="boardroom.css">
+</head>
+<body class="dark-theme">
+  <div class="ambient-bg">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Left Sidebar: 6 Great Gods -->
+    <aside class="sidebar glass-panel">
+      <div class="brand">
+        <span class="material-symbols-outlined brand-icon">hub</span>
+        <span class="brand-text">ANTIGRAVITY</span>
+      </div>
+      
+      <div class="agent-list">
+        <!-- 1. Kikou (Tech) -->
+        <div class="agent-item" data-agent="kikou">
+          <div class="avatar-ring color-kikou">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=kikou&backgroundColor=transparent" alt="Kikou">
+          </div>
+          <span class="agent-name">機巧 (Kikou)</span>
+        </div>
+        <!-- 2. Shinbou (Strategy) -->
+        <div class="agent-item" data-agent="shinbou">
+          <div class="avatar-ring color-shinbou">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=shinbou&backgroundColor=transparent" alt="Shinbou">
+          </div>
+          <span class="agent-name">深謀 (Shinbou)</span>
+        </div>
+        <!-- 3. Hyoujin (Safety) -->
+        <div class="agent-item" data-agent="hyoujin">
+          <div class="avatar-ring color-hyoujin">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=hyoujin&backgroundColor=transparent" alt="Hyoujin">
+          </div>
+          <span class="agent-name">兵神 (Hyoujin)</span>
+        </div>
+        <!-- 4. Zero (Data) -->
+        <div class="agent-item" data-agent="zero">
+          <div class="avatar-ring color-zero">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=zero&backgroundColor=transparent" alt="Zero">
+          </div>
+          <span class="agent-name">零 (Zero)</span>
+        </div>
+        <!-- 5. Librarian (Memory) -->
+        <div class="agent-item" data-agent="librarian">
+          <div class="avatar-ring color-librarian">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=librarian&backgroundColor=transparent" alt="Librarian">
+          </div>
+          <span class="agent-name">司書 (Librarian)</span>
+        </div>
+        <!-- 6. Shingun (Execution) -->
+        <div class="agent-item" data-agent="shingun">
+          <div class="avatar-ring color-shingun">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=shingun&backgroundColor=transparent" alt="Shingun">
+          </div>
+          <span class="agent-name">進軍 (Shingun)</span>
+        </div>
+      </div>
+      
+      <div class="sidebar-footer">
+        <md-filled-button id="btn-new-task">
+          <span class="material-symbols-outlined" slot="icon">bolt</span>
+          New Mission
+        </md-filled-button>
+      </div>
+    </aside>
+
+    <!-- Main Kanban Area -->
+    <main class="kanban-board">
+      <header class="board-header glass-panel">
+        <div class="header-titles">
+          <h1>Neural Operations Control</h1>
+          <p>Phase 2: Strategic Skill Integration</p>
+        </div>
+        <div class="header-actions">
+           <md-icon-button><span class="material-symbols-outlined">analytics</span></md-icon-button>
+           <md-icon-button><span class="material-symbols-outlined">history</span></md-icon-button>
+           <md-icon-button><span class="material-symbols-outlined">settings_input_component</span></md-icon-button>
+        </div>
+      </header>
+
+      <div class="columns-container">
+        <!-- TODO -->
+        <section class="kanban-column" id="col-todo">
+          <div class="column-header">
+            <h2>MISSIONS</h2>
+            <span class="task-count" id="count-todo">0</span>
+          </div>
+          <div class="task-list" id="list-todo"></div>
+        </section>
+
+        <!-- IN PROGRESS -->
+        <section class="kanban-column" id="col-progress">
+          <div class="column-header">
+            <h2 class="text-glow-blue">EXECUTING</h2>
+            <span class="task-count" id="count-progress">0</span>
+          </div>
+          <div class="task-list" id="list-progress"></div>
+        </section>
+
+        <!-- REVIEW -->
+        <section class="kanban-column" id="col-review">
+          <div class="column-header">
+            <h2 class="text-glow-yellow">AUDIT</h2>
+            <span class="task-count" id="count-review">0</span>
+          </div>
+          <div class="task-list" id="list-review"></div>
+        </section>
+
+        <!-- DONE -->
+        <section class="kanban-column" id="col-done">
+          <div class="column-header">
+            <h2 class="text-glow-green">ARCHIVED</h2>
+            <span class="task-count" id="count-done">0</span>
+          </div>
+          <div class="task-list" id="list-done"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Mission Deployment Modal -->
+  <dialog id="task-modal">
+    <div class="modal-header">
+      <h2>Deploy New Mission</h2>
+      <md-icon-button id="close-modal"><span class="material-symbols-outlined">close</span></md-icon-button>
+    </div>
+    <form id="task-form">
+      <div class="form-group">
+        <label>Mission Identifier</label>
+        <input type="text" id="task-title" required placeholder="e.g. Sync Mood Orbit with Hermes">
+      </div>
+      <div class="form-group">
+        <label>Designated Worker</label>
+        <select id="task-assignee">
+          <option value="kikou">機巧 (Kikou) - 技術・実装</option>
+          <option value="shinbou">深謀 (Shinbou) - 戦略・ロジック</option>
+          <option value="hyoujin">兵神 (Hyoujin) - 安全・監査</option>
+          <option value="zero">零 (Zero) - データ収集</option>
+          <option value="librarian">司書 (Librarian) - 記憶管理</option>
+          <option value="shingun">進軍 (Shingun) - 実行</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Operational Briefing</label>
+        <textarea id="task-desc" rows="4" placeholder="Detailed instructions for the Great God..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" id="btn-cancel-task">Abort</button>
+        <button type="submit" class="btn-submit">Execute Mission</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="boardroom.js"></script>
+</body>
+</html>
