@@ -48,7 +48,9 @@ def send_command():
         
     try:
         # CEOロジックに直接指示を渡して処理させる
-        result = autonomous_patrol.execute_direct_mission(instruction)
+        # フロントエンドからは 'instruction' と 'title' が送られてくる
+        title = data.get('title', 'Direct Mission')
+        result = autonomous_patrol.execute_direct_mission(instruction, title=title)
         return jsonify(result)
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500

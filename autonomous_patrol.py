@@ -85,7 +85,7 @@ def run_ai_board_meeting():
     except Exception as e:
         print(f"❌ AI Board Meeting Error: {e}")
 
-def execute_direct_mission(instruction):
+def execute_direct_mission(instruction, title=None):
     """
     Web画面から送られた人間からの直接指示（Mission）を即座に処理する関数
     """

@@ -48,14 +48,17 @@ def init_db():
     finally:
         conn.close()
 
-def create_task(instruction, agent_name="Hermes"):
+def create_task(instruction, agent_name="Hermes", title="Direct Mission"):
     """新しいタスクを登録する"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
+        # instructionの先頭にタイトルを付与するか、将来的にカラムを増やす。
+        # 現在のスキーマに合わせて、指示内容にタイトルをマージして保存します。
+        full_instruction = f"[{title}] {instruction}"
         cursor.execute(
             "INSERT INTO tasks (instruction, agent_name, status) VALUES (?, ?, ?)",
-            (instruction, agent_name, 'executing')
+            (full_instruction, agent_name, 'executing')
         )
         conn.commit()
         return cursor.lastrowid
