@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 # データベースファイルのパス (antigravity_bridge.pyと同じディレクトリ)
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'antigravity.db')
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'antigravity_v2.db')
 
 def get_connection():
     """SQLiteデータベースへの接続を取得し、WALモードを有効にする。テーブルがない場合は自動作成する。"""
