@@ -21,15 +21,17 @@ def get_connection():
         raise
 
 def init_db():
-    """データベースのテーブルを初期化する。"""
+    """データベースのテーブルを初期化し、必要に応じてカラムを追加する。"""
     print(f"📡 [DB] Initializing database at: {DB_PATH}")
     conn = get_connection()
     try:
         cursor = conn.cursor()
-        # tasksテーブルの作成
+        # tasksテーブルの作成 (title, description カラムを追加)
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS tasks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT,
+                description TEXT,
                 instruction TEXT NOT NULL,
                 status TEXT DEFAULT 'pending',
                 result TEXT,
@@ -38,45 +40,45 @@ def init_db():
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
+        
+        # 既存のテーブルにカラムがない場合の補完 (Migration)
+        try:
+            cursor.execute("ALTER TABLE tasks ADD COLUMN title TEXT")
+        except: pass
+        try:
+            cursor.execute("ALTER TABLE tasks ADD COLUMN description TEXT")
+        except: pass
+            
         conn.commit()
-        # 確認用のSELECT
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='tasks'")
-        if cursor.fetchone():
-            print("✅ [DB] Table 'tasks' confirmed and ready.")
-        else:
-            print("❌ [DB] Table 'tasks' creation FAILED.")
+        print("✅ [DB] Database schema is up to date.")
     except Exception as e:
         print(f"❌ [DB] Init Error: {e}")
     finally:
         conn.close()
 
+import time
+
 def create_task(instruction, agent_name="Hermes", title=None, description=None):
-    """新しいタスクを登録する"""
-    conn = get_connection()
-    try:
-        cursor = conn.cursor()
-        # 既存のスキーマに合わせて情報を統合
-        # titleやdescriptionがあれば、それをinstructionに含めて保存する
-        full_text = instruction
-        if title:
-            full_text = f"[{title}] {full_text}"
-        if description:
-            full_text = f"{full_text}\n\nDetails: {description}"
-            
-        cursor.execute(
-            "INSERT INTO tasks (instruction, agent_name, status) VALUES (?, ?, ?)",
-            (full_text, agent_name, 'IN_PROGRESS')
-        )
-        conn.commit()
-        return cursor.lastrowid
-    except Exception as e:
-        print(f"❌ [DB] create_task Error: {e}")
-        if "no such table" in str(e):
-            init_db()
-            return create_task(instruction, agent_name, title, description)
-        raise
-    finally:
-        conn.close()
+    """新しいタスクを登録する (リトライロジック付き)"""
+    for attempt in range(5):
+        try:
+            conn = get_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO tasks (instruction, agent_name, status, title, description) VALUES (?, ?, ?, ?, ?)",
+                (instruction, agent_name, 'IN_PROGRESS', title, description)
+            )
+            conn.commit()
+            last_id = cursor.lastrowid
+            conn.close()
+            return last_id
+        except Exception as e:
+            if "locked" in str(e).lower() and attempt < 4:
+                time.sleep(0.5)
+                continue
+            print(f"❌ [DB] create_task Error: {e}")
+            raise
+    return None
 
 def get_all_tasks(limit=10):
     """最新のタスク一覧を取得する"""

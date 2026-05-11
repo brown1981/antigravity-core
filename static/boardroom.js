@@ -83,9 +83,12 @@ function createTaskCard(task) {
 
   const avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${task.assignee}&backgroundColor=transparent`;
 
+  const displayTitle = task.title || (task.instruction ? task.instruction.substring(0, 30) + "..." : "No Title");
+  const displayDesc = task.description || task.instruction || "";
+
   div.innerHTML = `
-    <div class="task-title">${task.title}</div>
-    <div class="task-desc">${task.description}</div>
+    <div class="task-title">${displayTitle}</div>
+    <div class="task-desc">${displayDesc}</div>
     <div class="task-footer">
       <div class="task-agent-chip">
         <img src="${avatarUrl}" alt="${agent.label}">
