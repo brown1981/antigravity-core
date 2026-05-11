@@ -8,11 +8,20 @@ from datetime import datetime
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'nexus_core.db')
 
 def get_connection():
-    """SQLiteデータベースへの接続を取得し、WALモードを有効にする"""
+    """SQLiteデータベースへの接続を取得し、WALモードを有効にする。テーブルがない場合は自動作成する。"""
+    is_new = not os.path.exists(DB_PATH)
     conn = sqlite3.connect(DB_PATH, isolation_level=None)
     conn.row_factory = sqlite3.Row
     conn.execute('PRAGMA journal_mode=WAL;')
+    
+    # 物理ファイルがないか、テーブルがない場合に初期化を実行
+    try:
+        conn.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='tasks'")
+    except:
+        init_db()
+        
     return conn
+
 
 def init_db():
     """スキーマの初期化（テーブルの作成）"""
