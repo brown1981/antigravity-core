@@ -126,7 +126,11 @@ taskForm.onsubmit = async (e) => {
     const res = await fetch('/api/command', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ instruction: fullInstruction })
+      body: JSON.stringify({ 
+        instruction: title + (description ? "\n" + description : ""),
+        title: title,
+        description: description
+      })
     });
     
     const data = await res.json();

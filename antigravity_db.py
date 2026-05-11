@@ -10,9 +10,11 @@ DB_PATH = os.path.join(BASE_DIR, 'antigravity_v4.db')
 def get_connection():
     """SQLiteデータベースへの接続を取得し、WALモードを有効にする。"""
     try:
-        conn = sqlite3.connect(DB_PATH)
+        # タイムアウトを30秒に設定し、並列実行時のロック耐性を高める
+        conn = sqlite3.connect(DB_PATH, timeout=30.0)
         conn.row_factory = sqlite3.Row
         conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA busy_timeout = 30000")
         return conn
     except Exception as e:
         print(f"❌ [DB] Connection Error: {e}")
