@@ -84,10 +84,10 @@ def start_ai_company():
 # Server Entry Point
 # -------------------------------------------------------------
 
+# Flaskアプリ起動時にスレッドマネージャーを実行 (Gunicorn等でも動作するようモジュールレベルで呼び出し)
+start_ai_company()
+
 if __name__ == '__main__':
-    # Flaskアプリ起動時にスレッドマネージャーを実行
-    start_ai_company()
-    
     # Webサーバーの起動 (ポート8080)
     print("🌐 [HQ] Web Interface available at: http://localhost:8080")
     app.run(host='0.0.0.0', port=8080, debug=False, use_reloader=False)

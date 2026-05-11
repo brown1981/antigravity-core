@@ -74,11 +74,11 @@ def run_ai_board_meeting():
 
         # 4. Boardroom (司令室) への投稿
         print("📡 [AI COMPANY] Submitting decisions to Boardroom...")
-        db.create_task(title=title, description=description, assignee="shinbou")
+        report_instruction = f"定期パトロール分析報告: {fng_class}"
+        new_id = db.create_task(report_instruction, title=title, description=description, agent_name="shinbou")
         
-        tasks = db.get_all_tasks()
-        if tasks:
-            db.update_task_status(tasks[0]['id'], "DONE", reason="AI経営会議 完了 (非同期データ参照)")
+        if new_id:
+            db.update_task_status(new_id, "DONE", result="AI経営会議 完了 (非同期データ参照)")
         
         print("✅ Board Meeting Adjourned.")
         

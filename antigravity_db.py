@@ -63,7 +63,7 @@ def create_task(instruction, agent_name="Hermes", title=None, description=None):
             
         cursor.execute(
             "INSERT INTO tasks (instruction, agent_name, status) VALUES (?, ?, ?)",
-            (full_text, agent_name, 'executing')
+            (full_text, agent_name, 'IN_PROGRESS')
         )
         conn.commit()
         return cursor.lastrowid
@@ -92,14 +92,14 @@ def get_all_tasks(limit=10):
     finally:
         if 'conn' in locals(): conn.close()
 
-def update_task_result(task_id, result, status='completed'):
-    """タスクの結果を更新する"""
+def update_task_status(task_id, status, result=None):
+    """タスクのステータスと結果を更新する"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
         cursor.execute(
-            "UPDATE tasks SET result = ?, status = ?, updated_at = ? WHERE id = ?",
-            (result, status, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), task_id)
+            "UPDATE tasks SET status = ?, result = ?, updated_at = ? WHERE id = ?",
+            (status, result, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), task_id)
         )
         conn.commit()
     finally:

@@ -91,7 +91,7 @@ function createTaskCard(task) {
         <img src="${avatarUrl}" alt="${agent.label}">
         <span>${agent.label}</span>
       </div>
-      <div class="task-id">#${(task.id || 'new').substring(0, 4)}</div>
+      <div class="task-id">#${String(task.id || 'new').substring(0, 4)}</div>
     </div>
   `;
   return div;
